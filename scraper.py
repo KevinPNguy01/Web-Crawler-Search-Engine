@@ -1,19 +1,19 @@
 import re
+import socket
 from urllib.parse import urlparse
 from urllib.robotparser import RobotFileParser
 from bs4 import BeautifulSoup, SoupStrainer
 
 foundLinks = set([])
-prevDomain = ""
-rp = RobotFileParser()
-robot_exists = False
+robot_cache = {}
+
+socket.setdefaulttimeout(5)
 
 def scraper(url, resp):
     links = extract_next_links(url, resp)
     return [link for link in links if is_valid(link)]
 
 def extract_next_links(url, resp):
-    global prevDomain, robot_exists
     # Implementation required.
     # url: the URL that was used to get the page
     # resp.url: the actual url of the page
@@ -42,16 +42,16 @@ def extract_next_links(url, resp):
             continue
         
         parsed = urlparse(tag["href"])
+        domain = parsed.netloc
         # Check robots.txt file. If it exists and url is disallowed, then skip.
-        if parsed.netloc != prevDomain:
-            prevDomain = parsed.netloc
-            rp.set_url(f"https://{prevDomain}/robots.txt")
+        if domain not in robot_cache:
+            robot = RobotFileParser(f"https://{domain}/robots.txt")
+            robot_cache[domain] = robot
             try:
-                rp.read()
-                robot_exists = True
+                robot.read()
             except:
-                robot_exists = False
-        if robot_exists and not rp.can_fetch("*", link):
+                robot_cache[domain] = None
+        if robot_cache[domain] and not robot_cache[domain].can_fetch("*", link):
             continue
 
         results.append(link)
