@@ -1,11 +1,19 @@
 import re
 from urllib.parse import urlparse
+from urllib.robotparser import RobotFileParser
+from bs4 import BeautifulSoup, SoupStrainer
+
+foundLinks = set([])
+prevDomain = ""
+rp = RobotFileParser()
+robot_exists = False
 
 def scraper(url, resp):
     links = extract_next_links(url, resp)
     return [link for link in links if is_valid(link)]
 
 def extract_next_links(url, resp):
+    global prevDomain, robot_exists
     # Implementation required.
     # url: the URL that was used to get the page
     # resp.url: the actual url of the page
@@ -15,7 +23,40 @@ def extract_next_links(url, resp):
     #         resp.raw_response.url: the url, again
     #         resp.raw_response.content: the content of the page!
     # Return a list with the hyperlinks (as strings) scrapped from resp.raw_response.content
-    return list()
+    results = []
+
+    # Print error and return empty list if status is not 200.
+    if (resp.status != 200):
+        print("Error:", resp.error)
+        return results
+
+    # Search for links in 'a' tags.
+    soup = BeautifulSoup(resp.raw_response.content, "html.parser")
+    for tag in soup.find_all("a"):
+        # Skip tag if it doesn't have a link, has an invalid link, or has an already discovered link.
+        try:
+            link = tag["href"]
+        except:
+            continue
+        if not is_valid(link) or link in foundLinks:
+            continue
+        
+        parsed = urlparse(tag["href"])
+        # Check robots.txt file. If it exists and url is disallowed, then skip.
+        if parsed.netloc != prevDomain:
+            prevDomain = parsed.netloc
+            rp.set_url(f"https://{prevDomain}/robots.txt")
+            try:
+                rp.read()
+                robot_exists = True
+            except:
+                robot_exists = False
+        if robot_exists and not rp.can_fetch("*", link):
+            continue
+
+        results.append(link)
+        foundLinks.add(link)
+    return results
 
 def is_valid(url):
     # Decide whether to crawl this url or not. 
@@ -23,7 +64,10 @@ def is_valid(url):
     # There are already some conditions that return False.
     try:
         parsed = urlparse(url)
-        if parsed.scheme not in set(["http", "https"]):
+        if not re.match(
+            r"^.*\.(stat.uci.edu|informatics.uci.edu|cs.uci.edu|ics.uci.edu)/",
+            url.lower()
+        ) or parsed.scheme not in set(["http", "https"]):
             return False
         return not re.match(
             r".*\.(css|js|bmp|gif|jpe?g|ico"
