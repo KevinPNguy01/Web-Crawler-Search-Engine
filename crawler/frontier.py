@@ -7,11 +7,18 @@ from queue import Queue, Empty
 from utils import get_logger, get_urlhash, normalize
 from scraper import is_valid
 
+from urllib.parse import urlparse
+from typing import Dict
+from datetime import datetime
+
 class Frontier(object):
     def __init__(self, config, restart):
         self.logger = get_logger("FRONTIER")
         self.config = config
         self.to_be_downloaded = list()
+
+        self.last_crawls : Dict[str, datetime] = {}
+        self.mutex = RLock()
         
         if not os.path.exists(self.config.save_file) and not restart:
             # Save file does not exist, but request to load save.
@@ -49,8 +56,32 @@ class Frontier(object):
 
     def get_tbd_url(self):
         try:
-            return self.to_be_downloaded.pop()
+            # Loop through list of urls looking for a domain that wasn't crawled recently.
+            while True:
+                # Parse the url and get the domain.
+                url = self.to_be_downloaded.pop()
+                parsed = urlparse(url)
+                domain = parsed.netloc
+
+                # If the domain was crawled before, check how much time has passed.
+                time_elapsed = self.config.time_delay
+                if domain in self.last_crawls:
+                    last_time = self.last_crawls[domain]
+                    time_elapsed = (datetime.now() - last_time).total_seconds()
+
+                    # If the time passed was less than the time delay, then put it back into the list of urls.
+                    if time_elapsed < self.config.time_delay:
+                        self.to_be_downloaded.insert(0, url)
+
+                # If sufficient time has elapsed, then break out of loop.
+                if time_elapsed >= self.config.time_delay:
+                    break
+
+            # Update the last crawled time and return url.
+            self.last_crawls[domain] = datetime.now()
+            return url
         except IndexError:
+            print("Index Error\n")
             return None
 
     def add_url(self, url):
