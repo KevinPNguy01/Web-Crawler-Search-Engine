@@ -1,5 +1,6 @@
 import os
 import shelve
+import socket
 
 from threading import Thread, RLock
 from queue import Queue, Empty
@@ -10,6 +11,7 @@ from scraper import is_valid
 from urllib.parse import urlparse
 from typing import Dict
 from datetime import datetime
+from urllib.robotparser import RobotFileParser
 
 class Frontier(object):
     def __init__(self, config, restart):
@@ -19,6 +21,10 @@ class Frontier(object):
 
         self.last_crawls : Dict[str, datetime] = {}
         self.mutex = RLock()
+        self.found_links = set([])
+        self.robot_cache = {}
+
+        socket.setdefaulttimeout(5)
         
         if not os.path.exists(self.config.save_file) and not restart:
             # Save file does not exist, but request to load save.
@@ -85,8 +91,29 @@ class Frontier(object):
             return None
 
     def add_url(self, url):
+        # Skip url if it has been found already.
+        if url in self.found_links:
+            return
+
         url = normalize(url)
         urlhash = get_urlhash(url)
+
+        # Parse url and get domain.
+        parsed = urlparse(url)
+        domain = parsed.netloc
+
+        # Check robots.txt file. If it exists and url is disallowed, then skip.
+        if domain not in self.robot_cache:
+            robot = RobotFileParser(f"https://{domain}/robots.txt")
+            self.robot_cache[domain] = robot
+            try:
+                robot.read()
+            except:
+                self.robot_cache[domain] = None
+        if self.robot_cache[domain] and not self.robot_cache[domain].can_fetch("*", url):
+            return
+        self.found_links.add(url)
+        
         if urlhash not in self.save:
             self.save[urlhash] = (url, False)
             self.save.sync()

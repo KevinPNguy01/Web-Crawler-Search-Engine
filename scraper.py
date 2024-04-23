@@ -1,13 +1,7 @@
 import re
 import socket
-from urllib.parse import urlparse
-from urllib.robotparser import RobotFileParser
+from urllib.parse import urlparse, urldefrag, parse_qs
 from bs4 import BeautifulSoup, SoupStrainer
-
-foundLinks = set([])
-robot_cache = {}
-
-socket.setdefaulttimeout(5)
 
 def scraper(url, resp):
     links = extract_next_links(url, resp)
@@ -32,31 +26,7 @@ def extract_next_links(url, resp):
 
     # Search for links in 'a' tags.
     soup = BeautifulSoup(resp.raw_response.content, "html.parser")
-    for tag in soup.find_all("a"):
-        # Skip tag if it doesn't have a link, has an invalid link, or has an already discovered link.
-        try:
-            link = tag["href"]
-        except:
-            continue
-        if not is_valid(link) or link in foundLinks:
-            continue
-        
-        parsed = urlparse(tag["href"])
-        domain = parsed.netloc
-        # Check robots.txt file. If it exists and url is disallowed, then skip.
-        if domain not in robot_cache:
-            robot = RobotFileParser(f"https://{domain}/robots.txt")
-            robot_cache[domain] = robot
-            try:
-                robot.read()
-            except:
-                robot_cache[domain] = None
-        if robot_cache[domain] and not robot_cache[domain].can_fetch("*", link):
-            continue
-
-        results.append(link)
-        foundLinks.add(link)
-    return results
+    return [urldefrag(tag["href"])[0] for tag in soup.find_all("a", href=True)]
 
 def is_valid(url):
     # Decide whether to crawl this url or not. 
@@ -65,19 +35,24 @@ def is_valid(url):
     try:
         parsed = urlparse(url)
         if not re.match(
-            r"^.*\.(stat.uci.edu|informatics.uci.edu|cs.uci.edu|ics.uci.edu)/",
-            url.lower()
+            r"^.*\.(stat.uci.edu|informatics.uci.edu|cs.uci.edu|ics.uci.edu)",
+            parsed.netloc
         ) or parsed.scheme not in set(["http", "https"]):
             return False
+        for query in parse_qs(parsed.query):
+            if query in set(["ical", "share", "action", "ucinetid"]):
+                return False
+            if re.match(r"afg\d+_page_id", query):
+                return False
         return not re.match(
             r".*\.(css|js|bmp|gif|jpe?g|ico"
             + r"|png|tiff?|mid|mp2|mp3|mp4"
             + r"|wav|avi|mov|mpeg|ram|m4v|mkv|ogg|ogv|pdf"
             + r"|ps|eps|tex|ppt|pptx|doc|docx|xls|xlsx|names"
             + r"|data|dat|exe|bz2|tar|msi|bin|7z|psd|dmg|iso"
-            + r"|epub|dll|cnf|tgz|sha1"
-            + r"|thmx|mso|arff|rtf|jar|csv"
-            + r"|rm|smil|wmv|swf|wma|zip|rar|gz)$", parsed.path.lower())
+            + r"|epub|dll|cnf|tgz|sha1|ppsx"
+            + r"|thmx|mso|arff|rtf|jar|csv|bib"
+            + r"|rm|smil|wmv|swf|wma|zip|rar|gz)$", url.lower())
 
     except TypeError:
         print ("TypeError for ", parsed)
