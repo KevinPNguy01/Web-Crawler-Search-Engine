@@ -1,7 +1,7 @@
 import re
-import socket
+from crawler.tokenizer import *
 from urllib.parse import urlparse, urldefrag, parse_qs
-from bs4 import BeautifulSoup, SoupStrainer
+from bs4 import BeautifulSoup
 
 def scraper(url, resp):
     links = extract_next_links(url, resp)

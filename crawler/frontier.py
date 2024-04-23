@@ -2,7 +2,7 @@ import os
 import shelve
 import socket
 
-from threading import Thread, RLock
+from threading import Thread, RLock, Lock
 from queue import Queue, Empty
 
 from utils import get_logger, get_urlhash, normalize
@@ -12,6 +12,7 @@ from urllib.parse import urlparse
 from typing import Dict
 from datetime import datetime
 from urllib.robotparser import RobotFileParser
+from bs4 import BeautifulSoup
 
 class Frontier(object):
     def __init__(self, config, restart):
@@ -23,6 +24,8 @@ class Frontier(object):
         self.mutex = RLock()
         self.found_links = set([])
         self.robot_cache = {}
+        self.frequencies = {}
+        self.frequencies_lock = Lock()
 
         socket.setdefaulttimeout(5)
         
@@ -36,8 +39,12 @@ class Frontier(object):
             self.logger.info(
                 f"Found save file {self.config.save_file}, deleting it.")
             os.remove(self.config.save_file)
+        
+        if os.path.exists(self.config.frequencies_save_file) and restart:
+            os.remove(self.config.frequencies_save_file)
         # Load existing save file, or create one if it does not exist.
         self.save = shelve.open(self.config.save_file)
+        self.frequencies_save = shelve.open(self.config.frequencies_save_file)
         if restart:
             for url in self.config.seed_urls:
                 self.add_url(url)
@@ -47,6 +54,8 @@ class Frontier(object):
             if not self.save:
                 for url in self.config.seed_urls:
                     self.add_url(url)
+
+            self._parse_frequency_file()
 
     def _parse_save_file(self):
         ''' This function can be overridden for alternate saving techniques. '''
@@ -59,6 +68,10 @@ class Frontier(object):
         self.logger.info(
             f"Found {tbd_count} urls to be downloaded from {total_count} "
             f"total urls discovered.")
+        
+    def _parse_frequency_file(self):
+        for word, frequency in self.frequencies_save.items():
+            self.frequencies[word] = frequency
 
     def get_tbd_url(self):
         try:

@@ -4,6 +4,8 @@ from datetime import datetime
 from inspect import getsource
 from utils.download import download
 from utils import get_logger
+from bs4 import BeautifulSoup
+from crawler.tokenizer import *
 
 import scraper
 import time
@@ -38,4 +40,16 @@ class Worker(Thread):
                 for scraped_url in scraped_urls:
                     self.frontier.add_url(scraped_url)
                 self.frontier.mark_url_complete(tbd_url)
+            if resp.status == 200:
+                try:
+                    soup = BeautifulSoup(resp.raw_response.content, "html.parser")
+                    frequencies = computeWordFrequencies(tokenize(soup.body.stripped_strings))
+                except Exception as e:
+                    frequencies = {}
+                with self.frontier.frequencies_lock:
+                    for key in frequencies:
+                        if key not in self.frontier.frequencies_save.keys():
+                            self.frontier.frequencies_save[key] = 0
+                        self.frontier.frequencies_save[key] += frequencies[key]
+                    self.frontier.frequencies_save.sync()
             time.sleep(self.config.time_delay)
