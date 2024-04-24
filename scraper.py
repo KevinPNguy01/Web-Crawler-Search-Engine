@@ -1,6 +1,6 @@
 import re
 from crawler.tokenizer import *
-from urllib.parse import urlparse, urldefrag, parse_qs
+from urllib.parse import urlparse, urldefrag, urljoin, parse_qs
 from bs4 import BeautifulSoup
 
 def scraper(url, resp):
@@ -17,16 +17,15 @@ def extract_next_links(url, resp):
     #         resp.raw_response.url: the url, again
     #         resp.raw_response.content: the content of the page!
     # Return a list with the hyperlinks (as strings) scrapped from resp.raw_response.content
-    results = []
 
     # Print error and return empty list if status is not 200.
     if (resp.status != 200):
-        print("Error:", resp.error)
-        return results
+        return []
 
     # Search for links in 'a' tags.
     soup = BeautifulSoup(resp.raw_response.content, "html.parser")
-    return [urldefrag(tag["href"])[0] for tag in soup.find_all("a", href=True)]
+    parsed = urlparse(url)
+    return [urljoin(parsed.netloc, urldefrag(tag["href"])[0]) for tag in soup.find_all("a", href=True)]
 
 def is_valid(url):
     # Decide whether to crawl this url or not. 
@@ -50,7 +49,7 @@ def is_valid(url):
             + r"|wav|avi|mov|mpeg|ram|m4v|mkv|ogg|ogv|pdf"
             + r"|ps|eps|tex|ppt|pptx|doc|docx|xls|xlsx|names"
             + r"|data|dat|exe|bz2|tar|msi|bin|7z|psd|dmg|iso"
-            + r"|epub|dll|cnf|tgz|sha1|ppsx"
+            + r"|epub|dll|cnf|tgz|sha1|ppsx|txt"
             + r"|thmx|mso|arff|rtf|jar|csv|bib"
             + r"|rm|smil|wmv|swf|wma|zip|rar|gz)$", url.lower())
 

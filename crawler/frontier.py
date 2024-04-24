@@ -1,6 +1,7 @@
 import os
 import shelve
 import socket
+import time
 
 from threading import Thread, RLock, Lock
 from queue import Queue, Empty
@@ -23,7 +24,7 @@ class Frontier(object):
         self.last_crawls : Dict[str, datetime] = {}
         self.mutex = RLock()
         self.found_links = set([])
-        self.robot_cache = {}
+        self.robot_cache : Dict[str, RobotFileParser] = {}
         self.frequencies = {}
         self.frequencies_lock = Lock()
 
@@ -74,34 +75,36 @@ class Frontier(object):
             self.frequencies[word] = frequency
 
     def get_tbd_url(self):
-        try:
-            # Loop through list of urls looking for a domain that wasn't crawled recently.
-            while True:
-                # Parse the url and get the domain.
-                url = self.to_be_downloaded.pop()
-                parsed = urlparse(url)
-                domain = parsed.netloc
-
-                # If the domain was crawled before, check how much time has passed.
-                time_elapsed = self.config.time_delay
-                if domain in self.last_crawls:
-                    last_time = self.last_crawls[domain]
-                    time_elapsed = (datetime.now() - last_time).total_seconds()
-
-                    # If the time passed was less than the time delay, then put it back into the list of urls.
-                    if time_elapsed < self.config.time_delay:
-                        self.to_be_downloaded.insert(0, url)
-
-                # If sufficient time has elapsed, then break out of loop.
-                if time_elapsed >= self.config.time_delay:
-                    break
-
-            # Update the last crawled time and return url.
-            self.last_crawls[domain] = datetime.now()
-            return url
-        except IndexError:
-            print("Index Error\n")
+        if not self.to_be_downloaded:
             return None
+        # Loop through list of urls looking for a domain that wasn't crawled recently.
+        while True:
+            # Parse the url and get the domain.
+            url = self.to_be_downloaded.pop()
+            parsed = urlparse(url)
+            domain = parsed.netloc
+
+            # If the domain was crawled before, check how much time has passed.
+            time_elapsed = self.config.time_delay
+            if domain in self.last_crawls:
+                last_time = self.last_crawls[domain]
+                time_elapsed = (datetime.now() - last_time).total_seconds()                        
+
+            # If robots.txt exists, then get crawl delay.
+            robot = self.robot_cache.get(domain)
+            crawl_delay = 0 if robot is None else robot.crawl_delay(self.config.user_agent)
+            if crawl_delay is None: 
+                crawl_delay = 0
+
+            # If sufficient time has elapsed, then break out of loop.
+            if time_elapsed >= max(crawl_delay, self.config.time_delay):
+                break
+            # Else, add url back into the list of urls.
+            self.to_be_downloaded.insert(0, url)
+
+        # Update the last crawled time and return url.
+        self.last_crawls[domain] = datetime.now()
+        return url
 
     def add_url(self, url):
         # Skip url if it has been found already.
@@ -117,13 +120,13 @@ class Frontier(object):
 
         # Check robots.txt file. If it exists and url is disallowed, then skip.
         if domain not in self.robot_cache:
-            robot = RobotFileParser(f"https://{domain}/robots.txt")
+            robot = RobotFileParser(f"{parsed.scheme}://{domain}/robots.txt")
             self.robot_cache[domain] = robot
             try:
                 robot.read()
             except:
                 self.robot_cache[domain] = None
-        if self.robot_cache[domain] and not self.robot_cache[domain].can_fetch("*", url):
+        if self.robot_cache[domain] and not self.robot_cache[domain].can_fetch(self.config.user_agent, url):
             return
         self.found_links.add(url)
         

@@ -26,8 +26,12 @@ class Worker(Thread):
     def run(self):            
         global mutex
         while True:
-            with mutex:
-                tbd_url = self.frontier.get_tbd_url()
+            for i in range(3):
+                with mutex:
+                    tbd_url = self.frontier.get_tbd_url()
+                if tbd_url:
+                    break
+                time.sleep(5)
             if not tbd_url:
                 self.logger.info("Frontier is empty. Stopping Crawler.")
                 break
@@ -40,16 +44,21 @@ class Worker(Thread):
                 for scraped_url in scraped_urls:
                     self.frontier.add_url(scraped_url)
                 self.frontier.mark_url_complete(tbd_url)
-            if resp.status == 200:
+            if resp.status == 200 and "text" in resp.headers["Content-Type"] and resp.raw_response.content[:4] != b'%PDF':
                 try:
                     soup = BeautifulSoup(resp.raw_response.content, "html.parser")
-                    frequencies = computeWordFrequencies(tokenize(soup.body.stripped_strings))
+                    [s.extract() for s in soup(['style', 'script', '[document]', 'head', 'title', 'td', 'tr', 'code'])]
+                    frequencies = computeWordFrequencies(tokenize(soup.getText()))
                 except Exception as e:
                     frequencies = {}
                 with self.frontier.frequencies_lock:
+                    total_words = 0
                     for key in frequencies:
                         if key not in self.frontier.frequencies_save.keys():
                             self.frontier.frequencies_save[key] = 0
                         self.frontier.frequencies_save[key] += frequencies[key]
+                        total_words += frequencies[key]
+                    prev_longest_page = self.frontier.frequencies_save.get(f"[STATS] {tbd_url}", 0)
+                    self.frontier.frequencies_save[f"[STATS] {tbd_url}"] = max(total_words, prev_longest_page)
                     self.frontier.frequencies_save.sync()
             time.sleep(self.config.time_delay)
