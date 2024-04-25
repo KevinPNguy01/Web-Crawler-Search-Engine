@@ -1,5 +1,10 @@
 import pickle
 
+class RawResponse(object):
+    def __init__(self, url, content):
+        self.url = url
+        self.content = content
+
 class Response(object):
     def __init__(self, resp_headers_dict, resp_dict):
         self.url = resp_dict["url"]
@@ -12,4 +17,4 @@ class Response(object):
                 if "response" in resp_dict else
                 None)
         except TypeError:
-            self.raw_response = None
+            self.raw_response = RawResponse(resp_dict["response"]["url"], resp_dict["response"]["content"])

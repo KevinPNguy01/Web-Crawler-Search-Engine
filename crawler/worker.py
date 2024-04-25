@@ -2,10 +2,11 @@ from threading import Thread, Lock
 from datetime import datetime
 
 from inspect import getsource
-from utils.download import download
+from utils.download import download, download2
 from utils import get_logger
 from bs4 import BeautifulSoup
 from crawler.tokenizer import *
+from crawler.frontier import Frontier
 
 import scraper
 import time
@@ -13,7 +14,7 @@ import time
 mutex = Lock()
 
 class Worker(Thread):
-    def __init__(self, worker_id, config, frontier):
+    def __init__(self, worker_id, config, frontier: Frontier):
         self.logger = get_logger(f"Worker-{worker_id}", "Worker")
         self.config = config
         self.frontier = frontier
@@ -27,7 +28,7 @@ class Worker(Thread):
         global mutex
         while True:
             for i in range(3):
-                with mutex:
+                with self.frontier.links_mutex, self.frontier.robots_mutex:
                     tbd_url = self.frontier.get_tbd_url()
                 if tbd_url:
                     break
@@ -35,7 +36,10 @@ class Worker(Thread):
             if not tbd_url:
                 self.logger.info("Frontier is empty. Stopping Crawler.")
                 break
-            resp = download(tbd_url, self.config, self.logger)
+            try:
+                resp = download2(tbd_url, self.config, self.logger)
+            except:
+                continue
             self.logger.info(
                 f"Downloaded {tbd_url}, status <{resp.status}>, "
                 f"using cache {self.config.cache_server}.")

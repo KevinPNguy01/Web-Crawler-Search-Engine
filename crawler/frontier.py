@@ -22,7 +22,8 @@ class Frontier(object):
         self.to_be_downloaded = list()
 
         self.last_crawls : Dict[str, datetime] = {}
-        self.mutex = RLock()
+        self.links_mutex = Lock()
+        self.robots_mutex = Lock()
         self.found_links = set([])
         self.robot_cache : Dict[str, RobotFileParser] = {}
         self.frequencies = {}
@@ -77,6 +78,7 @@ class Frontier(object):
     def get_tbd_url(self):
         if not self.to_be_downloaded:
             return None
+        
         # Loop through list of urls looking for a domain that wasn't crawled recently.
         while True:
             # Parse the url and get the domain.
@@ -108,10 +110,11 @@ class Frontier(object):
 
     def add_url(self, url):
         # Skip url if it has been found already.
-        if url in self.found_links:
-            return
+        normalized_url = normalize(url)
+        with self.links_mutex:
+            if normalized_url in self.found_links:
+                return
 
-        url = normalize(url)
         urlhash = get_urlhash(url)
 
         # Parse url and get domain.
@@ -119,21 +122,23 @@ class Frontier(object):
         domain = parsed.netloc
 
         # Check robots.txt file. If it exists and url is disallowed, then skip.
-        if domain not in self.robot_cache:
-            robot = RobotFileParser(f"{parsed.scheme}://{domain}/robots.txt")
-            self.robot_cache[domain] = robot
-            try:
-                robot.read()
-            except:
-                self.robot_cache[domain] = None
-        if self.robot_cache[domain] and not self.robot_cache[domain].can_fetch(self.config.user_agent, url):
-            return
-        self.found_links.add(url)
+        with self.robots_mutex:
+            if domain not in self.robot_cache:
+                robot = RobotFileParser(f"{parsed.scheme}://{domain}/robots.txt")
+                self.robot_cache[domain] = robot
+                try:
+                    robot.read()
+                except:
+                    self.robot_cache[domain] = None
+            if self.robot_cache[domain] and not self.robot_cache[domain].can_fetch(self.config.user_agent, url):
+                return
         
-        if urlhash not in self.save:
-            self.save[urlhash] = (url, False)
-            self.save.sync()
-            self.to_be_downloaded.append(url)
+        with self.links_mutex:
+            self.found_links.add(normalized_url)
+            if urlhash not in self.save:
+                self.save[urlhash] = (url, False)
+                self.save.sync()
+                self.to_be_downloaded.append(url)
     
     def mark_url_complete(self, url):
         urlhash = get_urlhash(url)

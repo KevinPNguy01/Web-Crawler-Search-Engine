@@ -19,3 +19,21 @@ def download(url, config, logger=None):
         "error": f"Spacetime Response error {resp} with url {url}.",
         "status": resp.status_code,
         "url": url})
+
+def download2(url, config, logger=None):
+    resp = requests.get(url)
+    try:
+        if resp and resp.content:
+            return Response(resp.headers, {
+                "url": url,
+                "status": resp.status_code,
+                "error": resp.reason,
+                "response": {"content": resp.content, "url": url}
+            })
+    except (EOFError, ValueError) as e:
+        pass
+    logger.error(f"Spacetime Response error {resp} with url {url}.")
+    return Response({}, {
+        "error": f"Spacetime Response error {resp} with url {url}.",
+        "status": resp.status_code,
+        "url": url})
