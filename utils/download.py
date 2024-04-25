@@ -4,7 +4,7 @@ import time
 
 from utils.response import Response
 
-def download(url, config, logger=None):
+def download(url, config, logger=None) -> Response:
     host, port = config.cache_server
     resp = requests.get(
         f"http://{host}:{port}/",
@@ -20,7 +20,7 @@ def download(url, config, logger=None):
         "status": resp.status_code,
         "url": url})
 
-def download2(url, config, logger=None):
+def download2(url, config, logger=None) -> Response:
     resp = requests.get(url)
     try:
         if resp and resp.content:
@@ -37,3 +37,5 @@ def download2(url, config, logger=None):
         "error": f"Spacetime Response error {resp} with url {url}.",
         "status": resp.status_code,
         "url": url})
+    
+download = download2

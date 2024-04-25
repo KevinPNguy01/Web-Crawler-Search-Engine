@@ -65,6 +65,8 @@ def is_valid_query(query: str) -> bool:
             return False
         if re.match(r"afg\d+_page_id", param):
             return False
+        if any([keyword in param for keyword in {"filter"}]):
+            return False
     return True
 
 def is_valid(url: str) -> bool:
