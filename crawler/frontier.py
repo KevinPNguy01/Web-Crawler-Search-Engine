@@ -32,9 +32,7 @@ class Frontier(object):
         
         self.frequencies = {}
         self.frequencies_lock = Lock()
-
-        socket.setdefaulttimeout(5)
-        
+                
         if not os.path.exists(self.config.save_file) and not restart:
             # Save file does not exist, but request to load save.
             self.logger.info(
@@ -50,7 +48,7 @@ class Frontier(object):
             os.remove(self.config.frequencies_save_file)
         # Load existing save file, or create one if it does not exist.
         self.save = shelve.open(self.config.save_file)
-        self.frequencies_save = shelve.open(self.config.frequencies_save_file)
+        self.frequencies_save = shelve.open(self.config.frequencies_save_file, writeback=True)
         if restart:
             for url in self.config.seed_urls:
                 self.add_url(url)
@@ -111,7 +109,7 @@ class Frontier(object):
             
             # Set a flag and reserve an entry in the robot cache if the domain was not found in the cache.
             with self.robots_lock:
-                if create_new_robot := domain not in self.robot_cache:
+                if create_new_robot := (domain not in self.robot_cache):
                     self.robot_cache[domain] = None
             # Create a new robot without locking.
             if create_new_robot:
@@ -122,16 +120,16 @@ class Frontier(object):
             if robot is None:
                 self.to_be_downloaded.put(url)
                 continue
-                
+
             # Do not download the url if it is disallowed by the robot.
             if not robot.can_fetch(self.config.user_agent, url):
+                self.mark_url_complete(url)
                 continue       
 
             # Get crawl delay from associated robot.
             crawl_delay = robot.crawl_delay(self.config.user_agent)
             if crawl_delay is None: 
                 crawl_delay = 0
-                
             # Lock last_crawls dict so that the times remain consistent.
             with self.crawl_lock:
                 # Check how much time has passed since the domain was last crawled.
@@ -144,14 +142,15 @@ class Frontier(object):
                     # Update the last crawled time and return url.
                     self.last_crawls[domain] = datetime.now()
                     self.logger.info(f"Dispensed {url}.")
+                    self.mark_url_complete(url)
                     return url
             # Else, add url back into the list of urls.
             self.to_be_downloaded.put(url)
 
     def add_url(self, url):
         # Skip url if it has been found already.
+        url = normalize(url)
         if url in self.found_links: return
-
         urlhash = get_urlhash(url)
         
         self.found_links.add(url)

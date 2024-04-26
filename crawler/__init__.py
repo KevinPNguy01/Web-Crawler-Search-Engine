@@ -21,7 +21,7 @@ class Crawler(object):
     def start(self):
         try:
             self.start_async()
-            time.sleep(15)
+            time.sleep(5)
             self.join()
         except:
             self.frontier.is_running = False
@@ -30,3 +30,4 @@ class Crawler(object):
     def join(self):
         for worker in self.workers:
             worker.join()
+        self.frontier.frequencies_save.sync()

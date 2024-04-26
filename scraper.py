@@ -28,7 +28,7 @@ def extract_next_links(url: str, resp: Response) -> List[str]:
 
     # Search for links in 'a' tags.
     soup = BeautifulSoup(resp.raw_response.content, "html.parser")
-    return [urldefrag(urljoin(url, tag["href"]))[0] for tag in soup.find_all("a", href=True)]
+    return [urldefrag(urljoin(resp.raw_response.url, tag["href"]))[0] for tag in soup.find_all("a", href=True)]
 
 def is_valid_scheme(scheme: str) -> bool:
     # Returns whether the given scheme is valid to crawl.
@@ -38,23 +38,29 @@ def is_valid_scheme(scheme: str) -> bool:
 def is_valid_domain(domain: str) -> bool:
     # Returns whether the given domain is valid to crawl.
     
-    # If the domain is one of the valid domains or is a subdomain of them, return True.
-    for valid_domain in ("stat.uci.edu", "informatics.uci.edu", "cs.uci.edu", "ics.uci.edu"):
-        if domain == valid_domain or domain.endswith(f".{valid_domain}"):
-            return True
-    return False
+    if domain == "gitlab.ics.uci.edu":
+        return False
+    
+    # It must end with one of four valid domains.
+    return any([domain.endswith(valid_domain) for valid_domain in (".stat.uci.edu", ".informatics.uci.edu", ".cs.uci.edu", ".ics.uci.edu")])
 
 def is_valid_path(path: str) -> bool:
     # Returns whether the given path is valid to crawl.
     
+    if any([keyword in path for keyword in {".php", "/page"}]):
+        return False
+    
+    if len(path.strip("/").split("/")) > 3:
+        return False
+    
     return not re.match(
         r".*\.(css|js|bmp|gif|jpe?g|ico"
-        + r"|png|tiff?|mid|mp2|mp3|mp4"
+        + r"|png|tiff?|mid|mp2|mp3|mp4|sql"
         + r"|wav|avi|mov|mpeg|ram|m4v|mkv|ogg|ogv|pdf"
         + r"|ps|eps|tex|ppt|pptx|doc|docx|xls|xlsx|names"
-        + r"|data|dat|exe|bz2|tar|msi|bin|7z|psd|dmg|iso"
-        + r"|epub|dll|cnf|tgz|sha1|ppsx|txt"
-        + r"|thmx|mso|arff|rtf|jar|csv|bib|odc"
+        + r"|data|dat|exe|bz2|tar|msi|bin|7z|psd|dmg|iso|nb"
+        + r"|epub|dll|cnf|tgz|sha1|ppsx|txt|war|r|z|data"
+        + r"|thmx|mso|arff|rtf|jar|csv|bib|odc|php|data-original"
         + r"|rm|smil|wmv|swf|wma|zip|rar|gz)$", path.lower())
     
 def is_valid_query(query: str) -> bool:
