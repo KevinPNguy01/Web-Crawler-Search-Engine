@@ -22,7 +22,7 @@ class Frontier(object):
         self.config = config
         self.is_running = True
         self.to_be_downloaded = Queue()
-        self.found_links = set([])
+        self.found_links: Dict[str, bool] = {}
 
         self.last_crawls: Dict[str, datetime] = {}
         self.crawl_lock = Lock()
@@ -32,51 +32,43 @@ class Frontier(object):
         
         self.frequencies = {}
         self.frequencies_lock = Lock()
-                
-        if not os.path.exists(self.config.save_file) and not restart:
-            # Save file does not exist, but request to load save.
-            self.logger.info(
-                f"Did not find save file {self.config.save_file}, "
-                f"starting from seed.")
-        elif os.path.exists(self.config.save_file) and restart:
-            # Save file does exists, but request to start from seed.
-            self.logger.info(
-                f"Found save file {self.config.save_file}, deleting it.")
-            os.remove(self.config.save_file)
-        
-        if os.path.exists(self.config.frequencies_save_file) and restart:
-            os.remove(self.config.frequencies_save_file)
-        # Load existing save file, or create one if it does not exist.
-        self.save = shelve.open(self.config.save_file)
+                        
         if restart:
+            self.logger.info(f"Restarting from seed urls.")
             for url in self.config.seed_urls:
                 self.add_url(url)
         else:
-            # Set the frontier state with contents of save file.
             self._parse_save_file()
-            if not self.save:
-                for url in self.config.seed_urls:
-                    self.add_url(url)
-
             self._parse_frequency_file()
 
     def _parse_save_file(self):
-        ''' This function can be overridden for alternate saving techniques. '''
-        total_count = len(self.save)
-        tbd_count = 0
-        for url, completed in self.save.values():
-            if not completed and is_valid(url):
-                self.to_be_downloaded.put(url)
-                tbd_count += 1
-        self.logger.info(
-            f"Found {tbd_count} urls to be downloaded from {total_count} "
-            f"total urls discovered.")
+        try:
+            # Try to read save file.
+            with open(self.config.save_file, "r") as f:
+                self.found_links: Dict[str, bool] = json.load(f)
+                
+            # Add urls that have not been downloaded yet to the queue.
+            [self.to_be_downloaded.put(url) for url, completed in self.found_links.items() if not completed]
+            
+            # Log statistics.
+            total_count = len(self.found_links)
+            tbd_count = self.to_be_downloaded.qsize()
+            self.logger.info(f"Found {tbd_count} urls to be downloaded from {total_count} total urls discovered.")
+            
+        except:
+            # Start from seed if save file couldn't be read.
+            for url in self.config.seed_urls:
+                self.add_url(url)
+            self.logger.info(f"Couldn't read save {self.config.save_file}, starting from seed.")
         
     def _parse_frequency_file(self):
-        with open(self.config.frequencies_save_file, "a"):
-            pass
-        with open(self.config.frequencies_save_file, "r") as f:
-            self.frequencies = json.load(f)
+        try:
+            # Try to read frequency save file.
+            with open(self.config.frequencies_save_file, "r") as f:
+                self.frequencies = json.load(f)
+        except:
+            # Start empty if read failed.
+            self.frequencies = {}
             
     def create_robot(self, url: ParseResult) -> RobotFileParser:
         # Finds a robots.txt from the given url returns a RobotFileParser.
@@ -152,20 +144,9 @@ class Frontier(object):
         # Skip url if it has been found already.
         url = normalize(url)
         if url in self.found_links: return
-        urlhash = get_urlhash(url)
         
-        self.found_links.add(url)
-        if urlhash not in self.save:
-            self.save[urlhash] = (url, False)
-            self.save.sync()
-            self.to_be_downloaded.put(url)
+        self.found_links[url] = False
+        self.to_be_downloaded.put(url)
     
     def mark_url_complete(self, url):
-        urlhash = get_urlhash(url)
-        if urlhash not in self.save:
-            # This should not happen.
-            self.logger.error(
-                f"Completed url {url}, but have not seen it before.")
-
-        self.save[urlhash] = (url, True)
-        self.save.sync()
+        self.found_links[url] = True

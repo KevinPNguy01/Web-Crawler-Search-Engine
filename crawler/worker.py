@@ -99,15 +99,13 @@ class Worker(Thread):
         
         # Acquire mutex for frontier's frequencies data structure.
         with self.frontier.frequencies_lock:
-            self.logger.info("Syncing statistics...")
-            
             # Add this worker's word frequencies to frontier.
             for key, value in self.frequencies.items():
                 self.frontier.frequencies[key] = self.frontier.frequencies.setdefault(key, 0) + value
             # Add this worker's links and associated token counts to frontier.
             for key, value in self.page_lengths.items():
                 self.frontier.frequencies[key] = value
-            self.logger.info(f"Synced {len(self.frequencies)} words and {len(self.page_lengths)} links.")
+            self.logger.info(f"Contributed {len(self.frequencies)} tokens and {len(self.page_lengths)} links.")
         
     def run(self):            
         self.main()    
