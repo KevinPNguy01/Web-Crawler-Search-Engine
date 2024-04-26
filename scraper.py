@@ -1,4 +1,4 @@
-from urllib.parse import urlparse, urldefrag, urljoin, parse_qs
+from urllib.parse import urlparse, urldefrag, urljoin, parse_qs, unquote
 from utils.response import Response
 from bs4 import BeautifulSoup
 from typing import List
@@ -47,10 +47,22 @@ def is_valid_domain(domain: str) -> bool:
 def is_valid_path(path: str) -> bool:
     # Returns whether the given path is valid to crawl.
     
-    if any([keyword in path for keyword in {".php", "/page"}]):
+    # An empty path is valid.
+    if not path:
+        return True
+    
+    # If there are duplicate segments in the path, it is invalid.
+    segment_list = path.strip("/").split("/")
+    segment_set = set(segment_list)
+    if len(segment_list) != len(segment_set):
         return False
     
-    if len(path.strip("/").split("/")) > 3:
+    # If the first segment signifies a user directory, only allow a depth of 1.
+    if unquote(segment_list[0]).startswith("~") and len(segment_list) > 1:
+        return False
+    
+    # Highly repetitive auto-generated pages are invalid.
+    if "doku.php" in segment_set:
         return False
     
     return not re.match(

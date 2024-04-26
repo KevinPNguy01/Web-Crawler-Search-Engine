@@ -103,12 +103,12 @@ class Worker(Thread):
             
             # Add this worker's word frequencies to frontier.
             for key, value in self.frequencies.items():
-                self.frontier.frequencies_save[key] = self.frontier.frequencies_save.setdefault(key, 0) + value
+                self.frontier.frequencies[key] = self.frontier.frequencies.setdefault(key, 0) + value
             # Add this worker's links and associated token counts to frontier.
             for key, value in self.page_lengths.items():
-                self.frontier.frequencies_save[key] = value
+                self.frontier.frequencies[key] = value
             self.logger.info(f"Synced {len(self.frequencies)} words and {len(self.page_lengths)} links.")
         
     def run(self):            
         self.main()    
-        #self.sync()
+        self.sync()

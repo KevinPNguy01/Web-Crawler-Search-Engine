@@ -1,7 +1,7 @@
 import os
 import logging
 from hashlib import sha256
-from urllib.parse import urlparse
+from urllib.parse import urlparse, unquote
 
 def get_logger(name, filename=None):
     logger = logging.getLogger(name)
@@ -30,7 +30,7 @@ def get_urlhash(url):
         f"{parsed.query}/{parsed.fragment}".encode("utf-8")).hexdigest()
 
 def normalize(url: str):
-    url = url.lower()
+    url = unquote(url.lower())
     if url.endswith("/"):
         return url.rstrip("/")
     return url

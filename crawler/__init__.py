@@ -2,6 +2,7 @@ from utils import get_logger
 from crawler.frontier import Frontier
 from crawler.worker import Worker
 import time
+import json
 
 class Crawler(object):
     def __init__(self, config, restart, frontier_factory=Frontier, worker_factory=Worker):
@@ -30,4 +31,3 @@ class Crawler(object):
     def join(self):
         for worker in self.workers:
             worker.join()
-        self.frontier.frequencies_save.sync()
