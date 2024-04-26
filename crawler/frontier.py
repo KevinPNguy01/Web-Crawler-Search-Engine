@@ -1,7 +1,6 @@
 import os
 import shelve
-import socket
-import queue
+import json
 
 from threading import Thread, RLock, Lock
 from queue import Queue, Empty
@@ -15,9 +14,10 @@ from datetime import datetime
 from urllib.robotparser import RobotFileParser
 from bs4 import BeautifulSoup
 from utils.download import download
+from utils.config import Config
 
 class Frontier(object):
-    def __init__(self, config, restart):
+    def __init__(self, config: Config, restart):
         self.logger = get_logger("FRONTIER")
         self.config = config
         self.is_running = True
@@ -48,7 +48,6 @@ class Frontier(object):
             os.remove(self.config.frequencies_save_file)
         # Load existing save file, or create one if it does not exist.
         self.save = shelve.open(self.config.save_file)
-        self.frequencies_save = shelve.open(self.config.frequencies_save_file, writeback=True)
         if restart:
             for url in self.config.seed_urls:
                 self.add_url(url)
@@ -74,8 +73,10 @@ class Frontier(object):
             f"total urls discovered.")
         
     def _parse_frequency_file(self):
-        for word, frequency in self.frequencies_save.items():
-            self.frequencies[word] = frequency
+        with open(self.config.frequencies_save_file, "a"):
+            pass
+        with open(self.config.frequencies_save_file, "r") as f:
+            self.frequencies = json.load(f)
             
     def create_robot(self, url: ParseResult) -> RobotFileParser:
         # Finds a robots.txt from the given url returns a RobotFileParser.

@@ -1,11 +1,12 @@
 from utils import get_logger
 from crawler.frontier import Frontier
 from crawler.worker import Worker
+from utils.config import Config
 import time
 import json
 
 class Crawler(object):
-    def __init__(self, config, restart, frontier_factory=Frontier, worker_factory=Worker):
+    def __init__(self, config: Config, restart, frontier_factory=Frontier, worker_factory=Worker):
         self.config = config
         self.logger = get_logger("CRAWLER")
         self.frontier = frontier_factory(config, restart)
@@ -31,3 +32,5 @@ class Crawler(object):
     def join(self):
         for worker in self.workers:
             worker.join()
+        with open(self.config.frequencies_save_file, "w") as f:
+            json.dump(dict(sorted(self.frontier.frequencies.items(), key=lambda item: item[1], reverse=True)), f, indent=4)
