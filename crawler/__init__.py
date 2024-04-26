@@ -32,7 +32,9 @@ class Crawler(object):
     def join(self):
         for worker in self.workers:
             worker.join()
-        with open(self.config.frequencies_save_file, "w") as f:
-            json.dump(dict(sorted(self.frontier.frequencies.items(), key=lambda item: item[1], reverse=True)), f, indent=4)
         with open(self.config.save_file, "w") as f:
-            json.dump(self.frontier.found_links, f, indent=4)
+            data = {
+                "urls": dict(sorted(self.frontier.discovered_urls.items(), key=lambda item: item[1]["length"], reverse=True)),
+                "tokens": dict(sorted(self.frontier.frequencies.items(), key=lambda item: item[1], reverse=True))
+            }
+            json.dump(data, f, indent=4)

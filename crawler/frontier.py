@@ -22,7 +22,7 @@ class Frontier(object):
         self.config = config
         self.is_running = True
         self.to_be_downloaded = Queue()
-        self.found_links: Dict[str, bool] = {}
+        self.discovered_urls: Dict[str, Dict] = {}
 
         self.last_crawls: Dict[str, datetime] = {}
         self.crawl_lock = Lock()
@@ -32,43 +32,35 @@ class Frontier(object):
         
         self.frequencies = {}
         self.frequencies_lock = Lock()
-                        
+                                
         if restart:
             self.logger.info(f"Restarting from seed urls.")
             for url in self.config.seed_urls:
                 self.add_url(url)
         else:
             self._parse_save_file()
-            self._parse_frequency_file()
 
     def _parse_save_file(self):
         try:
             # Try to read save file.
             with open(self.config.save_file, "r") as f:
-                self.found_links: Dict[str, bool] = json.load(f)
+                data = json.load(f)
+                self.discovered_urls: Dict[str, Dict] = data["urls"]
+                self.frequencies: Dict[str, int] = data["tokens"]
                 
             # Add urls that have not been downloaded yet to the queue.
-            [self.to_be_downloaded.put(url) for url, completed in self.found_links.items() if not completed]
+            [self.to_be_downloaded.put(url) for url, data in self.discovered_urls.items() if not data["downloaded"]]
             
             # Log statistics.
-            total_count = len(self.found_links)
+            total_count = len(self.discovered_urls)
             tbd_count = self.to_be_downloaded.qsize()
             self.logger.info(f"Found {tbd_count} urls to be downloaded from {total_count} total urls discovered.")
             
         except:
             # Start from seed if save file couldn't be read.
+            self.logger.info(f"Couldn't read save {self.config.save_file}, starting from seed.")
             for url in self.config.seed_urls:
                 self.add_url(url)
-            self.logger.info(f"Couldn't read save {self.config.save_file}, starting from seed.")
-        
-    def _parse_frequency_file(self):
-        try:
-            # Try to read frequency save file.
-            with open(self.config.frequencies_save_file, "r") as f:
-                self.frequencies = json.load(f)
-        except:
-            # Start empty if read failed.
-            self.frequencies = {}
             
     def create_robot(self, url: ParseResult) -> RobotFileParser:
         # Finds a robots.txt from the given url returns a RobotFileParser.
@@ -97,6 +89,8 @@ class Frontier(object):
             # Return None if the frontier is empty.
             except Empty:
                 return None
+            
+            # Parse url and get domain.
             parsed = urlparse(url)
             domain = parsed.netloc
             
@@ -113,9 +107,8 @@ class Frontier(object):
             if robot is None:
                 self.to_be_downloaded.put(url)
                 continue
-
             # Do not download the url if it is disallowed by the robot.
-            if not robot.can_fetch(self.config.user_agent, url):
+            elif not robot.can_fetch(self.config.user_agent, url):
                 self.mark_url_complete(url)
                 continue       
 
@@ -143,10 +136,16 @@ class Frontier(object):
     def add_url(self, url):
         # Skip url if it has been found already.
         url = normalize(url)
-        if url in self.found_links: return
+        if url in self.discovered_urls: return
         
-        self.found_links[url] = False
+        self.discovered_urls[url] = {
+            "downloaded": False,
+            "length": 0
+        }
         self.to_be_downloaded.put(url)
     
     def mark_url_complete(self, url):
-        self.found_links[url] = True
+        self.discovered_urls[url] = {
+            "downloaded": True,
+            "length": 0
+        }

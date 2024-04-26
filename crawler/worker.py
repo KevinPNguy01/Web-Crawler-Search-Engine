@@ -91,7 +91,7 @@ class Worker(Thread):
                     frequencies = {}
                 for key, value in frequencies.items():
                     self.frequencies[key] = self.frequencies.setdefault(key, 0) + value
-                self.page_lengths[f"[STATS] {url.geturl()}"] = sum(frequencies.values())
+                self.page_lengths[url.geturl()] = sum(frequencies.values())
             time.sleep(self.config.time_delay)
         
     def sync(self):
@@ -104,7 +104,7 @@ class Worker(Thread):
                 self.frontier.frequencies[key] = self.frontier.frequencies.setdefault(key, 0) + value
             # Add this worker's links and associated token counts to frontier.
             for key, value in self.page_lengths.items():
-                self.frontier.frequencies[key] = value
+                self.frontier.discovered_urls[key]["length"] = value
             self.logger.info(f"Contributed {len(self.frequencies)} tokens and {len(self.page_lengths)} links.")
         
     def run(self):            
