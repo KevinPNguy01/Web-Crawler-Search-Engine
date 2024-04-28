@@ -18,25 +18,23 @@ def compare(item1: Tuple[str, int], item2: Tuple[str, int]) -> int:
 # and iterates through each character of each line only once.
 def tokenize(text: str) -> List[str]:
     tokens = []
-    for line in text.splitlines():
-        # Store current token here.
-        token = ""
-        for char in line:
-            # A valid char can be encoded into ascii and is alphanumeric.
-            try:
-                # isalnum() is an O(1) operation since char is always of length 1.
-                isValidChar = char.encode("ascii").isalnum()
-            except:
-                isValidChar = False
-            if isValidChar:
-                token += char
-            # If invalid character is encountered and token is not empty, add it to list.
-            elif token:
-                tokens.append(token.lower())
-                token = ""
-        # Also add token if end of line is reached.
-        if token:
+    token = ""
+    for char in text:
+        # A valid char can be encoded into ascii and is alphanumeric.
+        try:
+            # isalnum() is an O(1) operation since char is always of length 1.
+            isValidChar = char.encode("ascii").isalnum()
+        except:
+            isValidChar = False
+        if isValidChar:
+            token += char
+        # If invalid character is encountered and token is not empty, add it to list.
+        elif token:
             tokens.append(token.lower())
+            token = ""
+    # Also add token if end of string is reached.
+    if token:
+        tokens.append(token.lower())
     return tokens
 
 # This runs in O(n) with respect to the number of tokens since it traverses each key token in the list only once.
