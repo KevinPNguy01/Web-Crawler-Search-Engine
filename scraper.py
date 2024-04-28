@@ -57,21 +57,17 @@ def is_valid_path(path: str) -> bool:
     if len(segment_list) != len(segment_set):
         return False
     
-    # If the first segment signifies a user directory, only allow a depth of 1.
-    if unquote(segment_list[0]).startswith("~") and len(segment_list) > 1:
-        return False
-    
     # Highly repetitive auto-generated pages are invalid.
     if "doku.php" in segment_set:
         return False
     
     return not re.match(
-        r".*\.(css|js|bmp|gif|jpe?g|ico"
-        + r"|png|tiff?|mid|mp2|mp3|mp4|sql"
-        + r"|wav|avi|mov|mpeg|ram|m4v|mkv|ogg|ogv|pdf"
-        + r"|ps|eps|tex|ppt|pptx|doc|docx|xls|xlsx|names"
-        + r"|data|dat|exe|bz2|tar|msi|bin|7z|psd|dmg|iso|nb"
-        + r"|epub|dll|cnf|tgz|sha1|ppsx|txt|war|r|z|data"
+        r".*\.(css|js|bmp|gif|jpe?g|ico|java|rb|json|xml|yaml"
+        + r"|png|tiff?|mid|mp2|mp3|mp4|sql|c|cpp|py|js|sh|ts"
+        + r"|wav|avi|mov|mpeg|ram|m4v|mkv|ogg|ogv|pdf|bat|yml"
+        + r"|ps|eps|tex|ppt|pptx|doc|docx|xls|xlsx|names|ps1|scss|sass"
+        + r"|data|dat|exe|bz2|tar|msi|bin|7z|psd|dmg|iso|nb|swift"
+        + r"|epub|dll|cnf|tgz|sha1|ppsx|txt|war|r|z|data|jsx|tsx"
         + r"|thmx|mso|arff|rtf|jar|csv|bib|odc|php|data-original"
         + r"|rm|smil|wmv|swf|wma|zip|rar|gz)$", path.lower())
     
