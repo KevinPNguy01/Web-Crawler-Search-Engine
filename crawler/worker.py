@@ -24,7 +24,7 @@ class Worker(Thread):
         self.config = config
         self.frontier = frontier
         self.id = worker_id
-        
+                
         # Store dict for word frequencies, and dict for number of words in each page.
         self.frequencies: Dict[str, int] = {}
         self.page_lengths: Dict[str, int] = {}
@@ -34,9 +34,9 @@ class Worker(Thread):
         assert {getsource(scraper).find(req) for req in {"from urllib.request import", "import urllib.request"}} == {-1}, "Do not use urllib.request in scraper.py"
         super().__init__(daemon=True)
         
-    def save_page(self, response: Response, url: str):
+    def save_page(self, response: Response):
         # Parse the URL to extract domain and path.
-        parsed_url = urlparse(url)
+        parsed_url = urlparse(response.url)
         domain = parsed_url.netloc
         path = parsed_url.path
         
@@ -48,7 +48,7 @@ class Worker(Thread):
         os.makedirs(directory, exist_ok=True)
 
         # Generate filename from the last part of the path.
-        filename = os.path.join(directory, os.path.basename(path).lstrip("/") or 'index.html')
+        filename = os.path.join(directory, os.path.basename(path).lstrip("/"))
         if not filename.endswith(".html"):
             filename += ".html"
 
@@ -58,40 +58,59 @@ class Worker(Thread):
 
         self.logger.info(f"Page saved to: {filename}")
         
+    def should_scrape(self, resp: Response):
+        # Returns whether the worker should scrape this page.
+        
+        # The response must have all the appropriate data.
+        valid_response = resp and resp.status and resp.url and resp.raw_response and resp.raw_response.content and resp.raw_response.url
+        # The response must have status 200.
+        valid_status = resp.status == 200
+        # Must be at least 256 bytes.
+        valid_size = len(resp.raw_response.content) >= 256
+        # Must have html tag in first 256 bytes.
+        valid_content = b'<HTML' in resp.raw_response.content[:256] or b'<html' in resp.raw_response.content[:256]
+        
+        return valid_response and valid_status and valid_size and valid_content
+    
+    def process_url(self, tbd_url: str) -> bool:
+        # Processes one url from the frontier.
+        
+        # Try to download the url, setting the response to None if an exception was caught.
+        try:
+            resp = download(tbd_url, self.config, self.logger)
+            self.logger.info(f"Downloaded {tbd_url}, status <{resp.status}>, using cache {self.config.cache_server}.")
+            #self.save_page(resp, tbd_url)
+        except Exception as e:
+            resp = None
+            self.logger.error(f"Error Downloading {tbd_url}: {e}")
+            return
+        
+        if self.should_scrape(resp):
+            # Add the scraped urls to the frontier.
+            for scraped_url in scraper.scraper(tbd_url, resp):                
+                self.frontier.add_url(scraped_url)
+        
+            # Tokenize the page content and get their frequencies.
+            soup = BeautifulSoup(resp.raw_response.content, "html.parser")
+            [s.extract() for s in soup(['style', 'script', '[document]', 'head', 'title', 'td', 'tr', 'code'])]
+            frequencies = computeWordFrequencies(tokenize(soup.getText()))
+            
+            # Add them to this worker's frequencies dictionary, as well as store the length of this page.
+            for key, value in frequencies.items():
+                self.frequencies[key] = self.frequencies.setdefault(key, 0) + value
+            self.page_lengths[tbd_url] = sum(frequencies.values())
+            
     def main(self):
-        while self.frontier.is_running:            
+        while self.frontier.is_running:
             # If a url was not fetched, then the frontier is empty and the thread can be stopped.
             if not (tbd_url := self.frontier.get_tbd_url()):
                 self.logger.info("Frontier is empty. Stopping Crawler.")
                 break
-            
-            # Parse the url and get the domain.
-            url = urlparse(tbd_url)
-                
-            # Download the url and scrape it for links.
+            # Try to process the url. If something went wrong, the worker can recover and process the next one.    
             try:
-                resp = download(url.geturl(), self.config, self.logger)
-                self.logger.info(f"Downloaded {tbd_url}, status <{resp.status}>, using cache {self.config.cache_server}.")
-                #self.save_page(resp, url.geturl())
-                scraped_urls = scraper.scraper(tbd_url, resp)
+                self.process_url(tbd_url)
             except Exception as e:
-                self.logger.error(f"Error Downloading {tbd_url}: {e}")
-                continue
-            
-            # Add the scraped urls to the frontier.
-            for scraped_url in scraped_urls:                
-                self.frontier.add_url(scraped_url)
-            
-            if resp.status == 200 and "Content-Type" in resp.headers and "text" in resp.headers["Content-Type"] and resp.raw_response.content[:4] != b'%PDF':
-                try:
-                    soup = BeautifulSoup(resp.raw_response.content, "html.parser")
-                    [s.extract() for s in soup(['style', 'script', '[document]', 'head', 'title', 'td', 'tr', 'code'])]
-                    frequencies = computeWordFrequencies(tokenize(soup.getText()))
-                except:
-                    frequencies = {}
-                for key, value in frequencies.items():
-                    self.frequencies[key] = self.frequencies.setdefault(key, 0) + value
-                self.page_lengths[url.geturl()] = sum(frequencies.values())
+                self.logger.error(f"{type(e).__name__} caught while processing {tbd_url}: {e}.")
             time.sleep(self.config.time_delay)
         
     def sync(self):

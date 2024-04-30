@@ -72,6 +72,8 @@ class Frontier(object):
         
         # Try to download robots.txt and parse it.
         try:
+            # Update the last crawled time.
+            self.last_crawls[url.netloc] = datetime.now()
             response = download(robot_url, self.config, self.logger)
             robot.parse(response.raw_response.content.decode().splitlines())
             self.logger.info(f"Downloaded {robot_url}.")

@@ -22,10 +22,6 @@ def extract_next_links(url: str, resp: Response) -> List[str]:
     #         resp.raw_response.content: the content of the page!
     # Return a list with the hyperlinks (as strings) scrapped from resp.raw_response.content
 
-    # Return empty list if status is not 200.
-    if (resp.status != 200):
-        return []
-
     # Search for links in 'a' tags.
     soup = BeautifulSoup(resp.raw_response.content, "html.parser")
     return [urldefrag(urljoin(resp.raw_response.url, tag["href"]))[0] for tag in soup.find_all("a", href=True)]

@@ -25,7 +25,7 @@ class Crawler(object):
             self.start_async()
             time.sleep(5)
             self.join()
-        except:
+        except KeyboardInterrupt:
             self.frontier.is_running = False
             self.join()
 
