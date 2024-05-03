@@ -30,7 +30,7 @@ def get_urlhash(url):
         f"{parsed.query}/{parsed.fragment}".encode("utf-8")).hexdigest()
 
 def normalize(url: str):
-    url = unquote(url.lower())
+    url = unquote(url.lower()).replace("http://", "https://")
     if url.endswith("/"):
         return url.rstrip("/")
     return url

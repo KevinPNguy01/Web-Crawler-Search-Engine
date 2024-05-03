@@ -215,7 +215,7 @@ def main():
     with open(config.save_file) as f:
         data = json.load(f)
     tokens = data["tokens"]
-    urls = {k.replace(" ", ""): v for k, v in data["urls"].items()}
+    urls = {k.replace(" ", "").replace("http://", "https://"): v for k, v in data["urls"].items()}
     
     num_unique_pages = get_num_unique_pages(urls)
     

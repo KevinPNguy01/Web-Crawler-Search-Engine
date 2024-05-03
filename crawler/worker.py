@@ -63,14 +63,20 @@ class Worker(Thread):
         
         # The response must have all the appropriate data.
         valid_response = resp and resp.status and resp.url and resp.raw_response and resp.raw_response.content and resp.raw_response.url
+        if not valid_response:
+            return False
         # The response must have status 200.
         valid_status = resp.status == 200
+        if not valid_status: 
+            return False
         # Must be at least 256 bytes.
         valid_size = len(resp.raw_response.content) >= 256
+        if not valid_size:
+            return False
         # Must have html tag in first 256 bytes.
         valid_content = b'<HTML' in resp.raw_response.content[:256] or b'<html' in resp.raw_response.content[:256]
         
-        return valid_response and valid_status and valid_size and valid_content
+        return valid_content
     
     def process_url(self, tbd_url: str) -> bool:
         # Processes one url from the frontier.
