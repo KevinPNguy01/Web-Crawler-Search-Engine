@@ -1,0 +1,196 @@
+Name: Kevin Nguy
+UCI NetID: nguyk1
+ID #: 82216949
+
+------------------------------Assignment 2: Web Crawler------------------------------
+
+1. Number of unique pages found:
+	28645 pages.
+
+2.The longest page found:
+	https://www.ics.uci.edu/~eppstein/pubs/all.html with 36528 words.
+
+3. 50 most common words:
+	1.       research => 39991
+	2.       computer => 27075
+	3.           2022 => 23424
+	4.       software => 21920
+	5.    information => 21654
+	6.        student => 21289
+	7.            uci => 20844
+	8.       students => 20210
+	9.           2018 => 18580
+	10.       science => 17552
+	11.          will => 16689
+	12.           can => 16541
+	13.          2019 => 16514
+	14.           ics => 16424
+	15.          news => 16168
+	16.           may => 15991
+	17.      graduate => 15959
+	18.          2021 => 15955
+	19.   engineering => 15922
+	20.          2020 => 15808
+	21.          data => 15298
+	22.        events => 14976
+	23.          2017 => 14946
+	24. undergraduate => 14815
+	25.          2015 => 14577
+	26.          2016 => 14416
+	27.     september => 14009
+	28.        design => 13996
+	29.   informatics => 13921
+	30.        course => 13572
+	31.       october => 12745
+	32.           one => 12291
+	33.        people => 12115
+	34.        ramesh => 11906
+	35.    department => 11858
+	36.            ph => 11814
+	37.          june => 11771
+	38.       courses => 11734
+	39.      projects => 11660
+	40.          time => 11489
+	41.          july => 11146
+	42.      policies => 11042
+	43.          read => 11017
+	44.       contact => 10754
+	45.        school => 10603
+	46.         books => 10564
+	47.       faculty => 10544
+	48.          past => 10533
+	49.        search => 10509
+	50.         april => 10432
+
+4. 131 subdomains found under ics.uci.edu:
+	        https://accessibility.ics.uci.edu, 6
+	                 https://acoi.ics.uci.edu, 70
+	               https://aiclub.ics.uci.edu, 2
+	               https://alumni.ics.uci.edu, 5
+	              https://archive.ics.uci.edu, 1
+	              https://asterix.ics.uci.edu, 15
+	            https://asterixdb.ics.uci.edu, 3
+	                 https://auge.ics.uci.edu, 2
+	            https://awareness.ics.uci.edu, 1
+	              https://biaslab.ics.uci.edu, 6
+	                 https://cbcl.ics.uci.edu, 1
+	                 https://cert.ics.uci.edu, 15
+	                 https://cgvw.ics.uci.edu, 1
+	            https://checkmate.ics.uci.edu, 1
+	               https://chenli.ics.uci.edu, 11
+	               https://cherry.ics.uci.edu, 1
+	                https://chime.ics.uci.edu, 1
+	           https://cloudberry.ics.uci.edu, 3
+	                  https://cml.ics.uci.edu, 239
+	       https://cocoa-krispies.ics.uci.edu, 1
+	                 https://code.ics.uci.edu, 13
+	         https://codeexchange.ics.uci.edu, 1
+	      https://computableplant.ics.uci.edu, 82
+	https://coronavirustwittermap.ics.uci.edu, 1
+	        https://courselisting.ics.uci.edu, 1
+	                https://cradl.ics.uci.edu, 36
+	               https://create.ics.uci.edu, 7
+	          https://cwicsocal18.ics.uci.edu, 12
+	            https://cyberclub.ics.uci.edu, 15
+	            https://dataguard.ics.uci.edu, 1
+	              https://datalab.ics.uci.edu, 1
+	        https://dataprotector.ics.uci.edu, 1
+	                 https://dblp.ics.uci.edu, 2
+	               https://dejavu.ics.uci.edu, 2
+	              https://dgillen.ics.uci.edu, 25
+	              https://drzaius.ics.uci.edu, 1
+	                 https://duke.ics.uci.edu, 1
+	            https://duttgroup.ics.uci.edu, 104
+	               https://dynamo.ics.uci.edu, 33
+	               https://emj-pc.ics.uci.edu, 1
+	                  https://emj.ics.uci.edu, 43
+	                  https://esl.ics.uci.edu, 7
+	                https://evoke.ics.uci.edu, 9
+	                 https://fano.ics.uci.edu, 60
+	             https://flamingo.ics.uci.edu, 3755
+	                   https://fr.ics.uci.edu, 10
+	         https://futurehealth.ics.uci.edu, 5
+	                https://grape.ics.uci.edu, 1
+	             https://graphics.ics.uci.edu, 18
+	             https://graphmod.ics.uci.edu, 3
+	                 https://hack.ics.uci.edu, 2
+	                  https://hai.ics.uci.edu, 7
+	                 https://hana.ics.uci.edu, 3
+	               https://hobbes.ics.uci.edu, 10
+	               https://hombao.ics.uci.edu, 2
+	               https://honors.ics.uci.edu, 1
+	                  https://hpi.ics.uci.edu, 4
+	          https://i-sensorium.ics.uci.edu, 6
+	                 https://iasl.ics.uci.edu, 22
+	                 https://ieee.ics.uci.edu, 11
+	     https://industryshowcase.ics.uci.edu, 20
+	          https://informatics.ics.uci.edu, 1
+	  https://informatics.mt-live.ics.uci.edu, 2
+	               https://insite.ics.uci.edu, 7
+	             https://intranet.ics.uci.edu, 1
+	                  https://ipf.ics.uci.edu, 2
+	              https://ipubmed.ics.uci.edu, 1
+	                  https://isg.ics.uci.edu, 145
+	              https://jgarcia.ics.uci.edu, 24
+	               https://jujube.ics.uci.edu, 2
+	                  https://kdd.ics.uci.edu, 2
+	                 https://keys.ics.uci.edu, 3
+	                 https://luci.ics.uci.edu, 6
+	              https://mailman.ics.uci.edu, 6
+	                https://malek.ics.uci.edu, 1
+	              https://mapgrid.ics.uci.edu, 2
+	                  https://mcs.ics.uci.edu, 84
+	              https://mdogucu.ics.uci.edu, 1
+	                  https://mds.ics.uci.edu, 25
+	                https://mhcid.ics.uci.edu, 17
+	              https://mondego.ics.uci.edu, 7
+	                  https://mse.ics.uci.edu, 1
+	                 https://mswe.ics.uci.edu, 14
+	              https://mt-live.ics.uci.edu, 2
+	               https://nalini.ics.uci.edu, 7
+	                  https://ngs.ics.uci.edu, 2035
+	                  https://oai.ics.uci.edu, 2
+	                 https://omni.ics.uci.edu, 1
+	             https://password.ics.uci.edu, 1
+	              https://pasteur.ics.uci.edu, 2
+	https://perennialpolycultures.ics.uci.edu, 1
+	                 https://plrg.ics.uci.edu, 16
+	              https://psearch.ics.uci.edu, 2
+	              https://radicle.ics.uci.edu, 6
+	             https://redmiles.ics.uci.edu, 4
+	               https://riscit.ics.uci.edu, 3
+	              https://satware.ics.uci.edu, 1
+	                https://scale.ics.uci.edu, 7
+	               https://sconce.ics.uci.edu, 1
+	                 https://sdcl.ics.uci.edu, 205
+	                   https://se.ics.uci.edu, 1
+	                 https://seal.ics.uci.edu, 43
+	               https://seraja.ics.uci.edu, 2
+	             https://sherlock.ics.uci.edu, 8
+	                  https://sli.ics.uci.edu, 14
+	            https://sourcerer.ics.uci.edu, 2
+	               https://sprout.ics.uci.edu, 2
+	               https://stairs.ics.uci.edu, 4
+	       https://statconsulting.ics.uci.edu, 5
+	      https://student-council.ics.uci.edu, 2
+	       https://studentcouncil.ics.uci.edu, 33
+	        https://summeracademy.ics.uci.edu, 6
+	              https://support.ics.uci.edu, 4
+	                  https://tad.ics.uci.edu, 3
+	              https://tastier.ics.uci.edu, 1
+	              https://testlab.ics.uci.edu, 9
+	              https://tippers.ics.uci.edu, 1
+	           https://tippersweb.ics.uci.edu, 4
+	   https://transformativeplay.ics.uci.edu, 57
+	           https://ugradforms.ics.uci.edu, 1
+	                https://unite.ics.uci.edu, 10
+	               https://vision.ics.uci.edu, 219
+	        https://wearablegames.ics.uci.edu, 10
+	                 https://wics.ics.uci.edu, 874
+	               https://www-db.ics.uci.edu, 44
+	             https://www.cert.ics.uci.edu, 1
+	         https://www.graphics.ics.uci.edu, 3
+	                  https://www.ics.uci.edu, 17676
+	      https://www.informatics.ics.uci.edu, 1
+	              https://www.isg.ics.uci.edu, 1
+	                https://xtune.ics.uci.edu, 6
