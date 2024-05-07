@@ -1,0 +1,5 @@
+overview for things to complete 
+
+M1
+1: First import either Tyler or Kevin Assignment 1 to tokenize text
+2: 
