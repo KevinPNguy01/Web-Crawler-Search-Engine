@@ -2,4 +2,6 @@ overview for things to complete
 
 M1
 1: First import either Tyler or Kevin Assignment 1 to tokenize text
-2: 
+2: Utilize beautiful soup to grab text content 
+3: Create an inverted index 
+(inverted_index = {"Token" : [1,2,3,10,5]} ) where the numbers are the webpages
