@@ -1,6 +1,10 @@
 from typing import List, Dict, Tuple
 from bs4 import BeautifulSoup
 from functools import cmp_to_key
+import Path
+
+def read_webpages(path: Path):
+    pass
 
 def extract_text(content: str) -> str:
     # Given content representing a webpage, return the textual content.
