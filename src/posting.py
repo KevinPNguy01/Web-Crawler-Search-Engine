@@ -1,6 +1,6 @@
 from pathlib import Path
 from typing import Dict, Self
-from tokenizer import *
+from src.tokenizer import *
 import json
 
 class Posting: 
