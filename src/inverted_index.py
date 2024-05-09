@@ -9,4 +9,4 @@ class InvertedIndex:
         
         # Iterate through all json files in source directory.
         for file in source.rglob("*.json"):
-            print(file.name)
+            Posting.get_postings(file)
