@@ -8,5 +8,5 @@ class InvertedIndex:
         self.token_map: Dict[str, Posting] = {}
         
         # Iterate through all json files in source directory.
-        for file in source.rglob("*.json"):
-            Posting.get_postings(file)
+        for id, file in enumerate(source.rglob("*.json")):
+            Posting.get_postings(file, id)
