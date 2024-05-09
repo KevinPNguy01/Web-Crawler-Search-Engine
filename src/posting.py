@@ -9,6 +9,7 @@ class Posting:
         # Returns a dict of tokens to postings for this file.
         with open(file_path) as file:
             data = json.load(file)
+            print(f"{id} - {data['url']}")
             
             # Extract text from webpage content.
             text = extract_text(data["content"])
