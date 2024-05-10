@@ -3,6 +3,7 @@ from src.posting import Posting
 from typing import Dict, List, Set
 import json
 
+
 class InvertedIndex:
     def __init__(self, source: Path, restart=True) -> None:
         # Directory to read from.
@@ -34,15 +35,27 @@ class InvertedIndex:
         else:
             print("Starting from empty set.")
             
-        
+
+     
     def run(self):
         # Iterate through all json files in source directory.
         for id, file in enumerate(self.source.rglob("*.json")):
             # Skip file if it has been crawled before.
+
             if file.name in self.crawled:
                 continue
+
+            with open(file, 'r', encoding='utf-8') as f:
+                data = json.load(f)
+
+            # Ensure the JSON file has the "content" field and contains HTML tags
+            content = data.get('content', '')
+            if '<html' not in content[:1024].lower():
+                #print("FOUND A INVALID ")
+                continue
+
             self.crawled.add(file.name)
-            
+
             # Add all postings from that file to this index's own dict.
             for token, posting in Posting.get_postings(file, id).items():
                 self.postings.setdefault(token, [])

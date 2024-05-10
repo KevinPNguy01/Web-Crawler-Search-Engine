@@ -5,3 +5,9 @@ M1
 2: Utilize beautiful soup to grab text content 
 3: Create an inverted index 
 (inverted_index = {"Token" : [1,2,3,10,5]} ) where the numbers are the webpages
+
+
+ 55k pages 112k unique words 
+ pre pdf 
+
+
