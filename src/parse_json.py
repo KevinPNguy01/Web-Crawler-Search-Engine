@@ -21,10 +21,6 @@ with open('index.json', 'r') as f:
 print(f"number of pages {pages}")
 print(f"number of tokens {length}")
 
-for eachWord in common_words:
-     print(f"{eachWord}")
-
-
 
 
 
