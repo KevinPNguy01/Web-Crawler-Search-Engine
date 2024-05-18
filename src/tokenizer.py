@@ -8,7 +8,7 @@ def extract_text(content: str) -> str:
     soup = BeautifulSoup(content, "html.parser")
     
     # Remove specific html tags.
-    [s.extract() for s in soup(['style', 'script', '[document]', 'head', 'title', 'td', 'tr', 'code'])]
+    [s.extract() for s in soup(['style', 'script', '[document]', 'head', 'code'])]
     
     return soup.get_text()
 

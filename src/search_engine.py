@@ -31,10 +31,11 @@ def main():
                                     # add the tf_idf's of the tokens 
                                     doc_tf_idf[id] += posting["tf_idf"]
 
+
                 for document in results:
                     document["tf_idf"] = doc_tf_idf[document["id"]]
 
-                for index, posting in enumerate(sorted(results[:5], key= lambda x: x["tf_idf"], reverse = True), start = 1):
+                for index, posting in enumerate(sorted(results, key= lambda x: x["tf_idf"], reverse = True)[:5], start = 1):
                     st.write(f"{index}. {posting['url']}")
 
             
