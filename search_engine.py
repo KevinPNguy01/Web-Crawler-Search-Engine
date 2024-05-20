@@ -53,6 +53,8 @@ def main():
 
                 for document in results:
                     document.tf_idf = doc_tf_idf[document.id]
+                    
+                temp = open("temp.txt", "w")
 
                 with open("crawled.txt", "r") as crawled_file:
                     for index, posting in enumerate(sorted(results, key= lambda x: x.tf_idf, reverse = True)[:5], start = 1):
@@ -67,10 +69,11 @@ def main():
                         for token in tokens:
                             pos = text.lower().find(token)
                             size = 32
-                            contexts.append(f"{text[max(pos-size, 0):pos]}**:blue-background[{text[pos:pos+len(token)]}]**{text[pos+len(token):pos+len(token)+size]}".replace("\n","").replace("\r","").replace("#",""))
+                            contexts.append(f"{text[max(pos-size, 0):pos]}**:blue-background[{text[pos:pos+len(token)]}]**{text[pos+len(token):pos+len(token)+size]}".replace("\n","").replace("\r","").replace("\r\n","").replace("#",""))
                         st.write(f"{index}.\t{soup.title.string}")
                         st.write(f"{url}")
                         for context in contexts:
+                            temp.write(f"{context}\n")
                             st.markdown(f"...{context}...")
 
             
