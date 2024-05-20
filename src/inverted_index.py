@@ -5,84 +5,113 @@ import json
 import os
 
 class InvertedIndex:
-    def __init__(self, source: Path, restart=True) -> None:
-        # Directory to read from.
-        self.source: Path = source
-        
-        # Map of tokens to lists of Postings.
-        self.postings: Dict[str, List[Posting]] = {}
-        
-        # Set of crawled files.
-        self.crawled: Set[str] = set()
-        
-        self.crawled_save_path = Path("crawled.txt")
-        self.index_save_path = Path("index.txt")
-        if not restart:
-            # Load save files if they exist.
-            if self.crawled_save_path.exists() and self.index_save_path.exists():
-                with open(self.crawled_save_path, "r") as file:
-                    # Add crawled files to set.
-                    for file_path in file:
-                        self.crawled.add(file_path.rsplit("\\")[-1].strip())
-                with open(self.index_save_path) as file:
-                    # Add lists of Postings to dict through list comprehension.
-                    for line in file:
-                        token, postings_string = line.split(":", 1)
-                        self.postings[token] = [Posting.from_string(p) for p in postings_string.split(";")[:-1]]
-                print(f"Loaded {len(self.postings)} tokens from {len(self.crawled)} pages.")
-            else:
-                with open(self.crawled_save_path, "w"), open("index_of_crawled.txt", "w"):
-                    print("Save file missing, starting from empty set.")
-        else:
-            with open(self.crawled_save_path, "w"), open("index_of_crawled.txt", "w"):
-                print("Starting from empty set.")
-            
+	def __init__(self, source: Path, restart=True) -> None:
+		# Declaring attributes.
+		self.source: Path = source                      # Directory path containg webpages to index.
+		self.index_save_path = Path("index.txt")        # File path for inverted index.
+		self.crawled_save_path = Path("crawled.txt")    # File path for names of crawled files.
+		self.postings: Dict[str, List[Posting]] = {}    # Map of tokens to lists of Postings that contain that token.
+		self.crawled: Set[str] = set()                  # Set of crawled files to keep track of which files don't need to be crawled again.
+  
+		# If the restart flag was not selected and the save files exist, then load them into memory.
+		if not restart and self.crawled_save_path.exists() and self.index_save_path.exists():
+			with open(self.index_save_path) as file:
+				# Each line of the index is of the form: 
+				# 	<token>:<id_1>,<tf-idf_1>;<id_2>,<tf-idf_2>;<id_3>,<tf-idf_3>;
+				# ex.
+				#	research:0,3;4,2;7,3;
+				#   computer:0,12;3,8;4,9;
+				# The token "research" is found in documents 0, 4, 7 with tf-idfs of 3, 2, 3 respectively.
+				# The token "computer" is found in documents 0, 3, 4 with tf-idfs of 12, 8, 9.
+				for line in file:
+					token, postings_string = line.strip().split(":", 1)		# Separate the token from the list of postings.
+	 
+					# Create posting objects from each split string and add them to postings.
+					for p_string in postings_string.split(";")[:-1]:	
+						posting = Posting.from_string(p_string)
+						self.postings.setdefault(token, [])
+						self.postings.get(token).append(posting)
+	
+			# Load crawled file paths to memory.
+			with open(self.crawled_save_path, "r") as file:
+				for file_path in file:
+					self.crawled.add(file_path.strip())
+			print(f"Loaded {len(self.postings)} tokens from {len(self.crawled)} pages.")
+   
+		# If the restart flag as selected or the save files don't exist, create them with empty contents.
+		else:
+			with open(self.crawled_save_path, "w"), open("index_of_crawled.txt", "w"):
+				print("Starting from empty set.")
+			
 
+	 
+	def run(self):
+		id = len(self.crawled)										# Start the id number with how many pages have been crawled already.
+		file_position = os.path.getsize(self.crawled_save_path)		# The starting file position of the index of index is the size of the index.
+  
+		# Open the crawled save file to store file paths, and open a file to index that file for quick access of files by id.
+		with open(self.crawled_save_path, "a") as crawled_file, open("index_of_crawled.txt", "a") as index_of_crawled_file:
+			
+			# Iterate through all json files in source directory.
+			for file in self.source.rglob("*.json"):
+				# Skip file if it has been crawled before.
+				if str(file) in self.crawled:
+					continue
+				self.crawled.add(file.name)
+
+				# Ensure the JSON file has the "content" field and contains HTML tags.
+				with open(file, 'r', encoding='utf-8') as f:
+					data = json.load(f)
+					content = data.get('content', '')
+					if '<html' not in content[:1024].lower():
+						continue
+
+				# Add all postings from that file to this index's own dict.
+				for token, posting in Posting.get_postings(file, id).items():
+					self.postings.setdefault(token, []).append(posting)
      
-    def run(self):
-        id = len(self.crawled)
-        with open(self.crawled_save_path, "a") as crawled_file, open("index_of_crawled.txt", "a") as index_of_crawled_file:
-            position = os.path.getsize(self.crawled_save_path)
-            # Iterate through all json files in source directory.
-            for file in self.source.rglob("*.json"):
-                # Skip file if it has been crawled before.
-
-                if file.name in self.crawled:
-                    continue
-
-                with open(file, 'r', encoding='utf-8') as f:
-                    data = json.load(f)
-
-                # Ensure the JSON file has the "content" field and contains HTML tags
-                content = data.get('content', '')
-                if '<html' not in content[:1024].lower():
-                    #print("FOUND A INVALID ")
-                    continue
-
-                self.crawled.add(file.name)
-                line = f"{file}\n"
-                crawled_file.write(line)
-                index_of_crawled_file.write(f"{id},{position}\n")
-
-                # Add all postings from that file to this index's own dict.
-                for token, posting in Posting.get_postings(file, id).items():
-                    self.postings.setdefault(token, [])
-                    self.postings.get(token).append(posting)
-                    
-                id += 1
-                position += len(line)+1
-                
-    def save_to_file(self) -> None:
-        # Inverted index will be in the format:
-        # <token>:<doc_id1>,<tf_tdf1>;<doc_id2>,<tf_tdf2>;<doc_id3>,<tf_tdf3>;
-        with open(self.index_save_path, "w") as index, open("index_of_index.txt", "w") as index_of_index:
-            position = 0
-            for token, postings in self.postings.items():
-                index_of_index.write(f"{token},{position}\n")
-                line = f"{token}:"
-                for posting in postings:
-                    line += f"{posting.id},{posting.tf_idf};"
-                line += "\n"
-                index.write(line)
-                position += len(line)+1
-                
+				# Write the file path of this page to the crawled save file.
+				line = f"{file}\n"
+				crawled_file.write(line)
+    
+				# Each line of the index of crawled is of the form: 
+				# 	<id>,<file_position>
+				# ex.
+				#	3,8753
+				#   27,16536
+				# The file path of document id 3 can be found at byte 8753 in the crawled save file.
+				# The file path of document id 27 can be found at byte 16536.
+				index_of_crawled_file.write(f"{id},{file_position}\n")
+					
+				file_position += len(line)+1
+				id += 1
+				
+	def save_to_file(self) -> None:
+		""" Write the tokens and postings to index file. Also write token and index file positions to index of index file.
+			When accessing the postings for a token, we can directly go to the position of the file instead of reading its entirety.
+  		"""
+		file_position = 0
+		with open(self.index_save_path, "w") as index, open("index_of_index.txt", "w") as index_of_index:
+			for token, postings in self.postings.items():
+				# Each line of the index is of the form: 
+				# 	<token>:<id_1>,<tf-idf_1>;<id_2>,<tf-idf_2>;<id_3>,<tf-idf_3>;
+				# ex.
+				#	research:0,3;4,2;7,3;
+				#   computer:0,12;3,8;4,9;
+				# The token "research" is found in documents 0, 4, 7 with tf-idfs of 3, 2, 3 respectively.
+				# The token "computer" is found in documents 0, 3, 4 with tf-idfs of 12, 8, 9.
+				line = f"{token}:"
+				for posting in postings:
+					line += f"{posting.id},{posting.tf_idf};"
+				line += "\n"
+				index.write(line)
+   
+				# Each line of the index of index is of the form: 
+				# 	<token>,<file_position>
+				# ex.
+				#	research,0
+				#   computer,2376
+				# The token "research" can be found at byte 0 of the index.
+				# The token "computer" can be found at byte 2376.
+				index_of_index.write(f"{token},{file_position}\n")
+				file_position += len(line)+1
