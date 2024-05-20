@@ -15,11 +15,15 @@ class Posting:
             # Tokenize text.
             frequencies = computeWordFrequencies(tokenize(text))
             # Create postings for each token and return dict.
-            return {token: Posting(id, data["url"], frequency) for token, frequency in frequencies.items()}
-        
-        
+            return {token: Posting(id, frequency) for token, frequency in frequencies.items()}
 
-    def __init__(self, id: int, url: str, tf_idf: float) -> Self: 
+    def __init__(self, id: int, tf_idf: float) -> Self: 
         self.id = id
-        self.url = url
         self.tf_idf = tf_idf
+        
+    @classmethod
+    def from_string(cls: Self, string: str) -> Self:
+        data = string.split(",")
+        id = int(data[0])
+        tf_idf = float(data[1])
+        return cls(id, tf_idf)
