@@ -7,23 +7,33 @@ from bs4 import BeautifulSoup
 
 def main():
     try:
+        # Dictionaries to hold token positions and crawled positions
         index_of_index: Dict[str, int] = {}
+        index_of_crawled: Dict[int, int] = {}
+
+        # Read the index_of_index.txt file to populate the index_of_index dictionary
         with open("index_of_index.txt", "r") as index_of_index_file:
             for line in index_of_index_file:
                 token, position = line.split(",")
                 index_of_index[token] = int(position)
-        index_of_crawled: Dict[int, int] = {}
+
+        # Read the index_of_crawled.txt file to populate the index_of_crawled dictionary
         with open("index_of_crawled.txt", "r") as index_of_crawled_file:
             for line in index_of_crawled_file:
                 id, position = line.split(",")
                 index_of_crawled[int(id)] = int(position)
+
+        # Streamlit UI setup
         st.title("Search Engine")
         user_input = st.text_input("Enter a query: ")
 
+        # When the search button is clicked
         if st.button("Search"):
             if user_input:
                 tokens = user_input.split()
-                token_postings = [] # just a list of lists of postings
+                token_postings = []  # List to store postings for each token
+
+                # Read the index.txt file to get postings for each token
                 with open("index.txt", "r") as index:
                     for token in tokens:
                         index_position = index_of_index.get(token, -1)
@@ -34,30 +44,37 @@ def main():
                         token, postings_string = line.split(":", 1)
                         postings = [Posting.from_string(p) for p in postings_string.split(";")[:-1]]
                         token_postings.append(postings)
-                least_frequent = min(token_postings, key=len) # finds the list in the postings with the smallest len 
+
+                # Find the list of postings with the smallest length (least frequent) 
+                # this is to make it more efficient when finding the intersection 
+                least_frequent = min(token_postings, key=len)
                 results = []
 
+                # Dictionary to store TF-IDF scores for documents
                 doc_tf_idf = defaultdict(float)
+
+                # Filter documents that contain all tokens
                 for document in least_frequent:
                     id = document.id
-                    # checks if the website / id is present in all other lists in token_postings 
-                    # where each list in the token_posting is another token 
                     if all([any([posting.id == id for posting in postings]) for postings in token_postings]):
                         results.append(document)
 
+                        # Accumulate TF-IDF scores for documents
                         for postings in token_postings:
                             for posting in postings:
                                 if posting.id == id:
-                                    # add the tf_idf's of the tokens 
                                     doc_tf_idf[id] += posting.tf_idf
 
+                # Assign accumulated TF-IDF scores to documents
                 for document in results:
                     document.tf_idf = doc_tf_idf[document.id]
-                    
+
                 temp = open("temp.txt", "w")
 
+                # Read the crawled.txt file to fetch and display the top 5 results
                 with open("crawled.txt", "r") as crawled_file:
-                    for index, posting in enumerate(sorted(results, key= lambda x: x.tf_idf, reverse = True)[:5], start = 1):
+                    for index, posting in enumerate(sorted(results, key=lambda x: x.tf_idf, reverse=True)[:5], start=1):
+                        # idk what this is 
                         crawled_file.seek(index_of_crawled[posting.id])
                         path = crawled_file.readline().strip()
                         with open(path, "r") as file:
@@ -69,14 +86,15 @@ def main():
                         for token in tokens:
                             pos = text.lower().find(token)
                             size = 32
-                            contexts.append(f"{text[max(pos-size, 0):pos]}**:blue-background[{text[pos:pos+len(token)]}]**{text[pos+len(token):pos+len(token)+size]}".replace("\n","").replace("\r","").replace("\r\n","").replace("#",""))
+                            # Extract and highlight context around the token
+                            contexts.append(f"{text[max(pos-size, 0):pos]}**:blue-background[{text[pos:pos+len(token)]}]**{text[pos+len(token):pos+len(token)+size]}".replace("\n", "").replace("\r", "").replace("\r\n", "").replace("#", ""))
+                        # writing out relelvant infomration for our UI search engine 
                         st.write(f"{index}.\t{soup.title.string}")
                         st.write(f"{url}")
                         for context in contexts:
                             temp.write(f"{context}\n")
                             st.markdown(f"...{context}...")
 
-            
     except KeyboardInterrupt:
         print("\nExit successful.")
 
