@@ -20,6 +20,9 @@ class Posting:
     def __init__(self, id: int, tf_idf: float) -> Self: 
         self.id = id
         self.tf_idf = tf_idf
+
+    def __str__(self) -> str:
+        return f"{self.id},{self.tf_idf}"
         
     @classmethod
     def from_string(cls: Self, string: str) -> Self:

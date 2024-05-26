@@ -7,7 +7,7 @@ def main(restart):
     try:
         index.run()
     except KeyboardInterrupt:
-        index.calculate_tf_idf()
+        pass
     index.save_to_file()
 
 if __name__ == "__main__":
