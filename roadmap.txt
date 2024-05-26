@@ -1,5 +1,11 @@
 overview for things to complete 
 
+# need to get tokens to work regardless of capitalization 
+
+
+
+
+
 M1
 1: First import either Tyler or Kevin Assignment 1 to tokenize text
 2: Utilize beautiful soup to grab text content 

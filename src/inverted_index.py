@@ -104,7 +104,6 @@ class InvertedIndex:
 				tf = posting.tf_idf
 				td_idf = round(tf * idf, 3)
 				posting.tf_idf = td_idf
-
 				
 					
 	def save_to_file(self) -> None:
