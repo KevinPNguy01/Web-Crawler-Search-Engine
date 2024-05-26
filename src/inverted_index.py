@@ -117,9 +117,8 @@ class InvertedIndex:
 		""" Write the tokens and postings to index file. Also write token and index file positions to index of index file.
 			When accessing the postings for a token, we can directly go to the position of the file instead of reading its entirety.
   		"""
-		file_position = 0
-		with open(self.index_save_path, "w") as index, open(f"index_of_{self.index_save_path}", "w") as index_of_index:
-			for token, postings in self.postings.items():
+		with open(self.index_save_path, "w") as index:
+			for token, postings in sorted(self.postings.items()):
 				# Each line of the index is of the form: 
 				# 	<token>:<id_1>,<tf-idf_1>;<id_2>,<tf-idf_2>;<id_3>,<tf-idf_3>;
 				# ex.
@@ -129,7 +128,13 @@ class InvertedIndex:
 				# The token "computer" is found in documents 0, 3, 4 with tf-idfs of 12, 8, 9.
 				line = f"{token}:" + ";".join(f"{p.id},{p.tf_idf}" for p in postings) + "\n"
 				index.write(line)
-   
+		self.index_index()	
+	
+	def index_index(self) -> None:
+		""" Reads through the index and creates an index for that index. """
+		file_position = 0
+		with open(self.index_save_path, "r") as index, open(f"index_of_{self.index_save_path}", "w") as index_of_index:
+			for line in index:
 				# Each line of the index of index is of the form: 
 				# 	<token>,<file_position>
 				# ex.
@@ -137,5 +142,6 @@ class InvertedIndex:
 				#   computer,2376
 				# The token "research" can be found at byte 0 of the index.
 				# The token "computer" can be found at byte 2376.
+				token = line.split(":", 1)[0]
 				index_of_index.write(f"{token},{file_position}\n")
 				file_position += len(line) + OS_WINDOWS
