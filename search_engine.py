@@ -6,7 +6,7 @@ from src.posting import Posting
 from bs4 import BeautifulSoup
 
 
-def get_postings(index_file: str, tokens: list[str], index_of_index: dict[str, int]) -> list[list[Posting]]:
+def get_postings(tokens: list[str], index_of_index: dict[str, int]) -> list[list[Posting]]:
     token_postings = []  # List to store postings for each token
 
     # Read the index.txt file to get postings for each token
@@ -18,7 +18,7 @@ def get_postings(index_file: str, tokens: list[str], index_of_index: dict[str, i
                 index.seek(index_position)
                 line = index.readline()
             token, postings_string = line.split(":", 1)
-            postings = [Posting.from_string(p) for p in postings_string.split(";")[:-1]]
+            postings = [Posting.from_string(p) for p in postings_string.split(";")]
             token_postings.append(postings)
     return token_postings
 
@@ -110,7 +110,7 @@ def main():
         if user_input:
             # simply lowercasing our query as the orginal tokenizer lowercases all words
             tokens = user_input.lower().split()
-            token_postings = get_postings('index.txt', tokens, index_of_index)
+            token_postings = get_postings(tokens, index_of_index)
 
             # Find the list of postings with the smallest length (least frequent) 
             # this is to make it more efficient when finding the intersection 
@@ -119,7 +119,6 @@ def main():
             # filtering out our results via tf_idf 
             results = filter(token_postings, least_frequent)
             collect_and_display_results(results, index_of_crawled, tokens)
-
 
 if __name__ == "__main__":
     main()
