@@ -2,6 +2,7 @@ from pathlib import Path
 from src.posting import Posting
 from typing import Dict, List, Set
 from platform import system
+import math
 import json
 import os
 		
@@ -59,6 +60,20 @@ class InvertedIndex:
 		self.read_index_file()
 		self.read_crawled_file()
 		print(f"Loaded {len(self.postings)} tokens from {len(self.crawled)} pages.")
+  
+	def calculate_tf_idf(self) -> None :
+		total_docs = len(self.crawled)
+		# returns a dicitonary
+		# key is the token, value is the number of of documents where the token appears
+		token_document_counts = {token: len(postings) for token, postings in self.postings.items()}
+
+		for token,postings in self.postings.items():
+			idf = math.log(total_docs / token_document_counts[token])
+			for posting in postings:
+				# tf is the raw number of times a token appears in a doc
+				tf = posting.tf_idf
+				td_idf = round(tf * idf, 3)
+				posting.tf_idf = td_idf
 	 
 	def run(self):
 		id = len(self.crawled)										# Start the id number with how many pages have been crawled already.
@@ -96,6 +111,7 @@ class InvertedIndex:
 				index_of_crawled_file.write(f"{id},{file_position}\n")
 				file_position += len(line) + OS_WINDOWS
 				id += 1
+		self.calculate_tf_idf()
 				
 	def save_to_file(self) -> None:
 		""" Write the tokens and postings to index file. Also write token and index file positions to index of index file.
