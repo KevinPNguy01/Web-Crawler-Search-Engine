@@ -46,12 +46,12 @@ def filter(token_postings, least_frequent):
     
     return results 
 
-def collect_and_display_results(results, index_of_crawled, tokens):
+def collect_and_display_results(results, index_of_crawled, tokens, num_of_results = 5):
     temp = open("temp.txt", "w")
 
     # Read the crawled.txt file to fetch and display the top 5 results
     with open("crawled.txt", "r") as crawled_file:
-        for index, posting in enumerate(sorted(results, key=lambda x: x.tf_idf, reverse=True)[:5], start=1):
+        for index, posting in enumerate(sorted(results, key=lambda x: x.tf_idf, reverse=True)[:num_of_results], start=1):
             # Go to the position in the file where the filename for this document id is stored.
             crawled_file.seek(index_of_crawled[posting.id])
             path = crawled_file.readline().strip()
@@ -78,22 +78,28 @@ def collect_and_display_results(results, index_of_crawled, tokens):
                 st.markdown(f"...{context}...")
 
 
+def read_index_files(file_name): 
+    # might revert and delete  ? feels somewhat unecessary 
+    # but I like a clean main function 
+    # - Tyler May 26 
+    index_dict = {}
+
+    with open(file_name, "r") as file:
+        if file_name == 'index_of_index.txt':
+            for line in file:
+                key, position = line.split(",")
+                index_dict[key] = int(position)
+        else:
+            for line in file:
+                id, position = line.split(",")
+                index_dict[int(id)] = int(position)
+
+    return index_dict 
+            
 def main():
     # Dictionaries to hold token positions and crawled positions
-    index_of_index: Dict[str, int] = {}
-    index_of_crawled: Dict[int, int] = {}
-
-    # Read the index_of_index.txt file to populate the index_of_index dictionary
-    with open("index_of_index.txt", "r") as index_of_index_file:
-        for line in index_of_index_file:
-            token, position = line.split(",")
-            index_of_index[token] = int(position)
-
-    # Read the index_of_crawled.txt file to populate the index_of_crawled dictionary
-    with open("index_of_crawled.txt", "r") as index_of_crawled_file:
-        for line in index_of_crawled_file:
-            id, position = line.split(",")
-            index_of_crawled[int(id)] = int(position)
+    index_of_index: Dict[str, int] = read_index_files("index_of_index.txt")
+    index_of_crawled: Dict[int, int] = read_index_files("index_of_crawled.txt")
 
     # Streamlit UI setup
     st.title("Search Engine")
@@ -109,7 +115,8 @@ def main():
             # Find the list of postings with the smallest length (least frequent) 
             # this is to make it more efficient when finding the intersection 
             least_frequent = min(token_postings, key=len)
-            
+
+            # filtering out our results via tf_idf 
             results = filter(token_postings, least_frequent)
             collect_and_display_results(results, index_of_crawled, tokens)
 

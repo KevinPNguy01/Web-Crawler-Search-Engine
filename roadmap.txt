@@ -1,6 +1,7 @@
 overview for things to complete 
 
 # need to get tokens to work regardless of capitalization 
+# need to let the search engine work such that the query doesn't have to be quite exact 
 
 
 
