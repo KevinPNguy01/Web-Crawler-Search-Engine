@@ -4,6 +4,7 @@ import streamlit as st
 from typing import Dict
 from src.posting import Posting
 from bs4 import BeautifulSoup
+import difflib 
 
 
 def get_postings(tokens: list[str], index_of_index: dict[str, int]) -> list[list[Posting]]:
@@ -95,7 +96,14 @@ def read_index_files(file_name):
                 index_dict[int(id)] = int(position)
 
     return index_dict 
-            
+
+def correct_spelling(tokens,posting_keys):
+    # will find the closest match from our posting keys 
+    corrected_tokens = [difflib.get_close_matches(token, posting_keys, n =1 )[0] for token in tokens]
+    
+    return corrected_tokens    
+
+
 def main():
     # Dictionaries to hold token positions and crawled positions
     index_of_index: Dict[str, int] = read_index_files("index_of_index.txt")
@@ -110,7 +118,10 @@ def main():
         if user_input:
             # simply lowercasing our query as the orginal tokenizer lowercases all words
             tokens = user_input.lower().split()
-            token_postings = get_postings(tokens, index_of_index)
+            correct_tokens = correct_spelling(tokens, list(index_of_index.keys()))
+            
+            print(correct_tokens)
+            token_postings = get_postings(correct_tokens, index_of_index)
 
             # Find the list of postings with the smallest length (least frequent) 
             # this is to make it more efficient when finding the intersection 
@@ -118,7 +129,7 @@ def main():
 
             # filtering out our results via tf_idf 
             results = filter(token_postings, least_frequent)
-            collect_and_display_results(results, index_of_crawled, tokens)
+            collect_and_display_results(results, index_of_crawled, correct_tokens)
 
 if __name__ == "__main__":
     main()
