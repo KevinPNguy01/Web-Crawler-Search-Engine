@@ -1,4 +1,6 @@
+import math
 from pathlib import Path
+import platform
 from src.posting import Posting
 from typing import Dict, List, Set
 import json
@@ -83,9 +85,28 @@ class InvertedIndex:
 				# The file path of document id 27 can be found at byte 16536.
 				index_of_crawled_file.write(f"{id},{file_position}\n")
 					
-				file_position += len(line)+1
+				if platform.system() == 'Windows':
+					file_position += len(line)+1
+				else:
+					file_position += len(line)
 				id += 1
+
+	def calculate_tf_idf(self) -> None :
+		total_docs = len(self.crawled)
+		# returns a dicitonary
+		# key is the token, value is the number of of documents where the token appears
+		token_document_counts = {token: len(postings) for token, postings in self.postings.items()}
+
+		for token,postings in self.postings.items():
+			idf = math.log(total_docs / token_document_counts[token])
+			for posting in postings:
+				# tf is the raw number of times a token appears in a doc
+				tf = posting.tf_idf
+				td_idf = round(tf * idf, 3)
+				posting.tf_idf = td_idf
+
 				
+					
 	def save_to_file(self) -> None:
 		""" Write the tokens and postings to index file. Also write token and index file positions to index of index file.
 			When accessing the postings for a token, we can directly go to the position of the file instead of reading its entirety.
@@ -114,4 +135,7 @@ class InvertedIndex:
 				# The token "research" can be found at byte 0 of the index.
 				# The token "computer" can be found at byte 2376.
 				index_of_index.write(f"{token},{file_position}\n")
-				file_position += len(line)+1
+				if platform.system() == 'Windows':
+					file_position += len(line)+1
+				else:
+					file_position += len(line)
