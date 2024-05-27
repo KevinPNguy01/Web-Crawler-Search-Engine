@@ -96,6 +96,10 @@ class InvertedIndex:
 				time.sleep(1)
 			self.join()
 		except KeyboardInterrupt:
+			print("Emptying queue...")
+			while not self.q_in.empty():
+				self.q_in.get()
+			print("Emptied queue.")
 			self.join()
 
 	def join(self) -> None:
@@ -136,6 +140,8 @@ class InvertedIndex:
 		while not self.q_out.empty():
 			file_path, id = self.q_out.get()
 			self.update_crawled_list(file_path, id)
+
+		print("Saved to file.")
 	
 	def index_index(self) -> None:
 		""" Reads through the index and creates an index for that index. """
