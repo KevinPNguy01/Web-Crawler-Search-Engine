@@ -5,16 +5,19 @@ overview for things to complete
 
 
 
+# convert our indexer to store in disk instead of memeory 
+# 
 
 
-M1
-1: First import either Tyler or Kevin Assignment 1 to tokenize text
-2: Utilize beautiful soup to grab text content 
-3: Create an inverted index 
-(inverted_index = {"Token" : [1,2,3,10,5]} ) where the numbers are the webpages
 
 
- 55k pages 112k unique words 
- pre pdf 
+20 queries 
+
+master of software engineering at uci 
+
+
+
+# we wwant to write to file mid way 
+# issue is we need to go through the entire thing to parse for info 
 
 
