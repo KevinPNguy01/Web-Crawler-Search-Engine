@@ -19,7 +19,7 @@ class InvertedIndex:
 		self.index_save_path = Path("index.txt")        # File path for inverted index.
 		
 	def start_async(self) -> None:
-		self.workers = [Worker(id, self.frontier) for id in range(10)]
+		self.workers = [Worker(id, self.frontier) for id in range(5)]
 		for worker in self.workers:
 			worker.start()
 
@@ -27,7 +27,7 @@ class InvertedIndex:
 		start = time.time()
 		try:
 			self.start_async()
-			while self.frontier.to_be_read:
+			while not self.frontier.to_be_read.empty():
 				time.sleep(1)
 			self.join()
 		except KeyboardInterrupt:

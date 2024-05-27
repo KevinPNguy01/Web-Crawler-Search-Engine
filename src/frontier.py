@@ -70,7 +70,7 @@ class Frontier:
 
 	def get_tbr_file_path(self):
 		try:
-			file_path = self.to_be_read.get()
+			file_path = self.to_be_read.get(block=False)
 			id = self.current_id
 			self.current_id += 1
 			return (file_path, id)
