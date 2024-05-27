@@ -5,7 +5,7 @@ from functools import cmp_to_key
 def extract_text(content: str) -> str:
     # Given content representing a webpage, return the textual content.
 
-    soup = BeautifulSoup(content, "html.parser")
+    soup = BeautifulSoup(content, "xml")
     
     # Remove specific html tags.
     [s.extract() for s in soup(['style', 'script', '[document]', 'head', 'code'])]
