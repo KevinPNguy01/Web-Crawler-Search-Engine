@@ -5,7 +5,10 @@ from typing import Dict
 from src.posting import Posting
 from bs4 import BeautifulSoup
 import difflib 
+import time 
 
+# this function is very effcient 
+# getting the .get is O(1) so probs dont need to do anything there
 
 def get_postings(tokens: list[str], index_of_index: dict[str, int]) -> list[list[Posting]]:
     token_postings = []  # List to store postings for each token
@@ -26,26 +29,45 @@ def get_postings(tokens: list[str], index_of_index: dict[str, int]) -> list[list
 
 def filter(token_postings, least_frequent):
     results = []
-    # Dictionary to store TF-IDF scores for documents
     doc_tf_idf = defaultdict(float)
 
-    # Filter documents that contain all tokens
+    # preprocessing document(id) -> posting mapping 
+    # so it maps for a document 
+    #               doc_id                   "education"                "innovation"
+    # eg #1 which maps to www.uci.edu : [Posting(id=1, tf_idf=0.5), Posting(id=1, tf_idf=0.3)  ]
+    
+    doc_to_postings = defaultdict(list)
+    for postings in token_postings:
+        for posting in postings:
+            doc_to_postings[posting.id].append(posting)
+    
+    """
+    token_doc_ids = [
+    {1, 2},  # Document IDs containing "education"
+    {1, 3},  # Document IDs containing "research"
+    {1, 2, 3}  # Document IDs containing "innovation"
+    ]
+    """
+    token_doc_ids = [set(posting.id for posting in postings) for postings in token_postings]
+
+
+    print(token_doc_ids)    
     for document in least_frequent:
         id = document.id
-        if all([any([posting.id == id for posting in postings]) for postings in token_postings]):
-            results.append(document)
-
+        """
+        id id was == 1 
+        if all(1 in {1, 2}, 1 in {1, 3}, 1 in {1, 2, 3}):
+        """
+        # finds the intersection 
+        if all(id in doc_ids for doc_ids in token_doc_ids):
             # Accumulate TF-IDF scores for documents
-            for postings in token_postings:
-                for posting in postings:
-                    if posting.id == id:
-                        doc_tf_idf[id] += posting.tf_idf
+            tf_idf_score = sum(posting.tf_idf for posting in doc_to_postings[id])
+            # Assign accumulated TF-IDF scores to the document directly
+            document.tf_idf = tf_idf_score
+            results.append(document)
+            
+    return results
 
-    # Assign accumulated TF-IDF scores to documents
-    for document in results:
-        document.tf_idf = doc_tf_idf[document.id]
-    
-    return results 
 
 def collect_and_display_results(results, index_of_crawled, tokens, num_of_results = 5):
     temp = open("temp.txt", "w")
@@ -97,10 +119,12 @@ def read_index_files(file_name):
 
     return index_dict 
 
+
+# need to optimize this and will imrpove by 1.2 seconds 
+# from 2.9 to 1.7
 def correct_spelling(tokens,posting_keys):
     # will find the closest match from our posting keys 
     corrected_tokens = [difflib.get_close_matches(token, posting_keys, n =1 )[0] for token in tokens]
-    
     return corrected_tokens    
 
 
@@ -116,11 +140,11 @@ def main():
     # When the search button is clicked
     if st.button("Search"):
         if user_input:
+            start = time.time()
             # simply lowercasing our query as the orginal tokenizer lowercases all words
             tokens = user_input.lower().split()
             correct_tokens = correct_spelling(tokens, list(index_of_index.keys()))
             
-            print(correct_tokens)
             token_postings = get_postings(correct_tokens, index_of_index)
 
             # Find the list of postings with the smallest length (least frequent) 
@@ -130,6 +154,9 @@ def main():
             # filtering out our results via tf_idf 
             results = filter(token_postings, least_frequent)
             collect_and_display_results(results, index_of_crawled, correct_tokens)
+            end = time.time()
+            final = end - start 
+            print(final)          
 
 if __name__ == "__main__":
     main()
