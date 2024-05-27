@@ -3,7 +3,6 @@ from src.posting import Posting
 from typing import List
 import platform
 import math
-
 from src.frontier import Frontier
 from src.worker import Worker
 import platform
@@ -24,7 +23,6 @@ class InvertedIndex:
 			worker.start()
 
 	def start(self) -> None:
-		start = time.time()
 		try:
 			self.start_async()
 			while not self.frontier.to_be_read.empty():
@@ -33,7 +31,6 @@ class InvertedIndex:
 		except KeyboardInterrupt:
 			self.frontier.is_running = False
 			self.join()
-		print(time.time() - start, "seconds elapsed.")
 
 	def join(self) -> None:
 		for worker in self.workers:
