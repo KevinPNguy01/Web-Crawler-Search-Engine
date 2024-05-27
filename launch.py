@@ -4,11 +4,7 @@ from pathlib import Path
 
 def main(restart):
     index = InvertedIndex(Path("DEV"), restart=restart)
-    try:
-        index.run()
-    except KeyboardInterrupt:
-        pass
-    index.save_to_file()
+    index.start()
 
 if __name__ == "__main__":
     parser = ArgumentParser()
