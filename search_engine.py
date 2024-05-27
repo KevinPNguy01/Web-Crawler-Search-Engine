@@ -7,8 +7,6 @@ from bs4 import BeautifulSoup
 import difflib 
 import time 
 
-# this function is very effcient 
-# getting the .get is O(1) so probs dont need to do anything there
 
 def get_postings(tokens: list[str], index_of_index: dict[str, int]) -> list[list[Posting]]:
     token_postings = []  # List to store postings for each token
@@ -41,23 +39,20 @@ def filter(token_postings, least_frequent):
         for posting in postings:
             doc_to_postings[posting.id].append(posting)
     
-    """
-    token_doc_ids = [
-    {1, 2},  # Document IDs containing "education"
-    {1, 3},  # Document IDs containing "research"
-    {1, 2, 3}  # Document IDs containing "innovation"
-    ]
-    """
+    
+    #token_doc_ids = [
+    #{1, 2},  # Document IDs containing "education"
+    #{1, 3},  # Document IDs containing "research"
+    #{1, 2, 3}  # Document IDs containing "innovation"]
+    
     token_doc_ids = [set(posting.id for posting in postings) for postings in token_postings]
 
-
-    print(token_doc_ids)    
     for document in least_frequent:
         id = document.id
-        """
-        id id was == 1 
-        if all(1 in {1, 2}, 1 in {1, 3}, 1 in {1, 2, 3}):
-        """
+    
+        #id id was == 1 
+        #if all(1 in {1, 2}, 1 in {1, 3}, 1 in {1, 2, 3}):
+        
         # finds the intersection 
         if all(id in doc_ids for doc_ids in token_doc_ids):
             # Accumulate TF-IDF scores for documents
@@ -65,7 +60,7 @@ def filter(token_postings, least_frequent):
             # Assign accumulated TF-IDF scores to the document directly
             document.tf_idf = tf_idf_score
             results.append(document)
-            
+
     return results
 
 
@@ -123,15 +118,30 @@ def read_index_files(file_name):
 # need to optimize this and will imrpove by 1.2 seconds 
 # from 2.9 to 1.7
 def correct_spelling(tokens,posting_keys):
-    # will find the closest match from our posting keys 
-    corrected_tokens = [difflib.get_close_matches(token, posting_keys, n =1 )[0] for token in tokens]
-    return corrected_tokens    
+    final = []
+    
+    # so we only load the keys of based off each token's first letter
+    for token in tokens:
+        first_letter = token[0]
+        if first_letter in posting_keys:
+            closest_match = difflib.get_close_matches(token, posting_keys[first_letter], n=1)
+            if closest_match:
+                final.append(closest_match[0])
+            else:
+                final.append(token)
+        else:
+            final.append(token)
 
+    return final
 
 def main():
     # Dictionaries to hold token positions and crawled positions
     index_of_index: Dict[str, int] = read_index_files("index_of_index.txt")
     index_of_crawled: Dict[int, int] = read_index_files("index_of_crawled.txt")
+
+    # probably a better way to do this 
+    with open("posting_keys.json", "r") as file:
+        posting_keys = json.load(file)
 
     # Streamlit UI setup
     st.title("Search Engine")
@@ -143,9 +153,10 @@ def main():
             start = time.time()
             # simply lowercasing our query as the orginal tokenizer lowercases all words
             tokens = user_input.lower().split()
-            correct_tokens = correct_spelling(tokens, list(index_of_index.keys()))
+
+            correct_tokens = correct_spelling(tokens, posting_keys)
             
-            token_postings = get_postings(correct_tokens, index_of_index)
+            token_postings = get_postings(tokens, index_of_index)
 
             # Find the list of postings with the smallest length (least frequent) 
             # this is to make it more efficient when finding the intersection 
@@ -153,7 +164,7 @@ def main():
 
             # filtering out our results via tf_idf 
             results = filter(token_postings, least_frequent)
-            collect_and_display_results(results, index_of_crawled, correct_tokens)
+            collect_and_display_results(results, index_of_crawled, tokens)
             end = time.time()
             final = end - start 
             print(final)          
