@@ -1,16 +1,23 @@
 from pathlib import Path
 from typing import Dict, Self
 from src.tokenizer import *
-import json
+import msgspec
+
+class WebPage(msgspec.Struct, gc=False):
+    url: str
+    content: str
+    encoding: str
+
+decoder = msgspec.json.Decoder(type=WebPage)
 
 class Posting: 
     @staticmethod
     def get_postings(file_path: Path, id: int) -> Dict[str, Self]:
         # Returns a dict of tokens to postings for this file.
         with open(file_path) as file:
-            data = json.load(file)
+            page = decoder.decode(file.read())
             # Extract text from webpage content.
-            text = extract_text(data["content"])
+            text = extract_text(page.content)
             # Tokenize text.
             frequencies = computeWordFrequencies(tokenize(text))
             # Create postings for each token and return dict.
