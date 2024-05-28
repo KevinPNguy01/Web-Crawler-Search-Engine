@@ -5,13 +5,18 @@ import json
 import os
 from multiprocessing import Queue, Lock, Value
 import signal
+import msgspec
 
-def is_valid_html(file_path: Path) -> bool:
+class WebPage(msgspec.Struct, gc=False):
+    url: str
+    content: str
+    encoding: str
+
+decoder = msgspec.json.Decoder(type=WebPage)
+
+def is_valid_html(content: str) -> bool:
 	""" Ensure the JSON file has the "content" field and contains HTML tags. """
-	with open(file_path, 'r', encoding='utf-8') as f:
-		data = json.load(f)
-		content = data.get('content', '')
-		return '<html' in content[:1024].lower()
+	return '<html' in content[:1024].lower()
 
 class Worker:
 	def __init__(self, worker_id: int, lock, q_in: Queue, q_out: Queue, running):
@@ -50,22 +55,27 @@ class Worker:
 		self.index_count += 1
 
 	def read_file(self, file_path: Path, id: int) -> None:
+		with open(file_path, encoding="utf-8") as f:
+			page = decoder.decode(f.read())
 		# Skip file if it contains invalid html.
-		if not is_valid_html(file_path):
+		if not is_valid_html(page.content):
 			return
 
 		# Add all postings from that file to this index's own dict.
-		for token, posting in Posting.get_postings(file_path, id).items():
+		for token, posting in Posting.get_postings(page.content, id).items():
 			self.postings.setdefault(token, []).append(posting)
 			self.posting_count += 1
 		print(f"Worker {self.worker_id} - {id} - {file_path}")
 		self.q_out.put((file_path, id))
 
 	def run(self):
-		file_path, id = self.q_in.get(block=False)
+		file_path, id = self.q_in.get(timeout=1)
 		while self.running.value and file_path:
 			self.read_file(file_path, id)
-			file_path, id = self.q_in.get(block=False)
+			try:
+				file_path, id = self.q_in.get(timeout=1)
+			except:
+				continue
 
 			# If there are more than 100,000 postings stored in memory, write them to a partial index.
 			if self.posting_count > 100000:
@@ -77,7 +87,8 @@ class Worker:
 		signal.signal(signal.SIGINT, signal.SIG_IGN)
 		try:
 			self.run()
-		except:
+		except Exception as e:
+			print("ERROR", e)
 			self.exit()
 
 	def exit(self):

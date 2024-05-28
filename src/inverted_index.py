@@ -9,7 +9,6 @@ import os
 import time
 import multiprocessing
 from typing import Set
-import signal
 		
 OS_WINDOWS = platform.system() == "Windows"		# Flag for if OS is Windows.
 
@@ -18,10 +17,9 @@ class InvertedIndex:
 		self.workers: List[Worker]
 		self.index_save_path = Path("index.txt")        # File path for inverted index.
 		self.workers = []
-		self.m = multiprocessing.Manager()
-		self.q_in = self.m.Queue()
-		self.q_out = self.m.Queue()
-		self.running = self.m.Value("i", 1)
+		self.q_in = multiprocessing.Queue()
+		self.q_out = multiprocessing.Queue()
+		self.running = multiprocessing.Value("i", 1)
 		self.total_documents = 0
 		self.lock = multiprocessing.Lock()
 		self.is_running = True
@@ -31,7 +29,6 @@ class InvertedIndex:
 		self.crawled_save_path = Path("crawled.txt")    # File path for names of crawled files.
 		self.crawled_file = None
 		self.index_of_crawled_file = None
-		#self.crawled_file_lock = Lock()
 		self.file_position = 0
 		self.current_id = 0
 
@@ -98,16 +95,20 @@ class InvertedIndex:
 
 			while not self.q_in.empty():
 				time.sleep(1)
-			self.join()
+			
 		except KeyboardInterrupt:
-			self.running.value = 0
-			self.join()
+			pass
+		self.running.value = 0
+		self.join()
 
 	def join(self) -> None:
+		self.save_to_file()
+		print("Trying to join...")
 		for worker in self.workers:
 			worker.join()
-		self.save_to_file()
-				
+		while not self.q_in.empty():
+			self.q_in.get()
+		
 	def save_to_file(self) -> None:
 		""" Combine the partial indices into one file. """
 		print("Saving to file. Do not quit...")
