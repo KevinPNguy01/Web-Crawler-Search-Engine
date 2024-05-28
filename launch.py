@@ -2,6 +2,8 @@ from argparse import ArgumentParser
 from src.inverted_index import InvertedIndex
 from pathlib import Path
 import cProfile
+import pstats
+import io
 
 def main(restart):
     index = InvertedIndex(Path("DEV"), restart=restart)
@@ -13,6 +15,13 @@ if __name__ == "__main__":
     parser.add_argument("--profile", action="store_true", default=False)
     args = parser.parse_args()
     if args.profile:
-        cProfile.run("main(args.restart)", sort="tottime")
+        stream = io.StringIO()
+        profiler = cProfile.Profile()
+        profiler.enable()
+        main(args.restart)
+        profiler.disable()
+        p = pstats.Stats(profiler, stream=stream).sort_stats("tottime")
+        p.print_stats(20)
+        print(stream.getvalue())
     else:
         main(args.restart)
