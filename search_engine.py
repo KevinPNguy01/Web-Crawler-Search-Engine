@@ -156,7 +156,7 @@ def main():
 
             correct_tokens = correct_spelling(tokens, posting_keys)
             
-            token_postings = get_postings(tokens, index_of_index)
+            token_postings = get_postings(correct_tokens, index_of_index)
 
             # Find the list of postings with the smallest length (least frequent) 
             # this is to make it more efficient when finding the intersection 
