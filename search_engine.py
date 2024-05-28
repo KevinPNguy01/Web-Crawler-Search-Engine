@@ -164,7 +164,7 @@ def main():
 
             # filtering out our results via tf_idf 
             results = filter(token_postings, least_frequent)
-            collect_and_display_results(results, index_of_crawled, tokens)
+            collect_and_display_results(results, index_of_crawled, correct_tokens)
             end = time.time()
             final = end - start 
             print(final)          

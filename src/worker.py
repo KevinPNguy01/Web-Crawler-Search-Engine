@@ -1,10 +1,9 @@
-from threading import Thread
 from pathlib import Path
 from src.posting import Posting
-from src.frontier import Frontier
 from typing import Dict, List
 import json
 import os
+from multiprocessing import Queue, Lock, Value
 
 def is_valid_html(file_path: Path) -> bool:
 	""" Ensure the JSON file has the "content" field and contains HTML tags. """
@@ -13,23 +12,24 @@ def is_valid_html(file_path: Path) -> bool:
 		content = data.get('content', '')
 		return '<html' in content[:1024].lower()
 
-class Worker(Thread):
-	def __init__(self, worker_id: int, frontier: Frontier):
-		super().__init__(daemon=True)
-
-		self.id = worker_id
-		self.frontier = frontier
+class Worker:
+	def __init__(self, worker_id: int, lock, q_in: Queue, q_out: Queue, total_documents):
+		self.worker_id = worker_id
+		self.q_in = q_in
+		self.q_out = q_out
+		self.lock = lock
+		self.total_documents = total_documents
 
 		self.postings: Dict[str, List[Posting]] = {}    # Map of tokens to lists of Postings that contain that token.
 		self.posting_count: int = 0						# The current number of postings.
 		self.index_count = 0							# The current number of partial indices.
 		for file in os.listdir("partial"):
-			if file.startswith(f"w{self.id}"):
+			if file.startswith(f"w{self.worker_id}"):
 				self.index_count += 1
 
 	def create_partial_index(self) -> None:
 		""" Write the tokens and postings stored in memory into a partial index. """
-		with open(f"partial/w{self.id}-i{self.index_count}.dat", "w") as index:
+		with open(f"partial/w{self.worker_id}-i{self.index_count}.dat", "w") as index:
 			for token, postings in sorted(self.postings.items()):
 				# Each line of the index is of the form: 
 				# 	<token>:<id_1>,<tf-idf_1>;<id_2>,<tf-idf_2>;<id_3>,<tf-idf_3>;
@@ -54,18 +54,29 @@ class Worker(Thread):
 		for token, posting in Posting.get_postings(file_path, id).items():
 			self.postings.setdefault(token, []).append(posting)
 			self.posting_count += 1
-		print(f"Worker {self.id} - {id} - {file_path}")
-		with self.frontier.crawled_file_lock:
-			self.frontier.update_crawled_list(file_path, id)
+		print(f"Worker {self.worker_id} - {id} - {file_path}")
+		with self.lock:
+			self.total_documents.value += 1
+		self.q_out.put((file_path, id))
 
 	def run(self):
-		file_path, id = self.frontier.get_tbr_file_path()
-		while self.frontier.is_running and file_path:
+		file_path, id = self.q_in.get(block=False)
+		while file_path:
 			self.read_file(file_path, id)
-			file_path, id = self.frontier.get_tbr_file_path()
+			file_path, id = self.q_in.get(block=False)
 
 			# If there are more than 100,000 postings stored in memory, write them to a partial index.
 			if self.posting_count > 100000:
 				self.create_partial_index()
 		self.create_partial_index()
-		print(f"Worker {self.id} finished.")
+		print(f"Worker {self.worker_id} finished.")
+
+	def __call__(self):
+		try:
+			self.run()
+		except:
+			self.exit()
+
+	def exit(self):
+		self.create_partial_index()
+		print(f"Worker {self.worker_id} exited.")
