@@ -1,6 +1,8 @@
 from typing import List, Dict, Tuple
 from bs4 import BeautifulSoup
 from functools import cmp_to_key
+from collections import Counter
+import re
 
 def extract_text(content: str) -> str:
     # Given content representing a webpage, return the textual content.
@@ -26,43 +28,7 @@ def compare(item1: Tuple[str, int], item2: Tuple[str, int]) -> int:
 # This runs in O(n) with respect to the size of the file since it iterates through each line of the file once, 
 # and iterates through each character of each line only once.
 def tokenize(text: str) -> List[str]:
-    tokens = []
-    token = ""
-    for char in text:
-        # A valid char can be encoded into ascii and is alphanumeric.
-        try:
-            # isalnum() is an O(1) operation since char is always of length 1.
-            isValidChar = char.encode("ascii").isalnum()
-        except:
-            isValidChar = False
-        if isValidChar:
-            token += char
-        # If invalid character is encountered and token is not empty, add it to list.
-        elif token:
-            tokens.append(token.lower())
-            token = ""
-    # Also add token if end of string is reached.
-    if token:
-        tokens.append(token.lower())
-    return tokens
-
-# This runs in O(n) with respect to the number of tokens since it traverses each key token in the list only once.
-def computeWordFrequencies(tokens: List[str]) -> Dict[str, int]:
-    frequencies = {}
-    for token in tokens:
-        # Initialize frequency count for token to 0.
-        if token not in frequencies:
-            frequencies[token] = 0
-        frequencies[token] += 1
+    tokens = re.findall(r'\b[a-zA-Z0-9]+\b', text)
+    # Convert all tokens to lower case and count their frequencies.
+    frequencies = Counter(token.lower() for token in tokens)
     return frequencies
-
-
-# This runs in O(n log n) with respect to the number of tokens since it uses Timsort to sort the dictionary items.
-# Printing out the frequencies only takes O(n).
-def printFrequencies(frequencies: Dict[str, int]) -> None:
-    items = frequencies.items()
-    items = sorted(items, key=cmp_to_key(compare))
-    for items in items:
-        print(f"{items[0]} => {items[1]}")
-    if not items:
-        print(0)

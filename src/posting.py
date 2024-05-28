@@ -19,7 +19,7 @@ class Posting:
             # Extract text from webpage content.
             text = extract_text(page.content)
             # Tokenize text.
-            frequencies = computeWordFrequencies(tokenize(text))
+            frequencies = tokenize(text)
             # Create postings for each token and return dict.
             return {token: Posting(id, frequency) for token, frequency in frequencies.items()}
 
@@ -28,7 +28,7 @@ class Posting:
         self.tf_idf = tf_idf
 
     def __str__(self) -> str:
-        return f"{self.id},{self.tf_idf}"
+        return f"{self.id},{self.tf_idf:.3f}"
         
     @classmethod
     def from_string(cls: Self, string: str) -> Self:
