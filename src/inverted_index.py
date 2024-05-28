@@ -94,6 +94,10 @@ class InvertedIndex:
 				self.current_id += 1
 
 			while not self.q_in.empty():
+				while not self.q_out.empty():
+					file_path, id = self.q_out.get()
+					self.update_crawled_list(file_path, id)
+					self.total_documents += 1
 				time.sleep(1)
 			
 		except KeyboardInterrupt:
