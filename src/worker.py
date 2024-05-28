@@ -4,6 +4,7 @@ from typing import Dict, List
 import json
 import os
 from multiprocessing import Queue, Lock, Value
+import signal
 
 def is_valid_html(file_path: Path) -> bool:
 	""" Ensure the JSON file has the "content" field and contains HTML tags. """
@@ -13,12 +14,12 @@ def is_valid_html(file_path: Path) -> bool:
 		return '<html' in content[:1024].lower()
 
 class Worker:
-	def __init__(self, worker_id: int, lock, q_in: Queue, q_out: Queue, total_documents):
+	def __init__(self, worker_id: int, lock, q_in: Queue, q_out: Queue, running):
 		self.worker_id = worker_id
 		self.q_in = q_in
 		self.q_out = q_out
 		self.lock = lock
-		self.total_documents = total_documents
+		self.running = running
 
 		self.postings: Dict[str, List[Posting]] = {}    # Map of tokens to lists of Postings that contain that token.
 		self.posting_count: int = 0						# The current number of postings.
@@ -39,7 +40,10 @@ class Worker:
 				# The token "research" is found in documents 0, 4, 7 with tf-idfs of 3, 2, 3 respectively.
 				# The token "computer" is found in documents 0, 3, 4 with tf-idfs of 12, 8, 9.
 				line = f"{token}:" + ";".join(str(p) for p in postings) + "\n"
-				index.write(line)
+				try:
+					index.write(line)
+				except:
+					print(line)
 		# Update relevant variables.
 		self.postings = {}
 		self.posting_count = 0
@@ -55,13 +59,11 @@ class Worker:
 			self.postings.setdefault(token, []).append(posting)
 			self.posting_count += 1
 		print(f"Worker {self.worker_id} - {id} - {file_path}")
-		with self.lock:
-			self.total_documents.value += 1
 		self.q_out.put((file_path, id))
 
 	def run(self):
 		file_path, id = self.q_in.get(block=False)
-		while file_path:
+		while self.running.value and file_path:
 			self.read_file(file_path, id)
 			file_path, id = self.q_in.get(block=False)
 
@@ -72,6 +74,7 @@ class Worker:
 		print(f"Worker {self.worker_id} finished.")
 
 	def __call__(self):
+		signal.signal(signal.SIGINT, signal.SIG_IGN)
 		try:
 			self.run()
 		except:

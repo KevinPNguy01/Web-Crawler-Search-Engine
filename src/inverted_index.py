@@ -9,6 +9,7 @@ import os
 import time
 import multiprocessing
 from typing import Set
+import signal
 		
 OS_WINDOWS = platform.system() == "Windows"		# Flag for if OS is Windows.
 
@@ -20,7 +21,8 @@ class InvertedIndex:
 		self.m = multiprocessing.Manager()
 		self.q_in = self.m.Queue()
 		self.q_out = self.m.Queue()
-		self.total_documents = self.m.Value("i", 0)
+		self.running = self.m.Value("i", 1)
+		self.total_documents = 0
 		self.lock = multiprocessing.Lock()
 		self.is_running = True
 		self.crawled: Set[str] = set()                  # Set of crawled files to keep track of which files don't need to be crawled again.
@@ -46,12 +48,6 @@ class InvertedIndex:
 
 		self.crawled_file = open(self.crawled_save_path, "a")
 		self.index_of_crawled_file = open(f"index_of_{self.crawled_save_path}", "a")
-		for file in self.source.rglob("*.json"):
-			if str(file) in self.crawled:
-				continue
-			self.q_in.put((file, self.current_id))
-			self.current_id += 1
-		self.total_documents.value = len(self.crawled)
 
 	def read_crawled_file(self) -> None:
 		""" Read and load crawled save file into memory. """
@@ -60,6 +56,7 @@ class InvertedIndex:
 				self.crawled.add(file_path.strip())
 		self.file_position = os.path.getsize(self.crawled_save_path)
 		self.current_id = len(self.crawled)
+		self.total_documents = self.current_id
 			
 	def read_save_files(self) -> None:
 		""" Reads and loads save files into memory. """
@@ -84,7 +81,7 @@ class InvertedIndex:
 		
 	def start_async(self) -> None:
 		for id in range(10):
-			worker = Worker(id, self.lock, self.q_in, self.q_out, self.total_documents)
+			worker = Worker(id, self.lock, self.q_in, self.q_out, self.running)
 			p = multiprocessing.Process(target=worker)
 			p.start()
 			self.workers.append(p)
@@ -92,14 +89,18 @@ class InvertedIndex:
 	def start(self) -> None:
 		try:
 			self.start_async()
+
+			for file in self.source.rglob("*.json"):
+				if str(file) in self.crawled:
+					continue
+				self.q_in.put((file, self.current_id))
+				self.current_id += 1
+
 			while not self.q_in.empty():
 				time.sleep(1)
 			self.join()
 		except KeyboardInterrupt:
-			print("Emptying queue...")
-			while not self.q_in.empty():
-				self.q_in.get()
-			print("Emptied queue.")
+			self.running.value = 0
 			self.join()
 
 	def join(self) -> None:
@@ -110,6 +111,11 @@ class InvertedIndex:
 	def save_to_file(self) -> None:
 		""" Combine the partial indices into one file. """
 		print("Saving to file. Do not quit...")
+		time.sleep(1)
+		while not self.q_out.empty():
+			file_path, id = self.q_out.get()
+			self.update_crawled_list(file_path, id)
+			self.total_documents += 1
 
 		# Basically LeetCode #23
 		indices = [open(f"partial/{file}") for file in os.listdir("partial")]
@@ -122,24 +128,18 @@ class InvertedIndex:
 				postings: List[Posting] = []
 				for i, token in enumerate(tokens):
 					if token == min_token:
-						[postings.append(Posting.from_string(p)) for p in postings_strings[i].split(";")]
+						[postings.append(p.split(",", 1)) for p in postings_strings[i].split(";")]
 						lines[i] = indices[i].readline().strip()
 						tokens[i], postings_strings[i] = lines[i].split(":", 1) if lines[i] else (None, None)
 
 				# Calculate tf-idf for each posting.
-				idf = math.log(self.total_documents.value / len(postings))
-				for posting in postings:
-					tf = posting.tf_idf
-					td_idf = round(tf * idf, 3)
-					posting.tf_idf = td_idf
+				idf = math.log(self.total_documents / len(postings))
+				for i in range(len(postings)):
+					postings[i][1] = float(postings[i][1]) * idf
 
 				# Write to main index.
-				index.write(f"{min_token}:" + ";".join(str(p) for p in postings) + "\n")
+				index.write(f"{min_token}:" + ";".join(f"{p[0]},{p[1]:.3f}" for p in postings) + "\n")
 		self.index_index()
-
-		while not self.q_out.empty():
-			file_path, id = self.q_out.get()
-			self.update_crawled_list(file_path, id)
 
 		print("Saved to file.")
 	
