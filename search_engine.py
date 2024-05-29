@@ -7,6 +7,8 @@ from src.posting import Posting
 from bs4 import BeautifulSoup
 import time
 from thefuzz import fuzz
+
+
 from nltk.stem import PorterStemmer
 
 def stem_tokens(tokens: List[str]) -> List[str]:
@@ -31,33 +33,69 @@ def get_postings(tokens: List[str], index_of_index: Dict[str, int]) -> List[List
                 token_postings.append(postings)
     return token_postings
 
-def filter(token_postings):
+
+def filter(token_postings, tokens, index_of_crawled):
     results = []
     doc_tf_idf = defaultdict(float)
-
     doc_to_postings = defaultdict(list)
+
     for postings in token_postings:
         for posting in postings:
             doc_to_postings[posting.id].append(posting)
     
     token_doc_ids = [set(posting.id for posting in postings) for postings in token_postings]
     
-    #print(f"Token Document IDs: {token_doc_ids}")  # Debugging
-
     # Find common document IDs that appear in all token_doc_ids sets
     if token_doc_ids:
         common_doc_ids = set.intersection(*token_doc_ids)
     else:
         common_doc_ids = set()
 
-    #print(f"Common Document IDs: {common_doc_ids}")  # Debugging
 
-    for doc_id in common_doc_ids:
-        tf_idf_score = sum(posting.tf_idf for posting in doc_to_postings[doc_id])
-        document = Posting(id=doc_id, tf_idf=tf_idf_score)
-        results.append(document)
+    with open("crawled.txt", "r") as crawled_file:
+        for doc_id in common_doc_ids:
+            crawled_file.seek(index_of_crawled[doc_id])
+            path = crawled_file.readline().strip()
+            with open(path, "r") as file:
+                data = json.load(file)
+                tf_idf_score = calc_doc_relevance(doc_to_postings[doc_id], tokens, data)
+                document = Posting(id=doc_id, tf_idf=tf_idf_score)
+                results.append(document)
     
     return results
+
+
+
+
+def calc_doc_relevance(postings: List[Posting], tokens: List[str], data: Dict) -> float:
+    # inital tf_idf from the summings 
+    tf_idf_score = sum(posting.tf_idf for posting in postings)
+    
+    # parsing content and extracting title 
+    soup = BeautifulSoup(data["content"], "html.parser")
+    title_tag = soup.title
+    title = title_tag.string if title_tag and title_tag.string else ""
+
+    # Split the title into individual words and lowercase each word
+    split_title = [word.lower() for word in title.split()]
+
+    # check for the posting title if the query matches up 
+    for each_word in split_title:
+        for token in tokens:
+            if token in each_word:
+                #print(f"match found for the token {token} and the word {each_word}")
+                tf_idf_score += 30
+
+    return tf_idf_score
+
+
+
+
+
+
+
+    
+
 
 def collect_and_display_results(results: List[Posting], index_of_crawled: Dict[int, int], tokens: List[str], num_of_results: int = 5):
     temp = open("temp.txt", "w")
@@ -87,6 +125,7 @@ def collect_and_display_results(results: List[Posting], index_of_crawled: Dict[i
                 st.markdown(f"...{context}...")
 
     temp.close()
+
 
 def read_index_files(file_name: str) -> Dict:
     index_dict = {}
@@ -126,7 +165,7 @@ def main():
     if st.button("Search"):
         if user_input:
             start = time.time()
-            tokens = user_input.lower().split()
+            tokens= user_input.lower().split()
             corrected_tokens = correct_spelling(tokens, posting_keys)
             print(f"Corrected Tokens: {corrected_tokens}")
 
@@ -139,11 +178,10 @@ def main():
             stemmed_postings = get_postings(stemmed_tokens, index_of_index)
 
             # filtering results 
-            normal_results = filter(normal_postings)
-            stemmed_results = filter(stemmed_postings)
+            normal_results = filter(normal_postings, corrected_tokens, index_of_crawled)
+            stemmed_results = filter(stemmed_postings, stemmed_tokens, index_of_crawled)
 
             # Combine results and remove duplicates
-            # duplicates aren't allowed cause its a diciotnary 
             combined_results = {posting.id: posting for posting in normal_results + stemmed_results}.values()
 
             if combined_results:
