@@ -1,70 +1,153 @@
+from multiprocessing import Process, Queue, Value
+from typing import Set, List, Tuple, TextIO
 from pathlib import Path
-from src.posting import Posting
-from typing import List
-import platform
-import math
 from src.worker import Worker
 import platform
+import shutil
+import math
 import os
-import time
-import multiprocessing
-from typing import Set
 		
 OS_WINDOWS = platform.system() == "Windows"		# Flag for if OS is Windows.
 
 class InvertedIndex:
 	def __init__(self, source: Path, restart=True) -> None:
-		self.workers: List[Worker]
-		self.index_save_path = Path("index.txt")        # File path for inverted index.
-		self.workers = []
-		self.q_in = multiprocessing.Queue()
-		self.q_out = multiprocessing.Queue()
-		self.running = multiprocessing.Value("i", 1)
-		self.total_documents = 0
-		self.lock = multiprocessing.Lock()
-		self.is_running = True
-		self.crawled: Set[str] = set()                  # Set of crawled files to keep track of which files don't need to be crawled again.
-		self.document_count: int = 0					# The total number of valid documents.
-		self.source: Path = source                      # Directory path containg webpages to index.
-		self.crawled_save_path = Path("crawled.txt")    # File path for names of crawled files.
-		self.crawled_file = None
-		self.index_of_crawled_file = None
-		self.file_position = 0
-		self.current_id = 0
+		self.source: Path = source                      		# Folder path containg documents to index.
+		self.index_folder = Path("indices")						# Folder path for indices.
+		self.partial_index_folder = Path("partial_indices")		# Folder path for partial indices.
+		self.index_save_path = Path("index.txt")        		# File path for inverted index.
+		self.crawled_save_path = Path("crawled.txt")    		# File path for names of crawled files.
 
-		# If the restart flag was not selected and the save files exist, then load them into memory.
-		if not restart and self.crawled_save_path.exists():
-			self.read_save_files()
-		# If the restart flag was selected or the save files don't exist, create them with empty contents.
+		self.workers: List[Process] = []				# List of worker processes.
+		self.finished_workers = 0						# The number of workers that finished processing.
+		self.q_in: Queue[Tuple[str, int]] = Queue()		# Queue storing tuples of (file_path, doc_id) for workers to tokenize and process.
+		self.q_out: Queue[Tuple[str, int]] = Queue()	# Queue storing tuples of (file_path, doc_id) for the main process to save to file.
+		self.running = Value("i", 1)					# Flag to indicate to workers whether to keep working or not.
+		
+		self.crawled: Set[str] = set()				# Set of crawled files to keep track of which files don't need to be crawled again.
+		self.crawled_file: TextIO = None			# File to the crawled save file.
+		self.index_of_crawled_file: TextIO = None	# File to the index of the crawled save file.
+
+		# If the restart flag was selected or the crawled save file doesn't exist, start indexing from nothing. Otherwise, read the crawled save file.
+		if restart or not self.crawled_save_path.exists():
+			self.create_save_files()
 		else:
-			for file in os.listdir("partial"):
-				os.remove(f"partial/{file}")
-			self.index_count = 0
-			with open(self.crawled_save_path, "w"), open(f"index_of_{self.crawled_save_path}", "w"):
-				print("Starting from empty set.")
+			self.read_save_files()
 
-		self.crawled_file = open(self.crawled_save_path, "a")
-		self.index_of_crawled_file = open(f"index_of_{self.crawled_save_path}", "a")
+		# Open the crawled save file and the index for it. These can be written into while the workers are working.
+		self.crawled_file = open(f"{self.index_folder}/{self.crawled_save_path}", "a")
+		self.index_of_crawled_file = open(f"{self.index_folder}/index_of_{self.crawled_save_path}", "a")
 
-	def read_crawled_file(self) -> None:
-		""" Read and load crawled save file into memory. """
+	def create_save_files(self):
+		""" Initializes the directory for partial indices, and creates new save files. """
+
+		# Delete the indices and partial indices folder and create empty ones.
+		for folder in (self.index_folder, self.partial_index_folder):
+			if os.path.exists(folder):
+				shutil.rmtree(folder)
+			os.makedirs(folder)
+
+		# Open a new file for the crawled save file, and a new index file for it.
+		for file in (f"{self.index_folder}/{self.crawled_save_path}", f"{self.index_folder}/index_of_{self.crawled_save_path}"):
+			with open(file, "w"):
+				pass
+
+	def read_save_files(self) -> None:
+		""" Read the crawled save file to get the pages that have already been crawled. """
+		
+		# Each line of the crawled save file is a file path for a document already crawled.
 		with open(self.crawled_save_path, "r") as file:
 			for file_path in file:
 				self.crawled.add(file_path.strip())
-		self.file_position = os.path.getsize(self.crawled_save_path)
-		self.current_id = len(self.crawled)
-		self.total_documents = self.current_id
-			
-	def read_save_files(self) -> None:
-		""" Reads and loads save files into memory. """
-		self.read_crawled_file()
-		print(f"Loaded {len(self.crawled)} pages.")
 
-	def update_crawled_list(self, file_path: Path, id: int) -> None:
-		self.crawled.add(file_path.name)
-		# Write the file path of this page to the crawled save file.
+	def start(self) -> None:
+		""" Starts indexing. """
+		try:
+			self.spawn_processes(10)		
+			self.enqueue_documents()	# Documents get enqueued for workers to process
+			self.dequeue_documents()	# Documents that finished processing get saved to file.
+		except KeyboardInterrupt:
+			pass
+
+		self.running.value = 0			# Signal to workers to stop working.
+		self.dequeue_documents()		# Output queue needs to be empty for workers to exit.
+		self.join_workers()				# Join workers first to free up resources.
+		self.empty_input_queue()		# Input queue needs to be empty for the main process to exit.
+		self.save_to_file()
+		self.index_index()
+
+	def spawn_processes(self, n: int) -> None:
+		""" Create n workers and spawn a process for each one. 
+		
+		Positional Arguments: \n
+		n -- The number of workers and processes to spawn.
+		"""
+		
+		for id in range(n):
+			worker = Worker(id, self.partial_index_folder, self.q_in, self.q_out, self.running)
+			p = Process(target=worker)
+			self.workers.append(p)
+			p.start()
+
+	def join_workers(self) -> None:
+		print("Joining workers...")
+		for worker in self.workers:
+			worker.join()
+		print(f"All workers joined.")
+
+	def enqueue_documents(self) -> None:
+		""" Iterates through the documents and adds them to the input queue. """
+
+		# Iterate through every .json file in the source folder, starting the id at the number of documents already crawled.
+		for id, file_path in enumerate(self.source.rglob("*.json"), start=len(self.crawled)):
+
+			# Skip the file if it has been crawled previously.
+			if str(file_path) in self.crawled:
+				continue
+
+			# Enqueue the file path with its assigned id.
+			self.q_in.put((file_path, id))
+
+		# Enqueue None values to signal to the workers there is no work left to be done.
+		for _ in range(len(self.workers)):
+			self.q_in.put(None)
+
+	def dequeue_documents(self) -> None:
+		""" Dequeues the documents processed by the workers and updates the crawled save file. """
+
+		file_position = os.path.getsize(f"{self.index_folder}/{self.crawled_save_path}")	# Start the file position at the size of the crawled save file.
+
+		# The main process keeps checking the queue until all of its workers have finished.
+		while self.finished_workers < len(self.workers):
+
+			# If the item from the queue is not None, process the document and id. A None value means a worker has finished.
+			if doc_and_id := self.q_out.get():
+				file_position += self.update_crawled_list(*doc_and_id, file_position)
+			else:
+				self.finished_workers += 1
+
+	def empty_input_queue(self) -> None:
+		""" Empties the input queue to allow the main process to join. """
+
+		print("Clearing input queue...")
+		while not self.q_in.empty():
+			self.q_in.get()
+		print("Cleared input queue.")
+
+	def update_crawled_list(self, file_path: Path, id: int, file_position: int) -> int:
+		""" Updates the crawled save file, as well as the index for it. 
+		
+		Arguments:\n
+		file_path -- The document path to be written to the crawled save file. \n
+		id -- The document id. \n
+		file_position -- The current position in the crawled save file. \n
+
+		Return: The number of bytes written to the crawled save file.
+		"""
+
+		# Write the file path of this document to the crawled save file.
 		line = f"{file_path}\n"
 		self.crawled_file.write(line)
+		self.crawled.add(file_path.name)
 
 		# Each line of the index of crawled is of the form: 
 		# 	<id>,<file_position>
@@ -73,85 +156,52 @@ class InvertedIndex:
 		#   27,16536
 		# The file path of document id 3 can be found at byte 8753 in the crawled save file.
 		# The file path of document id 27 can be found at byte 16536.
-		self.index_of_crawled_file.write(f"{id},{self.file_position}\n")
-		self.file_position += len(line) + OS_WINDOWS
-		
-	def start_async(self) -> None:
-		for id in range(10):
-			worker = Worker(id, self.lock, self.q_in, self.q_out, self.running)
-			p = multiprocessing.Process(target=worker)
-			p.start()
-			self.workers.append(p)
-
-	def start(self) -> None:
-		try:
-			self.start_async()
-
-			for file in self.source.rglob("*.json"):
-				if str(file) in self.crawled:
-					continue
-				self.q_in.put((file, self.current_id))
-				self.current_id += 1
-
-			while not self.q_in.empty():
-				while not self.q_out.empty():
-					file_path, id = self.q_out.get()
-					self.update_crawled_list(file_path, id)
-					self.total_documents += 1
-				time.sleep(1)
-			
-		except KeyboardInterrupt:
-			pass
-		self.running.value = 0
-		self.join()
-
-	def join(self) -> None:
-		self.save_to_file()
-		print("Trying to join...")
-		for worker in self.workers:
-			worker.join()
-		while not self.q_in.empty():
-			self.q_in.get()
+		self.index_of_crawled_file.write(f"{id},{file_position}\n")
+		return len(line) + OS_WINDOWS
 		
 	def save_to_file(self) -> None:
 		""" Combine the partial indices into one file. """
 		print("Saving to file. Do not quit...")
-		time.sleep(1)
-		while not self.q_out.empty():
-			file_path, id = self.q_out.get()
-			self.update_crawled_list(file_path, id)
-			self.total_documents += 1
 
-		# Basically LeetCode #23
-		indices = [open(f"partial/{file}") for file in os.listdir("partial")]
-		lines = [index.readline().strip() for index in indices]
-		tokens = [line.split(":", 1)[0] if line else None for line in lines]
-		postings_strings = [line.split(":", 1)[-1] if line else None for line in lines]
-		with open("index.txt", "w") as index:
-			while any(token for token in tokens):
-				min_token = min(token for token in tokens if token)
-				postings: List[Posting] = []
+		# Since the partial indices are in alphabetical order, we are essentially merging n sorted lists.
+		indices = [open(f"{self.partial_index_folder}/{file}") for file in os.listdir(self.partial_index_folder)]	# Open every partial index.
+		lines = [index.readline().strip() for index in indices]														# Read the first line from every file.
+
+		# Get the first token and list of postings from each file.
+		tokens: List[str] = [None for _ in indices]
+		postings_strings: List[str] = [None for _ in indices]
+		for i, line in enumerate(lines):
+			tokens[i], postings_strings[i] = line.split(":", 1) if line else (None, None)	
+
+		with open(f"{self.index_folder}/index.txt", "w") as index:
+			while any(token for token in tokens):						# Loop until the end of every file has been reached.											
+				min_token = min(token for token in tokens if token)		# The minimum token alphabetically out of all the documents.
+				postings: List[List[str, str]] = []						# A list containing pairs of strings. The first string is the doc id, and the second is the frequency. 
+
+				# For each token that is the minimum token, add its postings to one list.
+				index.write(f"{min_token}:")
 				for i, token in enumerate(tokens):
 					if token == min_token:
-						[postings.append(p.split(",", 1)) for p in postings_strings[i].split(";")]
-						lines[i] = indices[i].readline().strip()
+						lines[i] = indices[i].readline().strip()		# For each file that had the minimum token, read the next line.
+						postings += [p.split(",", 1) for p in postings_strings[i].split(";")]
 						tokens[i], postings_strings[i] = lines[i].split(":", 1) if lines[i] else (None, None)
 
-				# Calculate tf-idf for each posting.
-				idf = math.log(self.total_documents / len(postings))
+				# Calculate tf-idf for each posting and write to the main index.
+				index.write(f"{min_token}:")									# Write the token.
+				idf = math.log(len(self.crawled) / len(postings))
 				for i in range(len(postings)):
-					postings[i][1] = float(postings[i][1]) * idf
-
-				# Write to main index.
-				index.write(f"{min_token}:" + ";".join(f"{p[0]},{p[1]:.3f}" for p in postings) + "\n")
-		self.index_index()
+					doc_id, tf = postings[i]
+					tf_idf = int(tf) * idf
+					index.write(f"{";" if i else ""}{doc_id},{tf_idf:.3f}")		# Write the posting.
+				index.write("\n")
 
 		print("Saved to file.")
 	
 	def index_index(self) -> None:
 		""" Reads through the index and creates an index for that index. """
+
 		file_position = 0
-		with open(self.index_save_path, "r") as index, open(f"index_of_{self.index_save_path}", "w") as index_of_index:
+		with open(f"{self.index_folder}/{self.index_save_path}", "r") as index, open(f"{self.index_folder}/index_of_{self.index_save_path}", "w") as index_of_index:
 			for line in index:
 				# Each line of the index of index is of the form: 
 				# 	<token>,<file_position>

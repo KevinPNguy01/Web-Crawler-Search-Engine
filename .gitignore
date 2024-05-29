@@ -1,11 +1,5 @@
 .vscode/settings.json
 __pycache__
 DEV/
-asterix_ics_uci_edu
-index.json
-crawled.txt
-index_of_index.txt
-index_of_crawled.txt
-index.txt
-temp.txt
-partial/
+indices/
+partial_indices/
