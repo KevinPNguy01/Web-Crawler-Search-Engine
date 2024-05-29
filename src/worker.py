@@ -58,6 +58,7 @@ class Worker:
 		""" Called when the worker exits due to reaching the end of the queue or from KeyboardInterrupt. """
 
 		self.create_partial_index()		# Write the rest of the postings to a partial index.
+		self.merge_indices()			# Merge this workers indices.
 		self.q_out.put(None)			# Signal to the main process that this worker is done.
 		print(f"Worker {self.worker_id} exited.")
 
@@ -80,6 +81,41 @@ class Worker:
 		self.postings = {}
 		self.posting_count = 0
 		self.index_count += 1
+
+	def merge_indices(self) -> None:
+		""" Combine the partial indices into one file. """
+		print(f"Worker {self.worker_id} - Merging indices...")
+
+		# Since the partial indices are in alphabetical order, we are essentially merging n sorted lists.
+		indices = [open(f"{self.folder}/{file}") for file in os.listdir(self.folder) if file.startswith(f"w{self.worker_id}-")]	# Open every partial index belonging to this worker.
+		lines = [index.readline().strip() for index in indices]																	# Read the first line from every file.
+
+		# Get the first token and list of postings from each file.
+		tokens: List[str] = [None for _ in indices]
+		postings_strings: List[str] = [None for _ in indices]
+		for i, line in enumerate(lines):
+			tokens[i], postings_strings[i] = line.split(":", 1) if line else (None, None)	
+
+		with open(f"{self.folder}/w{self.worker_id}.dat", "w") as index:
+			while any(token for token in tokens):						# Loop until the end of every file has been reached.											
+				min_token = min(token for token in tokens if token)		# The minimum token alphabetically out of all the documents.
+				postings: List[List[str, str]] = []						# A list containing pairs of strings. The first string is the doc id, and the second is the frequency. 
+
+				# For each token that is the minimum token, add its postings strings to one list.
+				postings: List[str] = []
+				for i, token in enumerate(tokens):
+					if token == min_token:
+						lines[i] = indices[i].readline().strip()		# For each file that had the minimum token, read the next line.
+						postings.append(postings_strings[i])
+						tokens[i], postings_strings[i] = lines[i].split(":", 1) if lines[i] else (None, None)
+				index.write(f"{min_token}:" + ";".join(postings) + "\n")
+
+		for file in indices:
+			file.close()
+		for file in os.listdir(self.folder):
+			if file.startswith(f"w{self.worker_id}-"):
+				os.remove(f"{self.folder}/{file}")
+		print(f"Worker {self.worker_id} - Merged indices...")
 
 	def process_document(self, file_path: Path, id: int) -> None:
 		""" Processing the given document, extracting the postings from it. """
