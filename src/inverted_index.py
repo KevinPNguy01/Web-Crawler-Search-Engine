@@ -179,7 +179,6 @@ class InvertedIndex:
 				postings: List[List[str, str]] = []						# A list containing pairs of strings. The first string is the doc id, and the second is the frequency. 
 
 				# For each token that is the minimum token, add its postings to one list.
-				index.write(f"{min_token}:")
 				for i, token in enumerate(tokens):
 					if token == min_token:
 						lines[i] = indices[i].readline().strip()		# For each file that had the minimum token, read the next line.
