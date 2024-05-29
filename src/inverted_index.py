@@ -185,6 +185,10 @@ class InvertedIndex:
 						postings += [p.split(",", 1) for p in postings_strings[i].split(";")]
 						tokens[i], postings_strings[i] = lines[i].split(":", 1) if lines[i] else (None, None)
 
+				# Skip n-grams that have less than a certain number of postings.
+				if min_token.find(" ") > -1 and len(postings) < 10:
+					continue
+
 				# Calculate tf-idf for each posting and write to the main index.
 				index.write(f"{min_token}:")									# Write the token.
 				idf = math.log(len(self.crawled) / len(postings))
