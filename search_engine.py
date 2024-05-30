@@ -7,29 +7,25 @@ from src.posting import Posting
 from bs4 import BeautifulSoup
 import time
 from thefuzz import fuzz
-import nltk
-import cProfile
+
 
 from nltk.stem import PorterStemmer
-import nltk 
 
 def stem_tokens(tokens: List[str]) -> List[str]:
     stemmer = PorterStemmer()
     return [stemmer.stem(token) for token in tokens]
 
 # need to modify this 
-
-string_sadad = "master of software engineering "
-
-
-
-
 def get_postings(tokens: List[str], index_of_index: Dict[str, int]) -> List[List[Posting]]:
     token_postings = []  # List to store postings for each token
 
     with open("indices/index.txt", "r") as index:
-
         for token in tokens:
+
+            #similar_tokens = [key for key in index_of_index.keys() if fuzz.ratio(token, key) >= 100]
+            #print(f"Token: {token}, Similar Tokens: {similar_tokens}")
+
+        #for similar_token in similar_tokens:
             index_position = index_of_index.get(token, -1)
             if index_position > -1:
                 index.seek(index_position)
@@ -37,8 +33,6 @@ def get_postings(tokens: List[str], index_of_index: Dict[str, int]) -> List[List
                 token, postings_string = line.split(":", 1)
                 postings = [Posting.from_string(p) for p in postings_string.split(";")]
                 token_postings.append(postings)
-                
-               
     return token_postings
 
 def filter(token_postings, tokens, index_of_crawled):
@@ -113,19 +107,6 @@ def read_index_files(file_name: str) -> Dict:
     return index_dict
 
 def correct_spelling(tokens: List[str], posting_keys: Dict[str, List[str]]) -> List[str]:
-    return tokens 
-
-    #corrected_tokens = []
-    #for token in tokens:
-        #first_letter = token[0]
-        #if first_letter in posting_keys:
-            #possible_tokens = posting_keys[first_letter]
-            #best_match = difflib.get_close_matches(token, possible_tokens, n=1)
-            #corrected_tokens.append(best_match[0] if best_match else token)
-        #else:
-            #corrected_tokens.append(token)
-    #return corrected_tokens
-    return tokens
     corrected_tokens = []
     for token in tokens:
         first_letter = token[0]
@@ -141,7 +122,7 @@ def main():
     index_of_index = read_index_files("index_of_index.txt")
     index_of_crawled = read_index_files("index_of_crawled.txt")
 
-    with open("posting_keys.json", "r") as file:
+    with open("indices/index_dictionary.json", "r") as file:
         posting_keys = json.load(file)
 
     st.title("Search Engine")
@@ -149,28 +130,14 @@ def main():
 
     if st.button("Search"):
         if user_input:
-            start = time.time()       
-
-            # for each_query in nltk.ngrams(user_input.lower().split(), 3) iterates over each trigram 
-            # for token in each_query does this for each for loop 
-
-            token_legnth = len(user_input.lower().split())
-
-            if token_legnth <= 2:
-                tokens = [" ".join(ngram) for ngram in nltk.ngrams(user_input.lower().split(), 1)]
-            
-            elif token_legnth == 3: 
-                tokens = [" ".join(ngram) for ngram in nltk.ngrams(user_input.lower().split(), 2)]
-
-            else:
-                tokens = [" ".join(ngram) for ngram in nltk.ngrams(user_input.lower().split(), 3)]
-
+            start = time.time()
+            tokens= user_input.lower().split()
             corrected_tokens = correct_spelling(tokens, posting_keys)
-            #print(f"Corrected Tokens: {corrected_tokens}")
+            print(f"Corrected Tokens: {corrected_tokens}")
 
             # stemming the corrected tokens
             stemmed_tokens = stem_tokens(corrected_tokens)
-            #print(f"Stemmed Tokens: {stemmed_tokens}")
+            print(f"Stemmed Tokens: {stemmed_tokens}")
 
             # getting postings for normal + stemmed tokens 
             normal_postings = get_postings(corrected_tokens, index_of_index)
@@ -180,8 +147,10 @@ def main():
             normal_results = filter(normal_postings, corrected_tokens, index_of_crawled)
             stemmed_results = filter(stemmed_postings, stemmed_tokens, index_of_crawled)
 
+
             # Combine results and remove duplicates
             combined_results = {posting.id: posting for posting in normal_results + stemmed_results}.values()
+
 
             if combined_results:
                 collect_and_display_results(combined_results, index_of_crawled, corrected_tokens + stemmed_tokens)
