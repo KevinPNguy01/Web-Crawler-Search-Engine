@@ -215,6 +215,7 @@ class InvertedIndex:
 				#   computer,2376
 				# The token "research" can be found at byte 0 of the index.
 				# The token "computer" can be found at byte 2376.
+
 				token = line.split(":", 1)[0]
 				index_of_index.write(f"{token},{file_position}\n")
 				file_position += len(line) + OS_WINDOWS * line.count("\n")

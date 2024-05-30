@@ -23,7 +23,8 @@ class Worker:
 		self.posting_count: int = 0						# The current number of postings.
 		self.index_count = 0							# The current number of partial indices.
 
-		self.page_hashes = set()
+		self.page_hashes: Dict[int, str] = {}
+		self.duplicate_pages: Dict[str, int] = {}
 
 		# Count the number of partial indices associated with this worker id.
 		for file in os.listdir(self.folder):
@@ -53,6 +54,7 @@ class Worker:
 
 		self.create_partial_index()		# Write the rest of the postings to a partial index.
 		self.merge_indices()			# Merge this workers indices.
+		#self.print_duplicate()      # write out duplicate webpages and their paths to a file 
 		self.q_out.put(None)			# Signal to the main process that this worker is done.
 		print(f"Worker {self.worker_id} exited.")
 
@@ -113,20 +115,15 @@ class Worker:
 		print(f"Worker {self.worker_id} - Merged indices.")
 
 
-	def extract_text(self, soup: BeautifulSoup) -> str:
-		""" Extract plain text from HTML content. """
-		# taking out javascript / css
-		for script in soup(["script", "style"]):
-			script.extract()  
-		return soup.get_text()
-
-	def is_duplicate(self, page_hash: str) -> bool:
-		if page_hash in self.page_hashes:
+	def is_duplicate(self, page_hash: str, page_path) -> bool:
+		if page_hash in self.page_hashes.keys():
 			return True
-		self.page_hashes.add(page_hash)
+		self.page_hashes[page_hash] = page_path
 		return False
 	
 	def compute_hash(self,page_content: str) : 
+		raw_text = ' '.join(page_content)
+
 		""" this function will return a hash value for a given document 
 		for each character in the hash we multily by the prime 
 		+ ord(char) gives us the ascii value of the character
@@ -138,15 +135,12 @@ class Worker:
 		and lets us produce a unique hash number 
 		"""
 
-		#
 		hash_value = 0
 		prime = 31  # A small prime number for multiplication
-		for char in page_content:
+		for char in raw_text:
 			hash_value = (hash_value * prime + ord(char)) % (2**32)  # Use a large prime modulus to avoid overflow
 		return hash_value
 	
-
-
 	def process_document(self, file_path: Path, id: int) -> None:
 		""" Processing the given document, extracting the postings from it. """
 
@@ -157,16 +151,11 @@ class Worker:
 		if not is_valid_html(webpage.content):
 			return
 		
-		soup = BeautifulSoup(page.content, "lxml")
-		title = soup.find("title")
-		title = title.string if title else ""
-		title = re.sub(r'\s+',' ', title if title else "").strip()
-
-		text_content = self.extract_text(soup)
+		text_content = webpage.get_text()
 		page_hash = self.compute_hash(text_content)
 
-		if self.is_duplicate(page_hash):
-			print(f"Dupliate page found {self.worker_id} locateed  in {file_path}")
+		if self.is_duplicate(page_hash, file_path):
+			self.duplicate_pages[file_path] = page_hash
 			return
 
 		# Add all postings from that file to this worker's own dict.
@@ -175,3 +164,8 @@ class Worker:
 			self.posting_count += 1
 		self.q_out.put((id, file_path, webpage.get_title(), webpage.url))
 		print(f"Worker {self.worker_id} - {id} - {file_path}")
+
+	def print_duplicate(self):
+		for key,value in self.duplicate_pages.items():
+			print(f"duplicate page found for {key} and {self.page_hashes[value]}")
+
