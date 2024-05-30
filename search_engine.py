@@ -154,7 +154,7 @@ def main():
             # for each_query in nltk.ngrams(user_input.lower().split(), 3) iterates over each trigram 
             # for token in each_query does this for each for loop 
 
-            token_legnth = len(tokens)
+            token_legnth = len(user_input.lower().split())
 
             if token_legnth <= 2:
                 tokens = [" ".join(ngram) for ngram in nltk.ngrams(user_input.lower().split(), 1)]
