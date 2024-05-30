@@ -93,7 +93,7 @@ def collect_and_display_results(results: List[Posting], index_of_crawled: Dict[i
 
             
 def collect_results_to_file(results: List[Posting], index_of_crawled: Dict[int, int], tokens: List[str], start_time: float, query: str, num_of_results: int = 5):
-    with open("query_results.txt", "a") as f: 
+    with open("query_results.txt", "a", encoding="utf-8") as f: 
         f.write(f"Query: {query}\n")
         f.write("Results:\n")
 

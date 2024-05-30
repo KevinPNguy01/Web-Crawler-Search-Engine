@@ -15,7 +15,7 @@ def main():
         queries = [line.strip() for line in query_file if line.strip()]
 
     # Clear the results file initially
-    with open("query_results.txt", "w") as result_file:
+    with open("query_results.txt", "w", encoding="utf-8") as result_file:
         result_file.write("")
 
     for query in queries:
