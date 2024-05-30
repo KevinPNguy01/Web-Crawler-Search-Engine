@@ -24,7 +24,6 @@ def get_postings(tokens: List[str], index_of_index: Dict[str, int]) -> List[List
     token_postings = []  # List to store postings for each token
 
     with open("indices/index.txt", "r") as index:
-
         for token in tokens:
             index_position = index_of_index.get(token, -1)
             if index_position > -1:
@@ -153,17 +152,23 @@ def correct_spelling(tokens: List[str], posting_keys: Dict[str, List[str]]) -> L
 # 0 = on search_egnine 1 = write_report
 def run(user_input, posting_keys, index_of_index, index_of_crawled, t = 0):
     start = time.time()
-    token_length = len(user_input.lower().split())
-
-    if token_length <= 2:
-        tokens = [" ".join(ngram) for ngram in nltk.ngrams(user_input.lower().split(), 1)]
-    elif token_length == 3: 
-        tokens = [" ".join(ngram) for ngram in nltk.ngrams(user_input.lower().split(), 2)]
-    else:
-        tokens = [" ".join(ngram) for ngram in nltk.ngrams(user_input.lower().split(), 3)]
+    tokens = user_input.lower().split()
+    token_length = len(tokens)
 
     corrected_tokens = correct_spelling(tokens, posting_keys)
     stemmed_tokens = stem_tokens(corrected_tokens)
+
+    if token_length <= 2:
+        corrected_tokens = [" ".join(ngram) for ngram in nltk.ngrams(corrected_tokens, 1)]
+        stemmed_tokens = [" ".join(ngram) for ngram in nltk.ngrams(stemmed_tokens, 1)]
+        if " ".join(corrected_tokens) == " ".join(stemmed_tokens):
+            stemmed_tokens = []
+    elif token_length == 3: 
+        corrected_tokens = [" ".join(ngram) for ngram in nltk.ngrams(corrected_tokens, 2)]
+        stemmed_tokens = []
+    else:
+        corrected_tokens = [" ".join(ngram) for ngram in nltk.ngrams(corrected_tokens, 3)]
+        stemmed_tokens = []
 
     normal_postings = get_postings(corrected_tokens, index_of_index)
     stemmed_postings = get_postings(stemmed_tokens, index_of_index)
