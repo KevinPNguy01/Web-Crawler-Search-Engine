@@ -1,24 +1,11 @@
 from pathlib import Path
 from src.posting import Posting
 from typing import Dict, List
-import json
 import os
 from multiprocessing import Queue, Value
 import signal
-import msgspec
 import ctypes
-from bs4 import BeautifulSoup
-import re
-from src.tokenizer import tokenize
-
-from webpage import WebPage
-
-class WebPage(msgspec.Struct, gc=False):
-    url: str
-    content: str
-    encoding: str
-
-decoder = msgspec.json.Decoder(type=WebPage)
+from src.webpage import WebPage
 
 def is_valid_html(content: str) -> bool:
 	""" Ensure the JSON file has the "content" field and contains HTML tags. """
@@ -163,12 +150,11 @@ class Worker:
 	def process_document(self, file_path: Path, id: int) -> None:
 		""" Processing the given document, extracting the postings from it. """
 
-		# Load json file for this document quickly.
-		with open(file_path, encoding="utf-8") as f:
-			page = decoder.decode(f.read())
+		# Load webpage from file path.
+		webpage = WebPage.from_path(file_path)
 
 		# Skip file if it contains invalid html.
-		if not is_valid_html(page.content):
+		if not is_valid_html(webpage.content):
 			return
 		
 		soup = BeautifulSoup(page.content, "lxml")
@@ -184,8 +170,8 @@ class Worker:
 			return
 
 		# Add all postings from that file to this worker's own dict.
-		for token, posting in Posting.get_postings(soup, id).items():
+		for token, posting in Posting.get_postings(webpage.soup, id).items():
 			self.postings.setdefault(token, []).append(posting)
 			self.posting_count += 1
-		self.q_out.put((id, file_path, title, page.url))
+		self.q_out.put((id, file_path, webpage.get_title(), webpage.url))
 		print(f"Worker {self.worker_id} - {id} - {file_path}")

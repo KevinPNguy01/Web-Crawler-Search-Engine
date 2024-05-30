@@ -10,7 +10,7 @@ import re
 def extract_text(soup: BeautifulSoup) -> List[str]:
     # Given content representing a webpage, return the textual content.
 
-    [s.decompose() for s in soup(['style', 'script', '[document]', 'head', 'title'])]
+    [s.decompose() for s in soup(['style', 'code', 'script', '[document]'])]
     return [re.sub(r'\s+',' ', string) for string in soup.stripped_strings if string]
 
 # Custom comparison function that sorts by frequency descending, and then alphabetically.

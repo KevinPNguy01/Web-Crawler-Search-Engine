@@ -137,12 +137,12 @@ def correct_spelling(tokens: List[str], posting_keys: Dict[str, List[str]]) -> L
 
 # type denotes if running on directly search_engine or on the write_report 
 # 0 = on search_egnine 1 = write_report
-def run(user_input, posting_keys, index_of_index, index_of_crawled, t = 0):
+def run(user_input, index_of_index, index_of_crawled, t = 0):
     start = time.time()
     tokens = [token.lower() for token in re.findall(r'\b[a-zA-Z0-9]+\b', user_input) if not token.isnumeric() or len(token) <= 4]
     token_length = len(tokens)
 
-    corrected_tokens = correct_spelling(tokens, posting_keys)
+    corrected_tokens = correct_spelling(tokens, None)
     stemmed_tokens = stem_tokens(corrected_tokens)
 
     if token_length <= 2:
@@ -182,15 +182,12 @@ def main():
     index_of_index = read_index_files("index_of_index.txt")
     index_of_crawled = read_index_files("index_of_crawled.txt")
 
-    with open("indices/index_dictionary.json", "r") as file:
-        posting_keys = json.load(file)
-
     st.title("Search Engine")
     user_input = st.text_input("Enter a query: ")
 
     if st.button("Search"):
         if user_input:
-            run(user_input, posting_keys, index_of_index, index_of_crawled)
+            run(user_input, index_of_index, index_of_crawled)
 
 
 if __name__ == "__main__":
