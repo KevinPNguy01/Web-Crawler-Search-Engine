@@ -7,6 +7,9 @@ from multiprocessing import Queue, Value
 import signal
 import msgspec
 import ctypes
+from bs4 import BeautifulSoup
+import re
+from src.tokenizer import tokenize
 
 class WebPage(msgspec.Struct, gc=False):
     url: str
@@ -87,7 +90,7 @@ class Worker:
 		print(f"Worker {self.worker_id} - Merging indices...")
 
 		# Since the partial indices are in alphabetical order, we are essentially merging n sorted lists.
-		indices = [open(f"{self.folder}/{file}") for file in os.listdir(self.folder) if file.startswith(f"w{self.worker_id}-")]	# Open every partial index belonging to this worker.
+		indices = [open(f"{self.folder}/{file}") for file in os.listdir(self.folder) if file.startswith(f"w{self.worker_id}")]	# Open every partial index belonging to this worker.
 		lines = [index.readline().strip() for index in indices]																	# Read the first line from every file.
 
 		# Get the first token and list of postings from each file.
@@ -115,7 +118,8 @@ class Worker:
 		for file in os.listdir(self.folder):
 			if file.startswith(f"w{self.worker_id}-"):
 				os.remove(f"{self.folder}/{file}")
-		print(f"Worker {self.worker_id} - Merged indices...")
+		os.rename(f"{self.folder}/w{self.worker_id}.dat", f"{self.folder}/w{self.worker_id}-0.dat")
+		print(f"Worker {self.worker_id} - Merged indices.")
 
 	def process_document(self, file_path: Path, id: int) -> None:
 		""" Processing the given document, extracting the postings from it. """
@@ -127,10 +131,15 @@ class Worker:
 		# Skip file if it contains invalid html.
 		if not is_valid_html(page.content):
 			return
+		
+		soup = BeautifulSoup(page.content, "lxml")
+		title = soup.find("title")
+		title = title.string if title else ""
+		title = re.sub(r'\s+',' ', title if title else "").strip()
 
 		# Add all postings from that file to this worker's own dict.
-		for token, posting in Posting.get_postings(page.content, id).items():
+		for token, posting in Posting.get_postings(soup, id).items():
 			self.postings.setdefault(token, []).append(posting)
 			self.posting_count += 1
-		self.q_out.put((file_path, id))
+		self.q_out.put((id, file_path, title))
 		print(f"Worker {self.worker_id} - {id} - {file_path}")

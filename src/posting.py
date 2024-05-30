@@ -1,12 +1,13 @@
 from typing import Dict, Self
 from src.tokenizer import *
+from bs4 import BeautifulSoup
 
 class Posting: 
     @staticmethod
-    def get_postings(content: str, id: int) -> Dict[str, Self]:
+    def get_postings(soup: BeautifulSoup, id: int) -> Dict[str, Self]:
         # Returns a dict of tokens to postings for this file.
         # Extract text from webpage content.
-        text = extract_text(content)
+        text = extract_text(soup)
         # Tokenize text.
         frequencies = tokenize(text)
         # Create postings for each token and return dict.

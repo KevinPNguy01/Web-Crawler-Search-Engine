@@ -7,10 +7,9 @@ from nltk.util import ngrams
 import json
 import re
 
-def extract_text(content: str) -> List[str]:
+def extract_text(soup: BeautifulSoup) -> List[str]:
     # Given content representing a webpage, return the textual content.
 
-    soup = BeautifulSoup(content, "lxml")
     [s.decompose() for s in soup(['style', 'script', '[document]', 'head', 'title'])]
     return [re.sub(r'\s+',' ', string) for string in soup.stripped_strings if string]
 
@@ -27,7 +26,7 @@ def compare(item1: Tuple[str, int], item2: Tuple[str, int]) -> int:
 
 # This runs in O(n) with respect to the size of the file since it iterates through each line of the file once, 
 # and iterates through each character of each line only once.
-def tokenize(text: List[str]) -> List[str]:
+def tokenize(text: List[str]) -> Dict[str, int]:
     n_grams = []
     for string in text:
         tokens: List[str] = [token.lower() for token in re.findall(r'\b[a-zA-Z0-9]+\b', string) if not token.isnumeric() or len(token) <= 4]

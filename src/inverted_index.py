@@ -20,7 +20,7 @@ class InvertedIndex:
 		self.workers: List[Process] = []				# List of worker processes.
 		self.finished_workers = 0						# The number of workers that finished processing.
 		self.q_in: Queue[Tuple[str, int]] = Queue()		# Queue storing tuples of (file_path, doc_id) for workers to tokenize and process.
-		self.q_out: Queue[Tuple[str, int]] = Queue()	# Queue storing tuples of (file_path, doc_id) for the main process to save to file.
+		self.q_out: Queue[Tuple[str, int]] = Queue()	# Queue storing tuples of (file_path, doc_id, title) for the main process to save to file.
 		self.running = Value("i", 1)					# Flag to indicate to workers whether to keep working or not.
 		
 		self.crawled: Set[str] = set()				# Set of crawled files to keep track of which files don't need to be crawled again.
@@ -28,14 +28,14 @@ class InvertedIndex:
 		self.index_of_crawled_file: TextIO = None	# File to the index of the crawled save file.
 
 		# If the restart flag was selected or the crawled save file doesn't exist, start indexing from nothing. Otherwise, read the crawled save file.
-		if restart or not self.crawled_save_path.exists():
+		if restart or not Path(f"{self.index_folder}/{self.crawled_save_path}").exists():
 			self.create_save_files()
 		else:
 			self.read_save_files()
 
 		# Open the crawled save file and the index for it. These can be written into while the workers are working.
-		self.crawled_file = open(f"{self.index_folder}/{self.crawled_save_path}", "a")
-		self.index_of_crawled_file = open(f"{self.index_folder}/index_of_{self.crawled_save_path}", "a")
+		self.crawled_file = open(f"{self.index_folder}/{self.crawled_save_path}", "a", encoding="utf-8")
+		self.index_of_crawled_file = open(f"{self.index_folder}/index_of_{self.crawled_save_path}", "a", encoding="utf-8")
 
 	def create_save_files(self):
 		""" Initializes the directory for partial indices, and creates new save files. """
@@ -55,10 +55,10 @@ class InvertedIndex:
 		""" Read the crawled save file to get the pages that have already been crawled. """
 		
 		# Each line of the crawled save file is a file path for a document already crawled.
-		with open(self.crawled_save_path, "r") as file:
+		with open(f"{self.index_folder}/{self.crawled_save_path}", "r", encoding="utf-8") as file:
 			for file_path in file:
-				self.crawled.add(file_path.strip())
-
+				if file_path.startswith(self.source.name):
+					self.crawled.add(file_path.strip())
 	def start(self) -> None:
 		""" Starts indexing. """
 		try:
@@ -98,7 +98,8 @@ class InvertedIndex:
 		""" Iterates through the documents and adds them to the input queue. """
 
 		# Iterate through every .json file in the source folder, starting the id at the number of documents already crawled.
-		for id, file_path in enumerate(self.source.rglob("*.json"), start=len(self.crawled)):
+		id = len(self.crawled)
+		for id, file_path in enumerate(self.source.rglob("*.json")):
 
 			# Skip the file if it has been crawled previously.
 			if str(file_path) in self.crawled:
@@ -106,6 +107,7 @@ class InvertedIndex:
 
 			# Enqueue the file path with its assigned id.
 			self.q_in.put((file_path, id))
+			id += 1
 
 		# Enqueue None values to signal to the workers there is no work left to be done.
 		for _ in range(len(self.workers)):
@@ -120,8 +122,8 @@ class InvertedIndex:
 		while self.finished_workers < len(self.workers):
 
 			# If the item from the queue is not None, process the document and id. A None value means a worker has finished.
-			if doc_and_id := self.q_out.get():
-				file_position += self.update_crawled_list(*doc_and_id, file_position)
+			if doc_info := self.q_out.get():
+				file_position += self.update_crawled_list(*doc_info, file_position)
 			else:
 				self.finished_workers += 1
 
@@ -133,7 +135,7 @@ class InvertedIndex:
 			self.q_in.get()
 		print("Cleared input queue.")
 
-	def update_crawled_list(self, file_path: Path, id: int, file_position: int) -> int:
+	def update_crawled_list(self, id: int, file_path: Path, title: str, file_position: int) -> int:
 		""" Updates the crawled save file, as well as the index for it. 
 		
 		Arguments:\n
@@ -145,7 +147,7 @@ class InvertedIndex:
 		"""
 
 		# Write the file path of this document to the crawled save file.
-		line = f"{file_path}\n"
+		line = f"{file_path}\n{title}\n"
 		self.crawled_file.write(line)
 		self.crawled.add(file_path.name)
 
@@ -157,7 +159,7 @@ class InvertedIndex:
 		# The file path of document id 3 can be found at byte 8753 in the crawled save file.
 		# The file path of document id 27 can be found at byte 16536.
 		self.index_of_crawled_file.write(f"{id},{file_position}\n")
-		return len(line) + OS_WINDOWS
+		return len(line.encode("utf-8")) + OS_WINDOWS * line.count("\n")
 		
 	def save_to_file(self) -> None:
 		""" Combine the partial indices into one file. """
@@ -215,4 +217,4 @@ class InvertedIndex:
 				# The token "computer" can be found at byte 2376.
 				token = line.split(":", 1)[0]
 				index_of_index.write(f"{token},{file_position}\n")
-				file_position += len(line) + OS_WINDOWS
+				file_position += len(line) + OS_WINDOWS * line.count("\n")
