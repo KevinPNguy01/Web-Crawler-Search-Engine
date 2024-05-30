@@ -27,7 +27,6 @@ string_sadad = "master of software engineering "
 def get_postings(tokens: List[str], index_of_index: Dict[str, int]) -> List[List[Posting]]:
     token_postings = []  # List to store postings for each token
 
-
     with open("indices/index.txt", "r") as index:
 
         for token in tokens:
@@ -154,7 +153,17 @@ def main():
 
             # for each_query in nltk.ngrams(user_input.lower().split(), 3) iterates over each trigram 
             # for token in each_query does this for each for loop 
-            tokens = [" ".join(ngram) for ngram in nltk.ngrams(user_input.lower().split(), 3)]
+
+            token_legnth = len(tokens)
+
+            if token_legnth <= 2:
+                tokens = [" ".join(ngram) for ngram in nltk.ngrams(user_input.lower().split(), 1)]
+            
+            elif token_legnth == 3: 
+                tokens = [" ".join(ngram) for ngram in nltk.ngrams(user_input.lower().split(), 2)]
+
+            else:
+                tokens = [" ".join(ngram) for ngram in nltk.ngrams(user_input.lower().split(), 3)]
 
             corrected_tokens = correct_spelling(tokens, posting_keys)
             #print(f"Corrected Tokens: {corrected_tokens}")
