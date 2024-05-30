@@ -9,6 +9,7 @@ import time
 from thefuzz import fuzz
 import nltk
 import cProfile
+import re
 
 from nltk.stem import PorterStemmer
 import nltk 
@@ -52,12 +53,11 @@ def filter(token_postings, tokens, index_of_crawled):
         common_doc_ids = set.intersection(*token_doc_ids)
     else:
         common_doc_ids = set()
-
     with open("indices/crawled.txt", "r", encoding="utf-8") as crawled_file:
         for doc_id in common_doc_ids:
             # tells you what byte come in 
             crawled_file.seek(index_of_crawled[doc_id])
-            path = crawled_file.readline().strip()
+            path = crawled_file.readline()
             title = crawled_file.readline()
             tf_idf_score = calc_doc_relevance(doc_to_postings[doc_id], tokens, title )
             document = Posting(id=doc_id, tf_idf=tf_idf_score)
@@ -149,7 +149,7 @@ def correct_spelling(tokens: List[str], posting_keys: Dict[str, List[str]]) -> L
 # 0 = on search_egnine 1 = write_report
 def run(user_input, posting_keys, index_of_index, index_of_crawled, t = 0):
     start = time.time()
-    tokens = user_input.lower().split()
+    tokens = [token.lower() for token in re.findall(r'\b[a-zA-Z0-9]+\b', user_input) if not token.isnumeric() or len(token) <= 4]
     token_length = len(tokens)
 
     corrected_tokens = correct_spelling(tokens, posting_keys)
