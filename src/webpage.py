@@ -32,7 +32,7 @@ class WebPage(msgspec.Struct, gc=False):
 		response = CLIENT.chat.completions.create(
 			model="gpt-3.5-turbo",
 			messages=[
-				{"role": "system", "content": "Create a short summary for the following webpage content that uses 30 completion_tokens or less…"},
+				{"role": "system", "content": "Summarize following webpage content using 30 completion_tokens or less. Not complete sentence, don't mention the word summary"},
 				{"role": "user", "content": "\n".join(s for s in self.get_text() if len(s) >= 5)}
 			]
 		)
@@ -40,13 +40,13 @@ class WebPage(msgspec.Struct, gc=False):
 	
 	@classmethod
 	def from_path(cls, path: Path):
-		with open(path) as f:
+		with open(path, "r", encoding="utf-8") as f:
 			return decoder.decode(f.read())
 
 decoder = msgspec.json.Decoder(type=WebPage)
 
 if __name__ == "__main__":
-	webpage = WebPage.from_path(Path("DEV\\wics_ics_uci_edu\\dee02f125e36fb566c5e32ccb7b149c904d146110da94531d5080984eb6faf97.json"))
+	webpage = WebPage.from_path(Path("DEV\\ngs_ics_uci_edu\\f46429fcd2d984473eac85f30165384427dbd4471e7750f7989fc79b2a70ddb2.json"))
 	print(webpage.url)
 	print(webpage.get_title())
 	print(webpage.get_text())

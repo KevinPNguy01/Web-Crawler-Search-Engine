@@ -6,16 +6,16 @@ URL: https://www.informatics.uci.edu/grad/mswe/
 Title: Master of Software Engineering (MSWE) | Informatics @ the University of California, Irvine
 URL: https://www.informatics.uci.edu/grad/mswe/#content
 
-Title: How to Apply – Master of Software Engineering
-URL: https://mswe.ics.uci.edu/admissions/admissions-overview/
+Title: Overview | Informatics @ the University of California, Irvine
+URL: https://www.informatics.uci.edu/grad/overview/
 
-Title: Master of Software Engineering – Master of Software Engineering (MSE)
-URL: https://mswe.ics.uci.edu/
+Title: Overview | Informatics @ the University of California, Irvine
+URL: https://www.informatics.uci.edu/grad/overview/#content
 
-Title: About the Program – Master of Software Engineering
-URL: https://mswe.ics.uci.edu/program/about-the-program/
+Title: M.S. Software Engineering | Informatics @ the University of California, Irvine
+URL: https://www.informatics.uci.edu/grad/ms-software-engineering/
 
-Time taken: 0.04 seconds
+Time taken: 0.01 seconds
 
 ==================================================
 
@@ -27,16 +27,16 @@ URL: https://www.informatics.uci.edu/grad/mswe/
 Title: Master of Software Engineering (MSWE) | Informatics @ the University of California, Irvine
 URL: https://www.informatics.uci.edu/grad/mswe/#content
 
-Title: How to Apply – Master of Software Engineering
-URL: https://mswe.ics.uci.edu/admissions/admissions-overview/
+Title: Overview | Informatics @ the University of California, Irvine
+URL: https://www.informatics.uci.edu/grad/overview/
 
-Title: Master of Software Engineering – Master of Software Engineering (MSE)
-URL: https://mswe.ics.uci.edu/
+Title: Overview | Informatics @ the University of California, Irvine
+URL: https://www.informatics.uci.edu/grad/overview/#content
 
-Title: About the Program – Master of Software Engineering
-URL: https://mswe.ics.uci.edu/program/about-the-program/
+Title: M.S. Software Engineering | Informatics @ the University of California, Irvine
+URL: https://www.informatics.uci.edu/grad/ms-software-engineering/
 
-Time taken: 0.04 seconds
+Time taken: 0.01 seconds
 
 ==================================================
 
@@ -48,16 +48,16 @@ URL: https://www.informatics.uci.edu/explore/faculty-profiles/cristina-lopes/#co
 Title: Cristina Lopes | Informatics @ the University of California, Irvine
 URL: https://www.informatics.uci.edu/explore/faculty-profiles/cristina-lopes/
 
+Title: faculty profile @ the bren school of information and computer sciences at uc irvine
+URL: https://www.ics.uci.edu/faculty/profiles/view_faculty.php?ucinetid=lopes
+
 Title: Hitesh Sajnani's homepage
 URL: https://www.ics.uci.edu/~hsajnani/
 
-Title: Lopes featured speaker at 2016 OpenSimulator Community Conference | Informatics @ the University of California, Irvine
-URL: https://www.informatics.uci.edu/lopes-featured-speaker-at-2016-opensimulator-community-conference/#content
+Title: noteworthy achievements 2009 @ the bren school of information and computer sciences
+URL: https://www.ics.uci.edu/community/news/notes/notes_2009.php
 
-Title: Lopes featured speaker at 2016 OpenSimulator Community Conference | Informatics @ the University of California, Irvine
-URL: https://www.informatics.uci.edu/lopes-featured-speaker-at-2016-opensimulator-community-conference/
-
-Time taken: 0.01 seconds
+Time taken: 0.00 seconds
 
 ==================================================
 
@@ -82,6 +82,27 @@ Time taken: 0.00 seconds
 
 ==================================================
 
+Query: computer!
+Results:
+Title: news | Center for Machine Learning and Intelligent Systems | Page 2
+URL: https://cml.ics.uci.edu/tag/news/page/2/?page=events&subPage=aiml
+
+Title: news | Center for Machine Learning and Intelligent Systems | Page 2
+URL: https://cml.ics.uci.edu/tag/news/page/2/?page=people&subPage=faculty
+
+Title: news | Center for Machine Learning and Intelligent Systems | Page 2
+URL: https://cml.ics.uci.edu/tag/news/page/2/?page=events&subPage=dss_schedule
+
+Title: news | Center for Machine Learning and Intelligent Systems | Page 2
+URL: https://cml.ics.uci.edu/tag/news/page/2/
+
+Title: News
+URL: https://www.cs.uci.edu/news/page/11/
+
+Time taken: 0.03 seconds
+
+==================================================
+
 Query: march 21 2018
 Results:
 Title: Informatics 122 Winter 2013, Final Project
@@ -100,6 +121,27 @@ Title: A memorable evening in Bangalore – Ramesh Jain
 URL: https://ngs.ics.uci.edu/a-memorable-evening-in-bangalore/
 
 Time taken: 0.00 seconds
+
+==================================================
+
+Query: thornton@ics.uci.edu
+Results:
+Title: faculty @ the bren school of information and computer sciences
+URL: https://www.ics.uci.edu/faculty/index.php
+
+Title: faculty @ the bren school of information and computer sciences
+URL: https://www.ics.uci.edu/faculty/
+
+Title: faculty @ the bren school of information and computer sciences
+URL: https://www.ics.uci.edu/faculty/index.php?department=Computer%20Science
+
+Title: Faculty
+URL: https://www.cs.uci.edu/faculty/
+
+Title: faculty @ the bren school of information and computer sciences
+URL: https://www.ics.uci.edu/faculty/faculty_dept?department=Computer%20Science
+
+Time taken: 0.02 seconds
 
 ==================================================
 
@@ -126,64 +168,64 @@ Time taken: 0.00 seconds
 
 Query: machine learning
 Results:
-Title: Michael Pazzani: Publications on Machine Learning, KDD and Artificial Intelligence
-URL: https://www.ics.uci.edu/~pazzani/Publications/OldPublications.html#1989
+Title: News | Center for Machine Learning and Intelligent Systems
+URL: https://cml.ics.uci.edu/category/news/?page=events&subPage=dss_schedule
 
-Title: Michael J. Pazzani: Publications on Machine Learning, KDD and Artificial Intelligence
-URL: https://www.ics.uci.edu/~pazzani/Publications/APubs.html
+Title: News | Center for Machine Learning and Intelligent Systems
+URL: https://cml.ics.uci.edu/category/news/?page=people&subPage=faculty
 
-Title: AIML | Center for Machine Learning and Intelligent Systems | Page 3
-URL: https://cml.ics.uci.edu/category/aiml/page/3/
+Title: News | Center for Machine Learning and Intelligent Systems
+URL: https://cml.ics.uci.edu/category/news/
 
-Title: AIML | Center for Machine Learning and Intelligent Systems | Page 3
-URL: https://cml.ics.uci.edu/category/aiml/page/3/#content
+Title: News | Center for Machine Learning and Intelligent Systems
+URL: https://cml.ics.uci.edu/category/news/#content
 
-Title: AI/ML Seminar Series | Center for Machine Learning and Intelligent Systems | Page 22
-URL: https://cml.ics.uci.edu/aiml/page/22/
+Title: News | Center for Machine Learning and Intelligent Systems
+URL: https://cml.ics.uci.edu/category/news/?page=events&subPage=aiml
 
-Time taken: 0.15 seconds
+Time taken: 0.02 seconds
 
 ==================================================
 
 Query: ACM
 Results:
-Title: David Eppstein - Publications
-URL: https://www.ics.uci.edu/~eppstein/pubs/pubs.ff
+Title: News
+URL: https://www.cs.uci.edu/news/page/15/
 
-Title: David Eppstein - Publications
-URL: https://www.ics.uci.edu/~eppstein/pubs/all.html
+Title: ACM Multimedia Information Retrieval – Ramesh Jain
+URL: https://ngs.ics.uci.edu/acm-multimedia-information-retrieval/
 
-Title: ICS 131 Readings * Spring 2004
-URL: https://www.ics.uci.edu/~kay/courses/131/s04readings.html
+Title: Second Day at ACM Multimedia – Ramesh Jain
+URL: https://ngs.ics.uci.edu/second-day-at-acm-multimedia/
 
-Title: BibTeX: David Eppstein
-URL: https://www.ics.uci.edu/~eppstein/bibs/eppstein.html
+Title: Grand Challenge Problems at ACM Multimedia 2009 – Ramesh Jain
+URL: https://ngs.ics.uci.edu/grand-challenge-problems-at-acm-multimedia-2009/
 
-Title: David Eppstein - Publications
-URL: https://www.ics.uci.edu/~eppstein/pubs/geom-all.html
+Title: ACM Multimedia 2006: Day 3 – Ramesh Jain
+URL: https://ngs.ics.uci.edu/acm-multimedia-2006-day-3/
 
-Time taken: 0.05 seconds
+Time taken: 0.00 seconds
 
 ==================================================
 
 Query: zip file
 Results:
-Title: Searching for a Better Way - Assignment 4
-URL: https://www.ics.uci.edu/~jacobson/ics23/LabManual/04-SearchingForABetterWay.html
+Title: ICS 22/CSE 22 - Project #1: Perfect Candidate
+URL: https://www.ics.uci.edu/~irani/s11_22/Project1/Project1.html
 
-Title: Program 1
-URL: https://www.ics.uci.edu/~pattis/ICS-33/assignments/program1/program.html
-
-Title: ICS 46 Spring 2018, Project #0: Getting to Know the ICS 46 VM
-URL: https://www.ics.uci.edu/~thornton/ics46/ProjectGuide/Project0/
+Title: ICS 22/CSE 22 - Project #3: What's Simple is True
+URL: https://www.ics.uci.edu/~irani/s11_22/Project3/Project3.html
 
 Title: SLI | PmWiki / Uploads Administration
 URL: http://sli.ics.uci.edu/PmWiki/UploadsAdmin
 
-Title: Program 0
-URL: https://www.ics.uci.edu/~pattis/ICS-46/assignments/program0/program.html
+Title: cs122b-2019-winter-project1 – Public
+URL: https://grape.ics.uci.edu/wiki/public/wiki/cs122b-2019-winter-project1?version=18
 
-Time taken: 0.04 seconds
+Title: cs122b-2019-winter-project1 – Public
+URL: https://grape.ics.uci.edu/wiki/public/wiki/cs122b-2019-winter-project1?version=34
+
+Time taken: 0.01 seconds
 
 ==================================================
 
@@ -198,13 +240,13 @@ URL: https://cbcl.ics.uci.edu/public_data/shilab/forColleen/MAJIQ/voila-KO-hind/
 Title: MAJIQ LSV ΔΨ Summary
 URL: https://cbcl.ics.uci.edu/public_data/shilab/forColleen/MAJIQ/voila-Wt-hind/
 
+Title: Pintos Projects: Project 0--Getting Real
+URL: https://www.ics.uci.edu/~ardalan/courses/os/pintos/pintos_2.html#SEC19
+
 Title: MAJIQ LSV ΔΨ Summary
 URL: https://cbcl.ics.uci.edu/public_data/shilab/forColleen/MAJIQ/voila-Wt-cort/
 
-Title: MAJIQ LSV ΔΨ Summary
-URL: https://cbcl.ics.uci.edu/public_data/shilab/forAmber/voila-dnlef/
-
-Time taken: 0.41 seconds
+Time taken: 0.05 seconds
 
 ==================================================
 
@@ -240,22 +282,22 @@ Time taken: 0.00 seconds
 
 Query: a machine
 Results:
-Title: David Eppstein - Publications
-URL: https://www.ics.uci.edu/~eppstein/pubs/pubs.ff
+Title: cs221-2019-spring-project1 – Public
+URL: https://grape.ics.uci.edu/wiki/public/wiki/cs221-2019-spring-project1?version=8
 
-Title: HTTP Extensions for Distributed Authoring -- WEBDAV
-URL: https://www.ics.uci.edu/~ejw/authoring/protocol/rfc2518.html
+Title: cs221-2019-spring-project1 – Public
+URL: https://grape.ics.uci.edu/wiki/public/wiki/cs221-2019-spring-project1?version=7
 
-Title: WORKING INFRASTRUCTURES:
-URL: https://www.ics.uci.edu/~gbowker/classification/
+Title: cs221-2019-spring-project1 – Public
+URL: https://grape.ics.uci.edu/wiki/public/wiki/cs221-2019-spring-project1?version=11
 
-Title: David Eppstein - Publications
-URL: https://www.ics.uci.edu/~eppstein/pubs/all.html
+Title: cs221-2019-spring-project1 – Public
+URL: https://grape.ics.uci.edu/wiki/public/wiki/cs221-2019-spring-project1?version=6
 
-Title: Extensions for Distributed Authoring and Versioning on the World Wide Web -- WEBDAV
-URL: https://www.ics.uci.edu/~ejw/authoring/protocol/draft-ietf-webdav-protocol-04.html
+Title: cs221-2019-spring-project1 – Public
+URL: https://grape.ics.uci.edu/wiki/public/wiki/cs221-2019-spring-project1?version=5
 
-Time taken: 0.54 seconds
+Time taken: 0.09 seconds
 
 ==================================================
 
@@ -275,6 +317,48 @@ URL: https://www.ics.uci.edu/~pattis/ICS-21/lectures/overview/lecture.html
 
 Title: ICS-46 Overview
 URL: https://www.ics.uci.edu/~pattis/ICS-46/lectures/overview/lecture.html
+
+Time taken: 0.00 seconds
+
+==================================================
+
+Query: document
+Results:
+Title: A-7 SCR
+URL: https://www.ics.uci.edu/~alspaugh/cls/shr/SCR.html
+
+Title: XHTML and HTML
+URL: https://www.ics.uci.edu/~alspaugh/cls/shr/html.html
+
+Title: MAJIQ LSV ΔΨ Summary
+URL: https://cbcl.ics.uci.edu/public_data/shilab/forColleen/MAJIQ/voila-KO-hind/
+
+Title: MAJIQ LSV ΔΨ Summary
+URL: https://cbcl.ics.uci.edu/public_data/shilab/forColleen/MAJIQ/voila-Wt-hind/
+
+Title: MAJIQ LSV ΔΨ Summary
+URL: https://cbcl.ics.uci.edu/public_data/shilab/forColleen/MAJIQ/voila-Wt-cort/
+
+Time taken: 0.01 seconds
+
+==================================================
+
+Query: collection
+Results:
+Title: Collection Requirements
+URL: https://www.ics.uci.edu/~ejw/authoring/www6/tsld022.htm
+
+Title: Listing Members of a Collection: PROPFIND
+URL: https://www.ics.uci.edu/~ejw/pres/stc-99/tsld038.htm
+
+Title: Collection Requirements (cont’d)
+URL: https://www.ics.uci.edu/~ejw/authoring/www6/tsld023.htm
+
+Title: Members of a Collection
+URL: https://www.ics.uci.edu/~ejw/authoring/orem/namespace/tsld003.htm
+
+Title: Create History Collection
+URL: https://www.ics.uci.edu/~ejw/authoring/orem/versioning/tsld016.htm
 
 Time taken: 0.00 seconds
 
