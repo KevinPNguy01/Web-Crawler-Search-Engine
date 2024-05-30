@@ -15,7 +15,7 @@ URL: https://mswe.ics.uci.edu/
 Title: About the Program – Master of Software Engineering
 URL: https://mswe.ics.uci.edu/program/about-the-program/
 
-Time taken: 0.41 seconds
+Time taken: 0.04 seconds
 
 ==================================================
 
@@ -36,7 +36,7 @@ URL: https://mswe.ics.uci.edu/
 Title: About the Program – Master of Software Engineering
 URL: https://mswe.ics.uci.edu/program/about-the-program/
 
-Time taken: 0.16 seconds
+Time taken: 0.04 seconds
 
 ==================================================
 
@@ -51,44 +51,44 @@ URL: https://www.informatics.uci.edu/explore/faculty-profiles/cristina-lopes/
 Title: Hitesh Sajnani's homepage
 URL: https://www.ics.uci.edu/~hsajnani/
 
-Title: Lopes Analyzes Big Code with Funding from DARPA | Informatics @ the University of California, Irvine
-URL: https://www.informatics.uci.edu/lopes-analyzes-big-code-with-funding-from-darpa/#content
+Title: Lopes featured speaker at 2016 OpenSimulator Community Conference | Informatics @ the University of California, Irvine
+URL: https://www.informatics.uci.edu/lopes-featured-speaker-at-2016-opensimulator-community-conference/#content
 
 Title: Lopes featured speaker at 2016 OpenSimulator Community Conference | Informatics @ the University of California, Irvine
 URL: https://www.informatics.uci.edu/lopes-featured-speaker-at-2016-opensimulator-community-conference/
 
-Time taken: 0.03 seconds
+Time taken: 0.01 seconds
 
 ==================================================
 
 Query: tyler
 Results:
-Title: Tyler does the chicken dance
-URL: https://www.ics.uci.edu/~eppstein/pix/s8bd/TylerChicken.html
-
-Title: Tyler Leads The Way
-URL: https://www.ics.uci.edu/~eppstein/pix/candystore/TylerLeadsTheWay.html
-
 Title: Tyler
 URL: https://www.ics.uci.edu/~eppstein/pix/onrp/Tyler.html
+
+Title: Tyler does the chicken dance
+URL: https://www.ics.uci.edu/~eppstein/pix/s8bd/TylerChicken.html
 
 Title: Tyler Kaczmarek Personnel Page
 URL: http://sprout.ics.uci.edu/people/tkaczmar/index.html
 
+Title: Tyler Leads The Way
+URL: https://www.ics.uci.edu/~eppstein/pix/candystore/TylerLeadsTheWay.html
+
 Title: Usable Security Group - improving usability for better security
 URL: http://sprout.ics.uci.edu/projects/usec/usec.html
 
-Time taken: 0.02 seconds
+Time taken: 0.00 seconds
 
 ==================================================
 
 Query: march 21 2018
 Results:
-Title: DSPage
-URL: https://www.ics.uci.edu/~asuncion/180/dspage.htm
-
 Title: Informatics 122 Winter 2013, Final Project
 URL: https://www.ics.uci.edu/~thornton/inf122/ProjectGuide/FinalProject/
+
+Title: DSPage
+URL: https://www.ics.uci.edu/~asuncion/180/dspage.htm
 
 Title: Fatemeh Nargesian: Data Enrichment for Data Science – Information Systems Group
 URL: https://isg.ics.uci.edu/event/fatemeh-nargesian-data-enrichment-for-data-science/
@@ -99,7 +99,7 @@ URL: https://isg.ics.uci.edu/events/list/?tribe_event_display=past&tribe_paged=1
 Title: A memorable evening in Bangalore – Ramesh Jain
 URL: https://ngs.ics.uci.edu/a-memorable-evening-in-bangalore/
 
-Time taken: 0.02 seconds
+Time taken: 0.00 seconds
 
 ==================================================
 
@@ -108,19 +108,19 @@ Results:
 Title: FORGE/Dynamo: PA-API Documentation
 URL: http://dynamo.ics.uci.edu/paapi.html
 
-Title: FORGE/Dynamo: PA-API Documentation
-URL: https://www.ics.uci.edu/~dsm/dyn/release/paapi.html
-
 Title: 143A Principles of Operating Systems
 URL: https://www.ics.uci.edu/~aburtsev/143A/2018fall/hw/hw4-threads.html
 
-Title: Sorting
-URL: https://www.ics.uci.edu/~eppstein/161/960116.html
+Title: FORGE/Dynamo: PA-API Documentation
+URL: https://www.ics.uci.edu/~dsm/dyn/release/paapi.html
 
-Title: Hierarchical Clustering in a 31-dimensional Fractal
-URL: https://www.ics.uci.edu/~eppstein/projects/pairs/Data/hs31/
+Title: Data Compression -- Section 5
+URL: https://www.ics.uci.edu/~dan/pubs/DC-Sec5.html
 
-Time taken: 0.01 seconds
+Title: ICS 33 Summer 2013, Unit Testing and Test-Driven Development with unittest, Step-by-Step Examples
+URL: https://www.ics.uci.edu/~thornton/ics33/CodeExamples/UnitTesting/CodeExamples.html
+
+Time taken: 0.00 seconds
 
 ==================================================
 
@@ -133,15 +133,15 @@ Title: Michael J. Pazzani: Publications on Machine Learning, KDD and Artificial 
 URL: https://www.ics.uci.edu/~pazzani/Publications/APubs.html
 
 Title: AIML | Center for Machine Learning and Intelligent Systems | Page 3
-URL: https://cml.ics.uci.edu/category/aiml/page/3/#content
+URL: https://cml.ics.uci.edu/category/aiml/page/3/
 
 Title: AIML | Center for Machine Learning and Intelligent Systems | Page 3
-URL: https://cml.ics.uci.edu/category/aiml/page/3/
+URL: https://cml.ics.uci.edu/category/aiml/page/3/#content
 
 Title: AI/ML Seminar Series | Center for Machine Learning and Intelligent Systems | Page 22
 URL: https://cml.ics.uci.edu/aiml/page/22/
 
-Time taken: 1.41 seconds
+Time taken: 0.15 seconds
 
 ==================================================
 
@@ -162,7 +162,7 @@ URL: https://www.ics.uci.edu/~eppstein/bibs/eppstein.html
 Title: David Eppstein - Publications
 URL: https://www.ics.uci.edu/~eppstein/pubs/geom-all.html
 
-Time taken: 0.60 seconds
+Time taken: 0.05 seconds
 
 ==================================================
 
@@ -183,7 +183,7 @@ URL: http://sli.ics.uci.edu/PmWiki/UploadsAdmin
 Title: Program 0
 URL: https://www.ics.uci.edu/~pattis/ICS-46/assignments/program0/program.html
 
-Time taken: 0.33 seconds
+Time taken: 0.04 seconds
 
 ==================================================
 
@@ -204,28 +204,7 @@ URL: https://cbcl.ics.uci.edu/public_data/shilab/forColleen/MAJIQ/voila-Wt-cort/
 Title: MAJIQ LSV ΔΨ Summary
 URL: https://cbcl.ics.uci.edu/public_data/shilab/forAmber/voila-dnlef/
 
-Time taken: 5.17 seconds
-
-==================================================
-
-Query: university of california irvine computer science ranking
-Results:
-Title: Eric Mjolsness | Department of Computer Science, University of California Irvine
-URL: https://emj.ics.uci.edu/#content
-
-Title: Eric Mjolsness | Department of Computer Science, University of California Irvine
-URL: https://emj.ics.uci.edu/
-
-Title: Books We Have Written | Informatics @ the University of California, Irvine
-URL: https://www.informatics.uci.edu/explore/books-we-have-written/#content
-
-Title: Books We Have Written | Informatics @ the University of California, Irvine
-URL: https://www.informatics.uci.edu/explore/books-we-have-written/
-
-Title: News | Informatics @ the University of California, Irvine | Page 14
-URL: https://www.informatics.uci.edu/very-top-footer-menu-items/news/page/14/
-
-Time taken: 0.74 seconds
+Time taken: 0.41 seconds
 
 ==================================================
 
@@ -246,16 +225,16 @@ URL: https://www.ics.uci.edu/~kay/courses/previous.html
 Title: Links to First Year CS Courses Using Java
 URL: https://www.ics.uci.edu/~jacobson/IntroCourses/FirstCourseSyllabi.html
 
-Title: Quotations for CS1
-URL: https://www.ics.uci.edu/~pattis/quotations.html
+Title: Courses | Informatics @ the University of California, Irvine
+URL: https://www.informatics.uci.edu/undergrad/courses/
 
 Title: Courses | Informatics @ the University of California, Irvine
 URL: https://www.informatics.uci.edu/undergrad/courses/#INF131
 
-Title: Courses | Informatics @ the University of California, Irvine
-URL: https://www.informatics.uci.edu/undergrad/courses/
+Title: Horstmann, Cay © 2003
+URL: https://www.ics.uci.edu/~jacobson/IntroCourses/IntroJavaTexts.html
 
-Time taken: 0.01 seconds
+Time taken: 0.00 seconds
 
 ==================================================
 
@@ -276,26 +255,26 @@ URL: https://www.ics.uci.edu/~eppstein/pubs/all.html
 Title: Extensions for Distributed Authoring and Versioning on the World Wide Web -- WEBDAV
 URL: https://www.ics.uci.edu/~ejw/authoring/protocol/draft-ietf-webdav-protocol-04.html
 
-Time taken: 2.90 seconds
+Time taken: 0.54 seconds
 
 ==================================================
 
 Query: The competent programmer is fully aware of the strictly limited size of his own skull therefore he approaches the programming task in full humility and among other things he avoids clever tricks like the plague
 Results:
-Title: JEWS IN CRACOW AT THE TIME OF THE
-URL: https://www.ics.uci.edu/~dan/genealogy/Krakow/other/bal.htm
-
-Title: Act on the Protection of Individuals with regard to the Processing of Personal Data No. 77/2000
-URL: https://www.ics.uci.edu/~kobsa/privacy/Iceland.htm#section6
-
-Title: ICS-46 Overview
-URL: https://www.ics.uci.edu/~pattis/ICS-46/lectures/overview/lecture.html
-
 Title: Quotations for CS1
 URL: https://www.ics.uci.edu/~pattis/quotations.html
 
+Title: ICS-33 Overview
+URL: https://www.ics.uci.edu/~pattis/ICS-33/lectures/overview/lecture.html
+
 Title: ICS-31 Overview
 URL: https://www.ics.uci.edu/~pattis/ICS-31/lectures/overview/lecture.html
+
+Title: ICS-21 Overview
+URL: https://www.ics.uci.edu/~pattis/ICS-21/lectures/overview/lecture.html
+
+Title: ICS-46 Overview
+URL: https://www.ics.uci.edu/~pattis/ICS-46/lectures/overview/lecture.html
 
 Time taken: 0.00 seconds
 

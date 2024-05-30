@@ -58,12 +58,10 @@ def filter(token_postings, tokens, index_of_crawled):
             # tells you what byte come in 
             crawled_file.seek(index_of_crawled[doc_id])
             path = crawled_file.readline().strip()
-            with open(path, "r") as file:
-                title = crawled_file.readline()
-                tf_idf_score = calc_doc_relevance(doc_to_postings[doc_id], tokens, title )
-                document = Posting(id=doc_id, tf_idf=tf_idf_score)
-                results.append(document)
-
+            title = crawled_file.readline()
+            tf_idf_score = calc_doc_relevance(doc_to_postings[doc_id], tokens, title )
+            document = Posting(id=doc_id, tf_idf=tf_idf_score)
+            results.append(document)
     return results
 
 def calc_doc_relevance(postings: List[Posting], tokens: List[str], title: str ) -> float:
