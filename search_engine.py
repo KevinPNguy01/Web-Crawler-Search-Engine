@@ -15,11 +15,13 @@ def stem_tokens(tokens: List[str]) -> List[str]:
     stemmer = PorterStemmer()
     return [stemmer.stem(token) for token in tokens]
 
+# need to modify this 
 def get_postings(tokens: List[str], index_of_index: Dict[str, int]) -> List[List[Posting]]:
     token_postings = []  # List to store postings for each token
 
     with open("indices/index.txt", "r") as index:
         for token in tokens:
+
             #similar_tokens = [key for key in index_of_index.keys() if fuzz.ratio(token, key) >= 100]
             #print(f"Token: {token}, Similar Tokens: {similar_tokens}")
 
@@ -52,62 +54,44 @@ def filter(token_postings, tokens, index_of_crawled):
 
     with open("indices/crawled.txt", "r", encoding="utf-8") as crawled_file:
         for doc_id in common_doc_ids:
+
+            # tells you what byte come in 
             crawled_file.seek(index_of_crawled[doc_id])
             path = crawled_file.readline().strip()
             with open(path, "r") as file:
+
                 data = json.load(file)
-                tf_idf_score = calc_doc_relevance(doc_to_postings[doc_id], tokens, data)
+                title = crawled_file.readline()
+                tf_idf_score = calc_doc_relevance(doc_to_postings[doc_id], tokens, data, title )
                 document = Posting(id=doc_id, tf_idf=tf_idf_score)
                 results.append(document)
-    
+
     return results
 
-def calc_doc_relevance(postings: List[Posting], tokens: List[str], data: Dict) -> float:
+def calc_doc_relevance(postings: List[Posting], tokens: List[str], data: Dict, title: str ) -> float:
     # inital tf_idf from the summings 
     tf_idf_score = sum(posting.tf_idf for posting in postings)
-    
-    # parsing content and extracting title 
-    soup = BeautifulSoup(data["content"], "lxml")
-    title_tag = soup.title
-    title = title_tag.string if title_tag and title_tag.string else ""
-
-    # Split the title into individual words and lowercase each word
-    split_title = [word.lower() for word in title.split()]
 
     # check for the posting title if the query matches up 
-    for each_word in split_title:
-        for token in tokens:
-            if token in each_word:
-                #print(f"match found for the token {token} and the word {each_word}")
-                tf_idf_score += 30
-
+    for token in tokens:
+        if token in title.lower():
+            tf_idf_score += 100
+            
+    #print(f"title {title} tf_idf {tf_idf_score}")
     return tf_idf_score
 
 def collect_and_display_results(results: List[Posting], index_of_crawled: Dict[int, int], tokens: List[str], num_of_results: int = 5):
     with open("indices/crawled.txt", "r", encoding="utf-8") as crawled_file:
         for index, posting in enumerate(sorted(results, key=lambda x: x.tf_idf, reverse=True)[:num_of_results], start=1):
             crawled_file.seek(index_of_crawled[posting.id])
-            path = crawled_file.readline().strip()
-            with open(path, "r") as file:
-                data = json.load(file)
-                url = data["url"]
-                soup = BeautifulSoup(data["content"], "lxml")
-                text = soup.get_text()
-            contexts = []
-            for token in tokens:
-                pos = text.lower().find(token)
-                if pos == -1:
-                    continue
-                size = 32
-                sentence_before = text[max(pos-size, 0):pos]
-                token_text = f"**:blue-background[{text[pos:pos+len(token)]}]**"
-                sentence_after = text[pos+len(token):pos+len(token)+size]
-                full_sentence = f"{sentence_before}{token_text}{sentence_after}"
-                contexts.append(full_sentence.replace("\n", "").replace("\r\n", "").replace("#", ""))
-            st.write(f"{index}.\t{soup.title.string}")
-            st.write(f"{url}")
-            for context in contexts:
-                st.markdown(f"...{context}...")
+            path = crawled_file.readline()
+            title = crawled_file.readline()
+            url = crawled_file.readline()
+        
+            st.write(title)
+            st.write(url)
+
+
 
 def read_index_files(file_name: str) -> Dict:
     index_dict = {}
@@ -163,11 +147,14 @@ def main():
             normal_results = filter(normal_postings, corrected_tokens, index_of_crawled)
             stemmed_results = filter(stemmed_postings, stemmed_tokens, index_of_crawled)
 
+
             # Combine results and remove duplicates
             combined_results = {posting.id: posting for posting in normal_results + stemmed_results}.values()
 
+
             if combined_results:
                 collect_and_display_results(combined_results, index_of_crawled, corrected_tokens + stemmed_tokens)
+
             else:
                 st.write("No matching tokens found.")
 
