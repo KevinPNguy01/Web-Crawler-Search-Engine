@@ -62,7 +62,7 @@ class InvertedIndex:
 	def start(self) -> None:
 		""" Starts indexing. """
 		try:
-			self.spawn_processes(10)		
+			self.spawn_processes(8)		
 			self.enqueue_documents()	# Documents get enqueued for workers to process
 			self.dequeue_documents()	# Documents that finished processing get saved to file.
 		except KeyboardInterrupt:

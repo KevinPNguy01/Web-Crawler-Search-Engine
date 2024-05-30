@@ -19,10 +19,6 @@ def stem_tokens(tokens: List[str]) -> List[str]:
 
 # need to modify this 
 
-string_sadad = "master of software engineering "
-
-
-
 
 def get_postings(tokens: List[str], index_of_index: Dict[str, int]) -> List[List[Posting]]:
     token_postings = []  # List to store postings for each token
@@ -60,12 +56,10 @@ def filter(token_postings, tokens, index_of_crawled):
 
     with open("indices/crawled.txt", "r", encoding="utf-8") as crawled_file:
         for doc_id in common_doc_ids:
-
             # tells you what byte come in 
             crawled_file.seek(index_of_crawled[doc_id])
             path = crawled_file.readline().strip()
             with open(path, "r") as file:
-
                 data = json.load(file)
                 title = crawled_file.readline()
                 tf_idf_score = calc_doc_relevance(doc_to_postings[doc_id], tokens, data, title )
@@ -97,6 +91,24 @@ def collect_and_display_results(results: List[Posting], index_of_crawled: Dict[i
             st.write(title)
             st.write(url)
 
+            
+def collect_results_to_file(results: List[Posting], index_of_crawled: Dict[int, int], tokens: List[str], start_time: float, query: str, num_of_results: int = 5):
+    with open("query_results.txt", "a") as f: 
+        f.write(f"Query: {query}\n")
+        f.write("Results:\n")
+
+        with open("indices/crawled.txt", "r", encoding="utf-8") as crawled_file:
+            for index, posting in enumerate(sorted(results, key=lambda x: x.tf_idf, reverse=True)[:num_of_results], start=1):
+                crawled_file.seek(index_of_crawled[posting.id])
+                path = crawled_file.readline().strip()
+                title = crawled_file.readline().strip()
+                url = crawled_file.readline().strip()
+
+                f.write(f"Title: {title}\nURL: {url}\n\n")
+
+            end_time = time.time()
+            f.write(f"Time taken: {end_time - start_time:.2f} seconds\n")
+            f.write("\n" + "="*50 + "\n\n")
 
 
 def read_index_files(file_name: str) -> Dict:
@@ -137,6 +149,43 @@ def correct_spelling(tokens: List[str], posting_keys: Dict[str, List[str]]) -> L
             corrected_tokens.append(token)
     return corrected_tokens
 
+# type denotes if running on directly search_engine or on the write_report 
+# 0 = on search_egnine 1 = write_report
+def run(user_input, posting_keys, index_of_index, index_of_crawled, t = 0):
+    start = time.time()
+    token_length = len(user_input.lower().split())
+
+    if token_length <= 2:
+        tokens = [" ".join(ngram) for ngram in nltk.ngrams(user_input.lower().split(), 1)]
+    elif token_length == 3: 
+        tokens = [" ".join(ngram) for ngram in nltk.ngrams(user_input.lower().split(), 2)]
+    else:
+        tokens = [" ".join(ngram) for ngram in nltk.ngrams(user_input.lower().split(), 3)]
+
+    corrected_tokens = correct_spelling(tokens, posting_keys)
+    stemmed_tokens = stem_tokens(corrected_tokens)
+
+    normal_postings = get_postings(corrected_tokens, index_of_index)
+    stemmed_postings = get_postings(stemmed_tokens, index_of_index)
+
+    normal_results = filter(normal_postings, corrected_tokens, index_of_crawled)
+    stemmed_results = filter(stemmed_postings, stemmed_tokens, index_of_crawled)
+
+    combined_results = {posting.id: posting for posting in normal_results + stemmed_results}.values()
+
+    if combined_results and t == 0:
+        collect_and_display_results(combined_results, index_of_crawled, corrected_tokens + stemmed_tokens)
+    elif combined_results and t == 1: 
+        collect_results_to_file(combined_results, index_of_crawled, corrected_tokens + stemmed_tokens, start, user_input)
+    else:
+        print("No matching tokens found")
+
+    end = time.time()
+    if t == 0:
+        st.write(f"Search completed in {end - start:.2f} seconds")
+
+
+
 def main():
     index_of_index = read_index_files("index_of_index.txt")
     index_of_crawled = read_index_files("index_of_crawled.txt")
@@ -149,48 +198,8 @@ def main():
 
     if st.button("Search"):
         if user_input:
-            start = time.time()       
+            run(user_input, posting_keys, index_of_index, index_of_crawled)
 
-            # for each_query in nltk.ngrams(user_input.lower().split(), 3) iterates over each trigram 
-            # for token in each_query does this for each for loop 
-
-            token_legnth = len(user_input.lower().split())
-
-            if token_legnth <= 2:
-                tokens = [" ".join(ngram) for ngram in nltk.ngrams(user_input.lower().split(), 1)]
-            
-            elif token_legnth == 3: 
-                tokens = [" ".join(ngram) for ngram in nltk.ngrams(user_input.lower().split(), 2)]
-
-            else:
-                tokens = [" ".join(ngram) for ngram in nltk.ngrams(user_input.lower().split(), 3)]
-
-            corrected_tokens = correct_spelling(tokens, posting_keys)
-            #print(f"Corrected Tokens: {corrected_tokens}")
-
-            # stemming the corrected tokens
-            stemmed_tokens = stem_tokens(corrected_tokens)
-            #print(f"Stemmed Tokens: {stemmed_tokens}")
-
-            # getting postings for normal + stemmed tokens 
-            normal_postings = get_postings(corrected_tokens, index_of_index)
-            stemmed_postings = get_postings(stemmed_tokens, index_of_index)
-
-            # filtering results 
-            normal_results = filter(normal_postings, corrected_tokens, index_of_crawled)
-            stemmed_results = filter(stemmed_postings, stemmed_tokens, index_of_crawled)
-
-            # Combine results and remove duplicates
-            combined_results = {posting.id: posting for posting in normal_results + stemmed_results}.values()
-
-            if combined_results:
-                collect_and_display_results(combined_results, index_of_crawled, corrected_tokens + stemmed_tokens)
-
-            else:
-                st.write("No matching tokens found.")
-
-            end = time.time()
-            st.write(f"Search completed in {end - start:.2f} seconds")
 
 if __name__ == "__main__":
     main()
