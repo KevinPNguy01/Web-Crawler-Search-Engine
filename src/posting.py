@@ -10,6 +10,15 @@ class Posting:
         text = extract_text(soup)
         # Tokenize text.
         frequencies = tokenize(text)
+
+        weights = [("title", 100000), ("h1", 10000), ("h2", 1000), ("h3", 100), ("strong", 10)]
+
+        for tag, weight in weights:
+            for tag in soup.find_all(tag):
+                for token in frequencies:
+                    if token in list(s.lower() for s in re.findall(r'\b[a-zA-Z0-9]+\b', tag.text)):
+                        frequencies[token] += weight
+
         # Create postings for each token and return dict.
         return {token: Posting(id, frequency) for token, frequency in frequencies.items()}
 

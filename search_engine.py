@@ -53,27 +53,17 @@ def filter(token_postings, tokens, index_of_crawled):
         common_doc_ids = set.intersection(*token_doc_ids)
     else:
         common_doc_ids = set()
-    with open("indices/crawled.txt", "r", encoding="utf-8") as crawled_file:
-        for doc_id in common_doc_ids:
-            # tells you what byte come in 
-            crawled_file.seek(index_of_crawled[doc_id])
-            path = crawled_file.readline()
-            title = crawled_file.readline()
-            tf_idf_score = calc_doc_relevance(doc_to_postings[doc_id], tokens, title )
-            document = Posting(id=doc_id, tf_idf=tf_idf_score)
-            results.append(document)
+
+    for doc_id in common_doc_ids:
+        # tells you what byte come in 
+        tf_idf_score = calc_doc_relevance(doc_to_postings[doc_id])
+        document = Posting(id=doc_id, tf_idf=tf_idf_score)
+        results.append(document)
     return results
 
-def calc_doc_relevance(postings: List[Posting], tokens: List[str], title: str ) -> float:
+def calc_doc_relevance(postings: List[Posting]) -> float:
     # inital tf_idf from the summings 
     tf_idf_score = sum(posting.tf_idf for posting in postings)
-
-    # check for the posting title if the query matches up 
-    for token in tokens:
-        if token in title.lower():
-            tf_idf_score += 100
-            
-    #print(f"title {title} tf_idf {tf_idf_score}")
     return tf_idf_score
 
 def collect_and_display_results(results: List[Posting], index_of_crawled: Dict[int, int], tokens: List[str], num_of_results: int = 5):
