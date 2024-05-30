@@ -1,20 +1,13 @@
-overview for things to complete 
-
-# need to get tokens to work regardless of capitalization 
-# need to let the search engine work such that the query doesn't have to be quite exact 
-
-
-
-
-
-M1
-1: First import either Tyler or Kevin Assignment 1 to tokenize text
-2: Utilize beautiful soup to grab text content 
-3: Create an inverted index 
-(inverted_index = {"Token" : [1,2,3,10,5]} ) where the numbers are the webpages
-
-
- 55k pages 112k unique words 
- pre pdf 
-
-
+master of software engineering
+master of software engineering uc irvine
+cristina lopes
+tyler
+computer science internships at uci
+computer!
+march 21 2018
+thornton@ics.uci.edu
+data structure and algorithms course
+machine learning
+ACM
+zip file
+0 shindler

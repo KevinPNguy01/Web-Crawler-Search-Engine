@@ -2,7 +2,7 @@ import json
 
 index_dictionary = {}
 
-with open("index_of_index.txt", "r") as f:
+with open("indices/index_of_index.txt", "r") as f:
     for line in f:
         token, index = line.strip().split(',')
 
@@ -11,7 +11,7 @@ with open("index_of_index.txt", "r") as f:
         else:
             index_dictionary[token[0]] = [token]
 
-with open("index_dictionary.json", "w") as json_file:
+with open("indices/index_dictionary.json", "w") as json_file:
     json.dump(index_dictionary, json_file, indent=4)
 
 print("Dictionary has been saved to index_dictionary.json")

@@ -7,7 +7,8 @@ from src.posting import Posting
 from bs4 import BeautifulSoup
 import time
 from thefuzz import fuzz
-
+import nltk
+import cProfile
 
 from nltk.stem import PorterStemmer
 import nltk 
@@ -126,6 +127,17 @@ def correct_spelling(tokens: List[str], posting_keys: Dict[str, List[str]]) -> L
         #else:
             #corrected_tokens.append(token)
     #return corrected_tokens
+    return tokens
+    corrected_tokens = []
+    for token in tokens:
+        first_letter = token[0]
+        if first_letter in posting_keys:
+            possible_tokens = posting_keys[first_letter]
+            best_match = difflib.get_close_matches(token, possible_tokens, n=1)
+            corrected_tokens.append(best_match[0] if best_match else token)
+        else:
+            corrected_tokens.append(token)
+    return corrected_tokens
 
 def main():
     index_of_index = read_index_files("index_of_index.txt")
@@ -170,6 +182,8 @@ def main():
                 st.write("No matching tokens found.")
 
             end = time.time()
+            profiler.disable()
+            profiler.print_stats(sort="tottime")
             st.write(f"Search completed in {end - start:.2f} seconds")
 
 if __name__ == "__main__":
