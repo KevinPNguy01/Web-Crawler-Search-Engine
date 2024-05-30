@@ -141,5 +141,5 @@ class Worker:
 		for token, posting in Posting.get_postings(soup, id).items():
 			self.postings.setdefault(token, []).append(posting)
 			self.posting_count += 1
-		self.q_out.put((id, file_path, title))
+		self.q_out.put((id, file_path, title, page.url))
 		print(f"Worker {self.worker_id} - {id} - {file_path}")
