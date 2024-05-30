@@ -11,6 +11,8 @@ from bs4 import BeautifulSoup
 import re
 from src.tokenizer import tokenize
 
+from webpage import WebPage
+
 class WebPage(msgspec.Struct, gc=False):
     url: str
     content: str
@@ -33,6 +35,8 @@ class Worker:
 		self.postings: Dict[str, List[Posting]] = {}    # Map of tokens to lists of Postings that contain that token.
 		self.posting_count: int = 0						# The current number of postings.
 		self.index_count = 0							# The current number of partial indices.
+
+		self.page_hashes = set()
 
 		# Count the number of partial indices associated with this worker id.
 		for file in os.listdir(self.folder):
@@ -121,6 +125,41 @@ class Worker:
 		os.rename(f"{self.folder}/w{self.worker_id}.dat", f"{self.folder}/w{self.worker_id}-0.dat")
 		print(f"Worker {self.worker_id} - Merged indices.")
 
+
+	def extract_text(self, soup: BeautifulSoup) -> str:
+		""" Extract plain text from HTML content. """
+		# taking out javascript / css
+		for script in soup(["script", "style"]):
+			script.extract()  
+		return soup.get_text()
+
+	def is_duplicate(self, page_hash: str) -> bool:
+		if page_hash in self.page_hashes:
+			return True
+		self.page_hashes.add(page_hash)
+		return False
+	
+	def compute_hash(self,page_content: str) : 
+		""" this function will return a hash value for a given document 
+		for each character in the hash we multily by the prime 
+		+ ord(char) gives us the ascii value of the character
+
+		% 2^32 to make sure it says within a 32 bit unsigned (no negative) integer and sets the range 
+		# so lets us have hash values in the range  0 - 8,388,607
+
+		we multiply by 31 (prime) becuase it less likely produces patterns (so no accidental matches)
+		and lets us produce a unique hash number 
+		"""
+
+		#
+		hash_value = 0
+		prime = 31  # A small prime number for multiplication
+		for char in page_content:
+			hash_value = (hash_value * prime + ord(char)) % (2**32)  # Use a large prime modulus to avoid overflow
+		return hash_value
+	
+
+
 	def process_document(self, file_path: Path, id: int) -> None:
 		""" Processing the given document, extracting the postings from it. """
 
@@ -136,6 +175,13 @@ class Worker:
 		title = soup.find("title")
 		title = title.string if title else ""
 		title = re.sub(r'\s+',' ', title if title else "").strip()
+
+		text_content = self.extract_text(soup)
+		page_hash = self.compute_hash(text_content)
+
+		if self.is_duplicate(page_hash):
+			print(f"Dupliate page found {self.worker_id} locateed  in {file_path}")
+			return
 
 		# Add all postings from that file to this worker's own dict.
 		for token, posting in Posting.get_postings(soup, id).items():
