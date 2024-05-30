@@ -30,15 +30,14 @@ def get_postings(tokens: List[str], index_of_index: Dict[str, int]) -> List[List
 
     with open("indices/index.txt", "r") as index:
 
-        for each_query in nltk.ngrams(tokens,3):
-            for token in each_query:
-                index_position = index_of_index.get(token, -1)
-                if index_position > -1:
-                    index.seek(index_position)
-                    line = index.readline()
-                    token, postings_string = line.split(":", 1)
-                    postings = [Posting.from_string(p) for p in postings_string.split(";")]
-                    token_postings.append(postings)
+        for token in tokens:
+            index_position = index_of_index.get(token, -1)
+            if index_position > -1:
+                index.seek(index_position)
+                line = index.readline()
+                token, postings_string = line.split(":", 1)
+                postings = [Posting.from_string(p) for p in postings_string.split(";")]
+                token_postings.append(postings)
                 
                
     return token_postings
@@ -182,8 +181,6 @@ def main():
                 st.write("No matching tokens found.")
 
             end = time.time()
-            profiler.disable()
-            profiler.print_stats(sort="tottime")
             st.write(f"Search completed in {end - start:.2f} seconds")
 
 if __name__ == "__main__":
