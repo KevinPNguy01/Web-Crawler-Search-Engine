@@ -18,7 +18,7 @@ def stem_tokens(tokens: List[str]) -> List[str]:
 def get_postings(tokens: List[str], index_of_index: Dict[str, int]) -> List[List[Posting]]:
     token_postings = []  # List to store postings for each token
 
-    with open("index.txt", "r") as index:
+    with open("indices/index.txt", "r") as index:
         for token in tokens:
             #similar_tokens = [key for key in index_of_index.keys() if fuzz.ratio(token, key) >= 100]
             #print(f"Token: {token}, Similar Tokens: {similar_tokens}")
@@ -32,7 +32,6 @@ def get_postings(tokens: List[str], index_of_index: Dict[str, int]) -> List[List
                 postings = [Posting.from_string(p) for p in postings_string.split(";")]
                 token_postings.append(postings)
     return token_postings
-
 
 def filter(token_postings, tokens, index_of_crawled):
     results = []
@@ -51,8 +50,7 @@ def filter(token_postings, tokens, index_of_crawled):
     else:
         common_doc_ids = set()
 
-
-    with open("crawled.txt", "r") as crawled_file:
+    with open("indices/crawled.txt", "r", encoding="utf-8") as crawled_file:
         for doc_id in common_doc_ids:
             crawled_file.seek(index_of_crawled[doc_id])
             path = crawled_file.readline().strip()
@@ -64,15 +62,12 @@ def filter(token_postings, tokens, index_of_crawled):
     
     return results
 
-
-
-
 def calc_doc_relevance(postings: List[Posting], tokens: List[str], data: Dict) -> float:
     # inital tf_idf from the summings 
     tf_idf_score = sum(posting.tf_idf for posting in postings)
     
     # parsing content and extracting title 
-    soup = BeautifulSoup(data["content"], "html.parser")
+    soup = BeautifulSoup(data["content"], "lxml")
     title_tag = soup.title
     title = title_tag.string if title_tag and title_tag.string else ""
 
@@ -88,30 +83,21 @@ def calc_doc_relevance(postings: List[Posting], tokens: List[str], data: Dict) -
 
     return tf_idf_score
 
-
-
-
-
-
-
-    
-
-
 def collect_and_display_results(results: List[Posting], index_of_crawled: Dict[int, int], tokens: List[str], num_of_results: int = 5):
-    temp = open("temp.txt", "w")
-
-    with open("crawled.txt", "r") as crawled_file:
+    with open("indices/crawled.txt", "r", encoding="utf-8") as crawled_file:
         for index, posting in enumerate(sorted(results, key=lambda x: x.tf_idf, reverse=True)[:num_of_results], start=1):
             crawled_file.seek(index_of_crawled[posting.id])
             path = crawled_file.readline().strip()
             with open(path, "r") as file:
                 data = json.load(file)
                 url = data["url"]
-                soup = BeautifulSoup(data["content"], "html.parser")
+                soup = BeautifulSoup(data["content"], "lxml")
                 text = soup.get_text()
             contexts = []
             for token in tokens:
                 pos = text.lower().find(token)
+                if pos == -1:
+                    continue
                 size = 32
                 sentence_before = text[max(pos-size, 0):pos]
                 token_text = f"**:blue-background[{text[pos:pos+len(token)]}]**"
@@ -121,16 +107,12 @@ def collect_and_display_results(results: List[Posting], index_of_crawled: Dict[i
             st.write(f"{index}.\t{soup.title.string}")
             st.write(f"{url}")
             for context in contexts:
-                temp.write(f"{context}\n")
                 st.markdown(f"...{context}...")
-
-    temp.close()
-
 
 def read_index_files(file_name: str) -> Dict:
     index_dict = {}
 
-    with open(file_name, "r") as file:
+    with open(f"indices/{file_name}", "r") as file:
         for line in file:
             key, position = line.split(",")
             if file_name == 'index_of_index.txt':
