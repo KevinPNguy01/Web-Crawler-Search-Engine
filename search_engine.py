@@ -141,7 +141,7 @@ def main():
     index_of_index = read_index_files("index_of_index.txt")
     index_of_crawled = read_index_files("index_of_crawled.txt")
 
-    with open("posting_keys.json", "r") as file:
+    with open("indices/index_dictionary.json", "r") as file:
         posting_keys = json.load(file)
 
     st.title("Search Engine")
