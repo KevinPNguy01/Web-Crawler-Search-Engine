@@ -1,27 +1,14 @@
 from argparse import ArgumentParser
 from src.inverted_index import InvertedIndex
 from pathlib import Path
-import cProfile
-import pstats
-import io
 
-def main(restart):
-    index = InvertedIndex(Path("DEV"), restart=restart)
+def main(restart, num_workers):
+    index = InvertedIndex(Path("DEV"), restart=restart, num_workers=num_workers)
     index.start()
 
 if __name__ == "__main__":
     parser = ArgumentParser()
     parser.add_argument("--restart", action="store_true", default=False)
-    parser.add_argument("--profile", action="store_true", default=False)
+    parser.add_argument("-n", type=int, default=1, help="The number of worker processes to spawn (default: 1)")
     args = parser.parse_args()
-    if args.profile:
-        stream = io.StringIO()
-        profiler = cProfile.Profile()
-        profiler.enable()
-        main(args.restart)
-        profiler.disable()
-        p = pstats.Stats(profiler, stream=stream).sort_stats("tottime")
-        p.print_stats(20)
-        print(stream.getvalue())
-    else:
-        main(args.restart)
+    main(args.restart, args.n)

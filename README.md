@@ -36,17 +36,21 @@ Once installed you're ready to create your index!
 
 ## Creating an index
 
-To create your index navigate to the directory of the project and enter into the terminal the following command
+To create your index navigate to the directory of the project and enter into the terminal the following command.
 ```sh
 python3 launch.py 
 ```
+Indexing can be stopped partway through by pressing ctrl+c once.
+Simply rerun the command to resume indexing.
+If you would like to restart the index for any reason add ```--restart``` as an argument for the command .
 
-if you would like to restart the index for any reason include ```--restart``` as an argument at the end of the command 
 
-
-**NOTE: the creation of the index utilizes multithreading for maxininum peformance, please modify the value in line 66 in the file src/inverted_index.py as shown below (deafult is currently set to 10 threads) if you're experiencing issues.** 
-
-![Thread modifier](images/multithread.png)
+**NOTE: The creation of the index utilizes multiprocessing for faster indexing.**
+**The number of worker processes can be set by passing ```-n``` followed by an integer.** 
+```sh
+python3 launch.py -n 10 --restart
+```
+This command creates the index from the start, and spawns 10 worker processes.
 
 After your index has been created you may now start the applicaation!
 

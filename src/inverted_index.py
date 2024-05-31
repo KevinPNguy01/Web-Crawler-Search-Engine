@@ -11,7 +11,7 @@ import os
 OS_WINDOWS = platform.system() == "Windows"		# Flag for if OS is Windows.
 
 class InvertedIndex:
-	def __init__(self, source: Path, restart=True) -> None:
+	def __init__(self, source: Path, restart=True, num_workers=1) -> None:
 		self.source: Path = source                      		# Folder path containg documents to index.
 		self.index_folder = Path("indices")						# Folder path for indices.
 		self.partial_index_folder = Path("partial_indices")		# Folder path for partial indices.
@@ -19,6 +19,7 @@ class InvertedIndex:
 		self.crawled_save_path = Path("crawled.txt")    		# File path for names of crawled files.
 
 		self.workers: List[Process] = []				# List of worker processes.
+		self.num_workers = max(1, min(100, num_workers))
 		self.finished_workers = 0						# The number of workers that finished processing.
 		self.q_in: Queue[Tuple[str, int]] = Queue()		# Queue storing tuples of (file_path, doc_id) for workers to tokenize and process.
 		self.q_out: Queue[Tuple[str, int]] = Queue()	# Queue storing tuples of (file_path, doc_id, title) for the main process to save to file.
@@ -63,7 +64,7 @@ class InvertedIndex:
 	def start(self) -> None:
 		""" Starts indexing. """
 		try:
-			self.spawn_processes(10)		
+			self.spawn_processes()		
 			self.enqueue_documents()	# Documents get enqueued for workers to process
 			self.dequeue_documents()	# Documents that finished processing get saved to file.
 		except KeyboardInterrupt:
@@ -76,14 +77,10 @@ class InvertedIndex:
 		self.save_to_file()
 		self.index_index()
 
-	def spawn_processes(self, n: int) -> None:
-		""" Create n workers and spawn a process for each one. 
+	def spawn_processes(self) -> None:
+		""" Create workers and spawn a process for each one. """
 		
-		Positional Arguments: \n
-		n -- The number of workers and processes to spawn.
-		"""
-		
-		for id in range(n):
+		for id in range(self.num_workers):
 			worker = Worker(id, self.partial_index_folder, self.q_in, self.q_out, self.running)
 			p = Process(target=worker)
 			self.workers.append(p)
