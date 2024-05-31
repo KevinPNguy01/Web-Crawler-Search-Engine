@@ -13,16 +13,13 @@ class WebPage(msgspec.Struct, gc=False):
 	url: str
 	content: str
 	encoding: str
+	title: str = ""
 	soup: BeautifulSoup = None
 
 	def __post_init__(self):
 		self.soup = BeautifulSoup(self.content, "lxml")
-	
-	def get_title(self) -> str:
 		title = self.soup.find("title")
-		title = title.string if title else ""
-		title = re.sub(r'\s+',' ', title if title else "").strip()
-		return title
+		self.title = title.text if title else ""
 	
 	def get_text(self) -> List[str]:
 		[s.decompose() for s in self.soup(['style', 'script', '[document]', 'head', 'title'])]
@@ -51,7 +48,6 @@ class WebPage(msgspec.Struct, gc=False):
 			body_strings = [re.sub(r'\s+',' ', string).strip() for string in body.stripped_strings]
 			body_strings = " ".join(body_strings)
 			body_strings = " ".join(re.findall(r'\b[a-zA-Z0-9]+\b', body_strings))
-			print(body_strings)
 			for token in tokens:
 				pos = body_strings.lower().find(token)
 				if pos > -1:
@@ -68,6 +64,5 @@ decoder = msgspec.json.Decoder(type=WebPage)
 if __name__ == "__main__":
 	webpage = WebPage.from_path(Path("DEV\\ngs_ics_uci_edu\\f46429fcd2d984473eac85f30165384427dbd4471e7750f7989fc79b2a70ddb2.json"))
 	print(webpage.url)
-	print(webpage.get_title())
+	print(webpage.title)
 	print(webpage.get_text())
-	print(webpage.get_summary())

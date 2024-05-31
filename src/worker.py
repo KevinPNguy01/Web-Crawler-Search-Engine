@@ -28,7 +28,7 @@ class Worker:
 
 		# Count the number of partial indices associated with this worker id.
 		for file in os.listdir(self.folder):
-			if file.startswith(f"w{self.worker_id}"):
+			if file.startswith(f"w{self.worker_id:02}"):
 				self.index_count += 1
 
 	def __call__(self):
@@ -61,7 +61,7 @@ class Worker:
 	def create_partial_index(self) -> None:
 		""" Write the tokens and postings stored in memory into a partial index. """
 
-		with open(f"{self.folder}/w{self.worker_id}-i{self.index_count}.dat", "w") as index:
+		with open(f"{self.folder}/w{self.worker_id:02}-i{self.index_count}.dat", "w") as index:
 			for token, postings in sorted(self.postings.items()):
 				# Each line of the index is of the form: 
 				# 	<token>:<id_1>,<tf-idf_1>;<id_2>,<tf-idf_2>;<id_3>,<tf-idf_3>;
@@ -80,10 +80,10 @@ class Worker:
 
 	def merge_indices(self) -> None:
 		""" Combine the partial indices into one file. """
-		print(f"Worker {self.worker_id} - Merging indices...")
+		print(f"Worker {self.worker_id:02} - Merging indices...")
 
 		# Since the partial indices are in alphabetical order, we are essentially merging n sorted lists.
-		indices = [open(f"{self.folder}/{file}") for file in os.listdir(self.folder) if file.startswith(f"w{self.worker_id}")]	# Open every partial index belonging to this worker.
+		indices = [open(f"{self.folder}/{file}") for file in os.listdir(self.folder) if file.startswith(f"w{self.worker_id:02}")]	# Open every partial index belonging to this worker.
 		lines = [index.readline().strip() for index in indices]																	# Read the first line from every file.
 
 		# Get the first token and list of postings from each file.
@@ -92,7 +92,7 @@ class Worker:
 		for i, line in enumerate(lines):
 			tokens[i], postings_strings[i] = line.split(":", 1) if line else (None, None)	
 
-		with open(f"{self.folder}/w{self.worker_id}.dat", "w") as index:
+		with open(f"{self.folder}/w{self.worker_id:02}.dat", "w") as index:
 			while any(token for token in tokens):						# Loop until the end of every file has been reached.											
 				min_token = min(token for token in tokens if token)		# The minimum token alphabetically out of all the documents.
 				postings: List[List[str, str]] = []						# A list containing pairs of strings. The first string is the doc id, and the second is the frequency. 
@@ -109,10 +109,10 @@ class Worker:
 		for file in indices:
 			file.close()
 		for file in os.listdir(self.folder):
-			if file.startswith(f"w{self.worker_id}-"):
+			if file.startswith(f"w{self.worker_id:02}-"):
 				os.remove(f"{self.folder}/{file}")
-		os.rename(f"{self.folder}/w{self.worker_id}.dat", f"{self.folder}/w{self.worker_id}-0.dat")
-		print(f"Worker {self.worker_id} - Merged indices.")
+		os.rename(f"{self.folder}/w{self.worker_id:02}.dat", f"{self.folder}/w{self.worker_id:02}-0.dat")
+		print(f"Worker {self.worker_id:02} - Merged indices.")
 
 
 	def is_duplicate(self, page_hash: str, page_path) -> bool:
@@ -162,8 +162,8 @@ class Worker:
 		for token, posting in Posting.get_postings(webpage.soup, id).items():
 			self.postings.setdefault(token, []).append(posting)
 			self.posting_count += 1
-		self.q_out.put((id, file_path, webpage.get_title(), webpage.url))
-		print(f"Worker {self.worker_id} - {id} - {file_path}")
+		self.q_out.put((id, file_path))
+		print(f"Worker {self.worker_id:02} - {id} - {file_path}")
 
 	def print_duplicate(self):
 		for key,value in self.duplicate_pages.items():

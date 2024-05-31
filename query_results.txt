@@ -1,366 +1,366 @@
 Query: master of software engineering
 Results:
-Title: Master of Software Engineering (MSWE) | Informatics @ the University of California, Irvine
+Title: 
 URL: https://www.informatics.uci.edu/grad/mswe/
 
-Title: Master of Software Engineering (MSWE) | Informatics @ the University of California, Irvine
+Title: 
 URL: https://www.informatics.uci.edu/grad/mswe/#content
 
-Title: Overview | Informatics @ the University of California, Irvine
+Title: 
 URL: https://www.informatics.uci.edu/grad/overview/
 
-Title: Overview | Informatics @ the University of California, Irvine
+Title: 
 URL: https://www.informatics.uci.edu/grad/overview/#content
 
-Title: M.S. Software Engineering | Informatics @ the University of California, Irvine
+Title: 
 URL: https://www.informatics.uci.edu/grad/ms-software-engineering/
 
-Time taken: 0.01 seconds
+Time taken: 0.005 seconds
 
 ==================================================
 
 Query: master of software engineering uc irvine
 Results:
-Title: Master of Software Engineering (MSWE) | Informatics @ the University of California, Irvine
+Title: 
 URL: https://www.informatics.uci.edu/grad/mswe/
 
-Title: Master of Software Engineering (MSWE) | Informatics @ the University of California, Irvine
+Title: 
 URL: https://www.informatics.uci.edu/grad/mswe/#content
 
-Title: Overview | Informatics @ the University of California, Irvine
+Title: 
 URL: https://www.informatics.uci.edu/grad/overview/
 
-Title: Overview | Informatics @ the University of California, Irvine
+Title: 
 URL: https://www.informatics.uci.edu/grad/overview/#content
 
-Title: M.S. Software Engineering | Informatics @ the University of California, Irvine
+Title: 
 URL: https://www.informatics.uci.edu/grad/ms-software-engineering/
 
-Time taken: 0.01 seconds
+Time taken: 0.004 seconds
 
 ==================================================
 
 Query: cristina lopes
 Results:
-Title: Cristina Lopes | Informatics @ the University of California, Irvine
+Title: 
 URL: https://www.informatics.uci.edu/explore/faculty-profiles/cristina-lopes/#content
 
-Title: Cristina Lopes | Informatics @ the University of California, Irvine
+Title: 
 URL: https://www.informatics.uci.edu/explore/faculty-profiles/cristina-lopes/
 
-Title: faculty profile @ the bren school of information and computer sciences at uc irvine
+Title: 
 URL: https://www.ics.uci.edu/faculty/profiles/view_faculty.php?ucinetid=lopes
 
-Title: Hitesh Sajnani's homepage
+Title: 
 URL: https://www.ics.uci.edu/~hsajnani/
 
-Title: noteworthy achievements 2009 @ the bren school of information and computer sciences
+Title: 
 URL: https://www.ics.uci.edu/community/news/notes/notes_2009.php
 
-Time taken: 0.00 seconds
+Time taken: 0.002 seconds
 
 ==================================================
 
 Query: tyler
 Results:
-Title: Tyler
+Title: 
 URL: https://www.ics.uci.edu/~eppstein/pix/onrp/Tyler.html
 
-Title: Tyler does the chicken dance
+Title: 
 URL: https://www.ics.uci.edu/~eppstein/pix/s8bd/TylerChicken.html
 
-Title: Tyler Kaczmarek Personnel Page
+Title: 
 URL: http://sprout.ics.uci.edu/people/tkaczmar/index.html
 
-Title: Tyler Leads The Way
+Title: 
 URL: https://www.ics.uci.edu/~eppstein/pix/candystore/TylerLeadsTheWay.html
 
-Title: Usable Security Group - improving usability for better security
+Title: 
 URL: http://sprout.ics.uci.edu/projects/usec/usec.html
 
-Time taken: 0.00 seconds
+Time taken: 0.000 seconds
 
 ==================================================
 
 Query: computer!
 Results:
-Title: news | Center for Machine Learning and Intelligent Systems | Page 2
+Title: 
 URL: https://cml.ics.uci.edu/tag/news/page/2/?page=events&subPage=aiml
 
-Title: news | Center for Machine Learning and Intelligent Systems | Page 2
-URL: https://cml.ics.uci.edu/tag/news/page/2/?page=people&subPage=faculty
-
-Title: news | Center for Machine Learning and Intelligent Systems | Page 2
+Title: 
 URL: https://cml.ics.uci.edu/tag/news/page/2/?page=events&subPage=dss_schedule
 
-Title: news | Center for Machine Learning and Intelligent Systems | Page 2
+Title: 
 URL: https://cml.ics.uci.edu/tag/news/page/2/
 
-Title: News
+Title: 
+URL: https://cml.ics.uci.edu/tag/news/page/2/?page=people&subPage=faculty
+
+Title: 
 URL: https://www.cs.uci.edu/news/page/11/
 
-Time taken: 0.03 seconds
+Time taken: 0.025 seconds
 
 ==================================================
 
 Query: march 21 2018
 Results:
-Title: Informatics 122 Winter 2013, Final Project
+Title: 
 URL: https://www.ics.uci.edu/~thornton/inf122/ProjectGuide/FinalProject/
 
-Title: DSPage
+Title: 
 URL: https://www.ics.uci.edu/~asuncion/180/dspage.htm
 
-Title: Fatemeh Nargesian: Data Enrichment for Data Science – Information Systems Group
+Title: 
 URL: https://isg.ics.uci.edu/event/fatemeh-nargesian-data-enrichment-for-data-science/
 
-Title: Past Events – Information Systems Group
+Title: 
 URL: https://isg.ics.uci.edu/events/list/?tribe_event_display=past&tribe_paged=1
 
-Title: A memorable evening in Bangalore – Ramesh Jain
+Title: 
 URL: https://ngs.ics.uci.edu/a-memorable-evening-in-bangalore/
 
-Time taken: 0.00 seconds
+Time taken: 0.001 seconds
 
 ==================================================
 
 Query: thornton@ics.uci.edu
 Results:
-Title: faculty @ the bren school of information and computer sciences
+Title: 
 URL: https://www.ics.uci.edu/faculty/index.php
 
-Title: faculty @ the bren school of information and computer sciences
+Title: 
 URL: https://www.ics.uci.edu/faculty/
 
-Title: faculty @ the bren school of information and computer sciences
+Title: 
 URL: https://www.ics.uci.edu/faculty/index.php?department=Computer%20Science
 
-Title: Faculty
+Title: 
 URL: https://www.cs.uci.edu/faculty/
 
-Title: faculty @ the bren school of information and computer sciences
+Title: 
 URL: https://www.ics.uci.edu/faculty/faculty_dept?department=Computer%20Science
 
-Time taken: 0.02 seconds
+Time taken: 0.020 seconds
 
 ==================================================
 
 Query: data structure and algorithms course
 Results:
-Title: FORGE/Dynamo: PA-API Documentation
+Title: 
 URL: http://dynamo.ics.uci.edu/paapi.html
 
-Title: 143A Principles of Operating Systems
+Title: 
 URL: https://www.ics.uci.edu/~aburtsev/143A/2018fall/hw/hw4-threads.html
 
-Title: FORGE/Dynamo: PA-API Documentation
+Title: 
 URL: https://www.ics.uci.edu/~dsm/dyn/release/paapi.html
 
-Title: Data Compression -- Section 5
+Title: 
 URL: https://www.ics.uci.edu/~dan/pubs/DC-Sec5.html
 
-Title: ICS 33 Summer 2013, Unit Testing and Test-Driven Development with unittest, Step-by-Step Examples
+Title: 
 URL: https://www.ics.uci.edu/~thornton/ics33/CodeExamples/UnitTesting/CodeExamples.html
 
-Time taken: 0.00 seconds
+Time taken: 0.000 seconds
 
 ==================================================
 
 Query: machine learning
 Results:
-Title: News | Center for Machine Learning and Intelligent Systems
+Title: 
 URL: https://cml.ics.uci.edu/category/news/?page=events&subPage=dss_schedule
 
-Title: News | Center for Machine Learning and Intelligent Systems
+Title: 
 URL: https://cml.ics.uci.edu/category/news/?page=people&subPage=faculty
 
-Title: News | Center for Machine Learning and Intelligent Systems
+Title: 
 URL: https://cml.ics.uci.edu/category/news/
 
-Title: News | Center for Machine Learning and Intelligent Systems
+Title: 
 URL: https://cml.ics.uci.edu/category/news/#content
 
-Title: News | Center for Machine Learning and Intelligent Systems
+Title: 
 URL: https://cml.ics.uci.edu/category/news/?page=events&subPage=aiml
 
-Time taken: 0.02 seconds
+Time taken: 0.019 seconds
 
 ==================================================
 
 Query: ACM
 Results:
-Title: News
+Title: 
 URL: https://www.cs.uci.edu/news/page/15/
 
-Title: ACM Multimedia Information Retrieval – Ramesh Jain
+Title: 
 URL: https://ngs.ics.uci.edu/acm-multimedia-information-retrieval/
 
-Title: Second Day at ACM Multimedia – Ramesh Jain
+Title: 
 URL: https://ngs.ics.uci.edu/second-day-at-acm-multimedia/
 
-Title: Grand Challenge Problems at ACM Multimedia 2009 – Ramesh Jain
+Title: 
 URL: https://ngs.ics.uci.edu/grand-challenge-problems-at-acm-multimedia-2009/
 
-Title: ACM Multimedia 2006: Day 3 – Ramesh Jain
+Title: 
 URL: https://ngs.ics.uci.edu/acm-multimedia-2006-day-3/
 
-Time taken: 0.00 seconds
+Time taken: 0.004 seconds
 
 ==================================================
 
 Query: zip file
 Results:
-Title: ICS 22/CSE 22 - Project #1: Perfect Candidate
+Title: 
 URL: https://www.ics.uci.edu/~irani/s11_22/Project1/Project1.html
 
-Title: ICS 22/CSE 22 - Project #3: What's Simple is True
+Title: 
 URL: https://www.ics.uci.edu/~irani/s11_22/Project3/Project3.html
 
-Title: SLI | PmWiki / Uploads Administration
+Title: 
 URL: http://sli.ics.uci.edu/PmWiki/UploadsAdmin
 
-Title: cs122b-2019-winter-project1 – Public
+Title: 
 URL: https://grape.ics.uci.edu/wiki/public/wiki/cs122b-2019-winter-project1?version=18
 
-Title: cs122b-2019-winter-project1 – Public
+Title: 
 URL: https://grape.ics.uci.edu/wiki/public/wiki/cs122b-2019-winter-project1?version=34
 
-Time taken: 0.01 seconds
+Time taken: 0.009 seconds
 
 ==================================================
 
 Query: 0
 Results:
-Title: MAJIQ LSV ΔΨ Summary
+Title: 
 URL: https://cbcl.ics.uci.edu/public_data/shilab/forColleen/MAJIQ/voila-KO-cort/
 
-Title: MAJIQ LSV ΔΨ Summary
+Title: 
 URL: https://cbcl.ics.uci.edu/public_data/shilab/forColleen/MAJIQ/voila-KO-hind/
 
-Title: MAJIQ LSV ΔΨ Summary
+Title: 
 URL: https://cbcl.ics.uci.edu/public_data/shilab/forColleen/MAJIQ/voila-Wt-hind/
 
-Title: Pintos Projects: Project 0--Getting Real
+Title: 
 URL: https://www.ics.uci.edu/~ardalan/courses/os/pintos/pintos_2.html#SEC19
 
-Title: MAJIQ LSV ΔΨ Summary
+Title: 
 URL: https://cbcl.ics.uci.edu/public_data/shilab/forColleen/MAJIQ/voila-Wt-cort/
 
-Time taken: 0.05 seconds
+Time taken: 0.046 seconds
 
 ==================================================
 
 Query: tropical fish
 Results:
-Title: Richard H. Lathrop other
+Title: 
 URL: https://www.ics.uci.edu/~rickl/rickl-other.html
 
-Time taken: 0.00 seconds
+Time taken: 0.000 seconds
 
 ==================================================
 
 Query: introduction to programming
 Results:
-Title: Previous Quarters' Courses
+Title: 
 URL: https://www.ics.uci.edu/~kay/courses/previous.html
 
-Title: Links to First Year CS Courses Using Java
+Title: 
 URL: https://www.ics.uci.edu/~jacobson/IntroCourses/FirstCourseSyllabi.html
 
-Title: Courses | Informatics @ the University of California, Irvine
+Title: 
 URL: https://www.informatics.uci.edu/undergrad/courses/
 
-Title: Courses | Informatics @ the University of California, Irvine
+Title: 
 URL: https://www.informatics.uci.edu/undergrad/courses/#INF131
 
-Title: Horstmann, Cay © 2003
+Title: 
 URL: https://www.ics.uci.edu/~jacobson/IntroCourses/IntroJavaTexts.html
 
-Time taken: 0.00 seconds
+Time taken: 0.002 seconds
 
 ==================================================
 
 Query: a machine
 Results:
-Title: cs221-2019-spring-project1 – Public
+Title: 
 URL: https://grape.ics.uci.edu/wiki/public/wiki/cs221-2019-spring-project1?version=8
 
-Title: cs221-2019-spring-project1 – Public
+Title: 
 URL: https://grape.ics.uci.edu/wiki/public/wiki/cs221-2019-spring-project1?version=7
 
-Title: cs221-2019-spring-project1 – Public
+Title: 
 URL: https://grape.ics.uci.edu/wiki/public/wiki/cs221-2019-spring-project1?version=11
 
-Title: cs221-2019-spring-project1 – Public
+Title: 
 URL: https://grape.ics.uci.edu/wiki/public/wiki/cs221-2019-spring-project1?version=6
 
-Title: cs221-2019-spring-project1 – Public
+Title: 
 URL: https://grape.ics.uci.edu/wiki/public/wiki/cs221-2019-spring-project1?version=5
 
-Time taken: 0.09 seconds
+Time taken: 0.083 seconds
 
 ==================================================
 
 Query: The competent programmer is fully aware of the strictly limited size of his own skull therefore he approaches the programming task in full humility and among other things he avoids clever tricks like the plague
 Results:
-Title: Quotations for CS1
+Title: 
 URL: https://www.ics.uci.edu/~pattis/quotations.html
 
-Title: ICS-33 Overview
+Title: 
 URL: https://www.ics.uci.edu/~pattis/ICS-33/lectures/overview/lecture.html
 
-Title: ICS-31 Overview
+Title: 
 URL: https://www.ics.uci.edu/~pattis/ICS-31/lectures/overview/lecture.html
 
-Title: ICS-21 Overview
+Title: 
 URL: https://www.ics.uci.edu/~pattis/ICS-21/lectures/overview/lecture.html
 
-Title: ICS-46 Overview
+Title: 
 URL: https://www.ics.uci.edu/~pattis/ICS-46/lectures/overview/lecture.html
 
-Time taken: 0.00 seconds
+Time taken: 0.001 seconds
 
 ==================================================
 
 Query: document
 Results:
-Title: A-7 SCR
+Title: 
 URL: https://www.ics.uci.edu/~alspaugh/cls/shr/SCR.html
 
-Title: XHTML and HTML
+Title: 
 URL: https://www.ics.uci.edu/~alspaugh/cls/shr/html.html
 
-Title: MAJIQ LSV ΔΨ Summary
+Title: 
 URL: https://cbcl.ics.uci.edu/public_data/shilab/forColleen/MAJIQ/voila-KO-hind/
 
-Title: MAJIQ LSV ΔΨ Summary
+Title: 
 URL: https://cbcl.ics.uci.edu/public_data/shilab/forColleen/MAJIQ/voila-Wt-hind/
 
-Title: MAJIQ LSV ΔΨ Summary
+Title: 
 URL: https://cbcl.ics.uci.edu/public_data/shilab/forColleen/MAJIQ/voila-Wt-cort/
 
-Time taken: 0.01 seconds
+Time taken: 0.008 seconds
 
 ==================================================
 
 Query: collection
 Results:
-Title: Collection Requirements
+Title: 
 URL: https://www.ics.uci.edu/~ejw/authoring/www6/tsld022.htm
 
-Title: Listing Members of a Collection: PROPFIND
+Title: 
 URL: https://www.ics.uci.edu/~ejw/pres/stc-99/tsld038.htm
 
-Title: Collection Requirements (cont’d)
+Title: 
 URL: https://www.ics.uci.edu/~ejw/authoring/www6/tsld023.htm
 
-Title: Members of a Collection
+Title: 
 URL: https://www.ics.uci.edu/~ejw/authoring/orem/namespace/tsld003.htm
 
-Title: Create History Collection
+Title: 
 URL: https://www.ics.uci.edu/~ejw/authoring/orem/versioning/tsld016.htm
 
-Time taken: 0.00 seconds
+Time taken: 0.004 seconds
 
 ==================================================
 

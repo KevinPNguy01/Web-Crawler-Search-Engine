@@ -74,11 +74,9 @@ def collect_and_display_results(results: List[Posting], index_of_crawled: Dict[i
             crawled_file.seek(index_of_crawled[posting.id])
             path = Path(crawled_file.readline().strip())
             webpage = WebPage.from_path(path)
-            title = crawled_file.readline()
-            url = crawled_file.readline()
         
-            st.subheader(title, anchor=False)
-            st.write(url)
+            st.subheader(webpage.title, anchor=False)
+            st.write(webpage.url)
             st.markdown(webpage.get_context(tokens))
             st.markdown("---")
             #st.write(webpage.get_summary())
@@ -192,6 +190,7 @@ def main():
     user_input = st.text_input("Enter a query: ")
 
     if st.button("Search"):
+        st.write("running")
         if user_input:
             run(user_input, index_of_index, index_of_crawled)
 

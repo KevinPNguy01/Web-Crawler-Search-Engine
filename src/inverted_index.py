@@ -62,7 +62,7 @@ class InvertedIndex:
 	def start(self) -> None:
 		""" Starts indexing. """
 		try:
-			self.spawn_processes(8)		
+			self.spawn_processes(10)		
 			self.enqueue_documents()	# Documents get enqueued for workers to process
 			self.dequeue_documents()	# Documents that finished processing get saved to file.
 		except KeyboardInterrupt:
@@ -135,7 +135,7 @@ class InvertedIndex:
 			self.q_in.get()
 		print("Cleared input queue.")
 
-	def update_crawled_list(self, id: int, file_path: Path, title: str, url: str, file_position: int) -> int:
+	def update_crawled_list(self, id: int, file_path: Path, file_position: int) -> int:
 		""" Updates the crawled save file, as well as the index for it. 
 		
 		Arguments:\n
@@ -147,7 +147,7 @@ class InvertedIndex:
 		"""
 
 		# Write the file path of this document to the crawled save file.
-		line = f"{file_path}\n{title}\n{url}\n"
+		line = f"{file_path}\n"
 		self.crawled_file.write(line)
 		self.crawled.add(file_path.name)
 
