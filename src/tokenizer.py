@@ -4,6 +4,7 @@ from bs4.element import Comment
 from functools import cmp_to_key
 from collections import Counter
 from nltk.util import ngrams
+from nltk.stem import PorterStemmer
 import json
 import re
 
@@ -26,10 +27,13 @@ def compare(item1: Tuple[str, int], item2: Tuple[str, int]) -> int:
 
 # This runs in O(n) with respect to the size of the file since it iterates through each line of the file once, 
 # and iterates through each character of each line only once.
-def tokenize(text: List[str]) -> Dict[str, int]:
+def tokenize(text: List[str], stem=False) -> Dict[str, int]:
+    stemmer = PorterStemmer()
     n_grams = []
     for string in text:
         tokens: List[str] = [token.lower() for token in re.findall(r'\b[a-zA-Z0-9]+\b', string) if not token.isnumeric() or len(token) <= 4]
+        if stem:
+            tokens = [stemmer.stem(token) for token in tokens]
         for token in tokens:
             n_grams.append((token.lower(),))
         n_grams.extend(n_gram for n_gram in ngrams(tokens, 2) if any(not token.isnumeric() for token in n_gram))

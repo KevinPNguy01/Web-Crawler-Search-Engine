@@ -121,7 +121,7 @@ class Worker:
 		self.page_hashes[page_hash] = page_path
 		return False
 	
-	def compute_hash(self,page_content: str) : 
+	def compute_hash(self,page_content: List[str]) : 
 		raw_text = ' '.join(page_content)
 
 		""" this function will return a hash value for a given document 

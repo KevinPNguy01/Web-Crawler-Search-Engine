@@ -2,6 +2,7 @@ from multiprocessing import Process, Queue, Value
 from typing import Set, List, Tuple, TextIO
 from pathlib import Path
 from src.worker import Worker
+from src.webpage import WebPage
 import platform
 import shutil
 import math
@@ -102,7 +103,7 @@ class InvertedIndex:
 		for id, file_path in enumerate(self.source.rglob("*.json")):
 
 			# Skip the file if it has been crawled previously.
-			if str(file_path) in self.crawled:
+			if str(file_path) in self.crawled or os.path.getsize(file_path) > 10000000:
 				continue
 
 			# Enqueue the file path with its assigned id.

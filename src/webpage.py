@@ -5,6 +5,7 @@ import lxml
 from typing import List
 import re
 from openai import OpenAI
+import time
 
 OPENAI_AI_KEY = ""
 CLIENT = OpenAI(api_key=OPENAI_AI_KEY)
@@ -18,11 +19,11 @@ class WebPage(msgspec.Struct, gc=False):
 
 	def __post_init__(self):
 		self.soup = BeautifulSoup(self.content, "lxml")
-		title = self.soup.find("title")
-		self.title = title.text if title else ""
+		title = self.soup("title")
+		self.title = title[-1].text if title else self.url
 	
 	def get_text(self) -> List[str]:
-		[s.decompose() for s in self.soup(['style', 'script', '[document]', 'head', 'title'])]
+		[s.decompose() for s in self.soup(['style', 'script', 'code', '[document]', 'head'])]
 		return [re.sub(r'\s+',' ', string) for string in self.soup.stripped_strings if string]
 	
 	def get_summary(self) -> str:
