@@ -1,10 +1,9 @@
-import search_engine
-import json
+from search_engine import SearchEngine
+import time
 
 def main():
-    # Read index files
-    index_of_index = search_engine.read_index_files("index_of_index.txt")
-    index_of_crawled = search_engine.read_index_files("index_of_crawled.txt")
+    # Create search engine
+    search_engine = SearchEngine()
 
     # Open the roadmap and results file
     with open("roadmap.txt", "r") as query_file:
@@ -14,8 +13,18 @@ def main():
     with open("query_results.txt", "w", encoding="utf-8") as result_file:
         result_file.write("")
 
-    for query in queries:
-        search_engine.run(query, index_of_index, index_of_crawled, t=1)
+    with open("query_results.txt", "a", encoding="utf-8") as f: 
+        for query in queries:
+            f.write(f"Query: {query}\n")
+            f.write("Results:\n")
+
+            start_time = time.time()
+            for webpage in search_engine.search(query):
+                f.write(f"Title: {webpage.title}\nURL: {webpage.url}\n\n")
+
+            end_time = time.time()
+            f.write(f"Time taken: {end_time - start_time:.3f} seconds\n")
+            f.write("\n" + "="*50 + "\n\n")
 
 if __name__ == "__main__":
     main()

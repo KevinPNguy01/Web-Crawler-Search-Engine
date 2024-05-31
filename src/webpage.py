@@ -15,6 +15,7 @@ class WebPage(msgspec.Struct, gc=False):
 	content: str
 	encoding: str
 	title: str = ""
+	context: str = ""
 	soup: BeautifulSoup = None
 
 	def __post_init__(self):
@@ -43,17 +44,16 @@ class WebPage(msgspec.Struct, gc=False):
 		)
 		return response.choices[0].message.content
 	
-	def get_context(self, tokens: List[str]) -> str:
-		body = self.soup.find("body")
-		if body:
+	def get_context(self, tokens=None) -> str:
+		if tokens and (body := self.soup.find("body")):
 			body_strings = [re.sub(r'\s+',' ', string).strip() for string in body.stripped_strings]
 			body_strings = " ".join(body_strings)
 			body_strings = " ".join(re.findall(r'\b[a-zA-Z0-9]+\b', body_strings))
 			for token in tokens:
 				pos = body_strings.lower().find(token)
 				if pos > -1:
-					return body_strings[pos:pos+300]
-		return ""
+					self.context = body_strings[pos:pos+300]
+		return self.context
 	
 	@classmethod
 	def from_path(cls, path: Path):
