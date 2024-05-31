@@ -29,14 +29,34 @@ class WebPage(msgspec.Struct, gc=False):
 		return [re.sub(r'\s+',' ', string) for string in self.soup.stripped_strings if string]
 	
 	def get_summary(self) -> str:
+		body = self.soup.find("body")
+		if not body:
+			return ""
+		body_strings = [re.sub(r'\s+',' ', string).strip() for string in body.stripped_strings]
+		body_strings = [list(re.findall(r'\b[a-zA-Z0-9]+\b', string)) for string in body_strings]
+		body_strings = [" ".join(string) for string in body_strings]
+		body_strings = [s for s in body_strings if len(s) >= 5]
 		response = CLIENT.chat.completions.create(
 			model="gpt-3.5-turbo",
 			messages=[
 				{"role": "system", "content": "Summarize following webpage content using 30 completion_tokens or less. Not complete sentence, don't mention the word summary"},
-				{"role": "user", "content": "\n".join(s for s in self.get_text() if len(s) >= 5)}
+				{"role": "user", "content": "\n".join(body_strings)}
 			]
 		)
 		return response.choices[0].message.content
+	
+	def get_context(self, tokens: List[str]) -> str:
+		body = self.soup.find("body")
+		if body:
+			body_strings = [re.sub(r'\s+',' ', string).strip() for string in body.stripped_strings]
+			body_strings = " ".join(body_strings)
+			body_strings = " ".join(re.findall(r'\b[a-zA-Z0-9]+\b', body_strings))
+			print(body_strings)
+			for token in tokens:
+				pos = body_strings.lower().find(token)
+				if pos > -1:
+					return body_strings[pos:pos+300]
+		return ""
 	
 	@classmethod
 	def from_path(cls, path: Path):

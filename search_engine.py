@@ -10,9 +10,11 @@ from thefuzz import fuzz
 import nltk
 import cProfile
 import re
-
+from src.webpage import WebPage
 from nltk.stem import PorterStemmer
 import nltk 
+from pathlib import Path
+import re
 
 def stem_tokens(tokens: List[str]) -> List[str]:
     stemmer = PorterStemmer()
@@ -70,12 +72,16 @@ def collect_and_display_results(results: List[Posting], index_of_crawled: Dict[i
     with open("indices/crawled.txt", "r", encoding="utf-8") as crawled_file:
         for index, posting in enumerate(sorted(results, key=lambda x: x.tf_idf, reverse=True)[:num_of_results], start=1):
             crawled_file.seek(index_of_crawled[posting.id])
-            path = crawled_file.readline()
+            path = Path(crawled_file.readline().strip())
+            webpage = WebPage.from_path(path)
             title = crawled_file.readline()
             url = crawled_file.readline()
         
-            st.write(title)
+            st.subheader(title, anchor=False)
             st.write(url)
+            st.markdown(webpage.get_context(tokens))
+            st.markdown("---")
+            #st.write(webpage.get_summary())
 
             
 def collect_results_to_file(results: List[Posting], index_of_crawled: Dict[int, int], tokens: List[str], start_time: float, query: str, num_of_results: int = 5):
@@ -93,7 +99,7 @@ def collect_results_to_file(results: List[Posting], index_of_crawled: Dict[int, 
                 f.write(f"Title: {title}\nURL: {url}\n\n")
 
             end_time = time.time()
-            f.write(f"Time taken: {end_time - start_time:.2f} seconds\n")
+            f.write(f"Time taken: {end_time - start_time:.3f} seconds\n")
             f.write("\n" + "="*50 + "\n\n")
 
 
@@ -174,7 +180,7 @@ def run(user_input, index_of_index, index_of_crawled, t = 0):
 
     end = time.time()
     if t == 0:
-        st.write(f"Search completed in {end - start:.2f} seconds")
+        st.write(f"Search completed in {end - start:.3f} seconds")
 
 
 
