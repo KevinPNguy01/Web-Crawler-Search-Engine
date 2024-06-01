@@ -40,7 +40,7 @@ class WebPage(msgspec.Struct, gc=False):
 			model="gpt-3.5-turbo",
 			messages=[
 				{"role": "system", "content": "Summarize following webpage content using 30 completion_tokens or less. Not complete sentence, don't mention the word summary"},
-				{"role": "user", "content": "\n".join(body_strings)[:16384]}
+				{"role": "user", "content": "\n".join(body_strings)}
 			],
 			max_tokens=100,
 			stream=True

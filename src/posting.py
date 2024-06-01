@@ -16,8 +16,8 @@ class Posting:
             if token not in frequencies:
                 frequencies[token] = count
 
+        # Add emphasis on important html tags.
         weights = [("title", 100000), ("h1", 10000), ("h2", 1000), ("h3", 100), ("strong", 10)]
-
         for tag_type, weight in weights:
             for tag in soup.find_all(tag_type):
                 tag_string = [" ".join([s.lower() for s in re.findall(r'\b[a-zA-Z0-9]+\b', tag.text)])]
