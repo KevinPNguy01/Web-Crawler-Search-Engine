@@ -91,12 +91,19 @@ class SearchEngine:
         return results
 
 def display_results(results: List[WebPage]) -> None:
-    for webpage in results:
+    summaries = []
+    for i, webpage in enumerate(results):
         st.subheader(webpage.title, anchor=False)
         st.write(webpage.url)
-        st.markdown(webpage.context)
-        #st.write(webpage.get_summary())
+        st.write(webpage.context)
+        summaries.append(st.empty())
         st.markdown("---")
+    for i, webpage in enumerate(results):
+        with summaries[i].container():
+            try:
+                st.write_stream(webpage.get_summary())
+            except:
+                pass
 
 def main():
     search_engine = SearchEngine()

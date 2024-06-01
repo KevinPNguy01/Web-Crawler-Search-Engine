@@ -27,10 +27,11 @@ class WebPage(msgspec.Struct, gc=False):
 		[s.decompose() for s in self.soup(['style', 'script', 'code', '[document]', 'head'])]
 		return [re.sub(r'\s+',' ', string) for string in self.soup.stripped_strings if string]
 	
-	def get_summary(self) -> str:
+	def get_summary(self):
 		body = self.soup.find("body")
 		if not body:
 			return ""
+		yield "AI Summary: "
 		body_strings = [re.sub(r'\s+',' ', string).strip() for string in body.stripped_strings]
 		body_strings = [list(re.findall(r'\b[a-zA-Z0-9]+\b', string)) for string in body_strings]
 		body_strings = [" ".join(string) for string in body_strings]
@@ -39,10 +40,14 @@ class WebPage(msgspec.Struct, gc=False):
 			model="gpt-3.5-turbo",
 			messages=[
 				{"role": "system", "content": "Summarize following webpage content using 30 completion_tokens or less. Not complete sentence, don't mention the word summary"},
-				{"role": "user", "content": "\n".join(body_strings)}
-			]
+				{"role": "user", "content": "\n".join(body_strings)[:16384]}
+			],
+			max_tokens=100,
+			stream=True
 		)
-		return response.choices[0].message.content
+		for chunk in response:
+			if chunk.choices[0].delta.content is not None:
+				yield chunk.choices[0].delta.content
 	
 	def get_context(self, tokens=None) -> str:
 		if tokens and (body := self.soup.find("body")):
