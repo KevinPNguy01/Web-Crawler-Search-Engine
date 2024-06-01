@@ -6,7 +6,7 @@ def main():
     search_engine = SearchEngine()
 
     # Open the roadmap and results file
-    with open("roadmap.txt", "r") as query_file:
+    with open("query.txt", "r") as query_file:
         queries = [line.strip() for line in query_file if line.strip()]
 
     # Clear the results file initially
