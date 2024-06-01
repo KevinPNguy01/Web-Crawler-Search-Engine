@@ -9,55 +9,55 @@ URL: https://www.informatics.uci.edu/grad/mswe/
 Title: Master of Software Engineering (MSWE) | Informatics @ the University of California, Irvine
 URL: https://www.informatics.uci.edu/grad/mswe/#content
 
+Title: Overview
+URL: https://www.ics.uci.edu/~wscacchi/Presentations/Nasa-ARC-talk/tsld002.htm
+
 Title: Graduate Programs of Study st the bren school of information and computer sciences
 URL: https://www.ics.uci.edu/grad/degrees/index.php
 
-Title: Prospective Graduate Students @ the bren school of information and computer sciences
-URL: https://www.ics.uci.edu/grad/admissions/
-
-Time taken: 0.050 seconds
+Time taken: 0.024 seconds
 
 ==================================================
 
 Query: master of software engineering uc irvine
 Results:
-Title: January | 2019 | Informatics @ the University of California, Irvine | Page 2
-URL: https://www.informatics.uci.edu/2019/01/page/2/
+Title: Master of Software Engineering – Master of Software Engineering (MSE)
+URL: https://mswe.ics.uci.edu/
 
-Title: January | 2019 | Informatics @ the University of California, Irvine | Page 2
-URL: https://www.informatics.uci.edu/2019/01/page/2/#content
+Title: Master of Software Engineering (MSWE) | Informatics @ the University of California, Irvine
+URL: https://www.informatics.uci.edu/grad/mswe/
+
+Title: Master of Software Engineering (MSWE) | Informatics @ the University of California, Irvine
+URL: https://www.informatics.uci.edu/grad/mswe/#content
 
 Title: Hispanic Engineer: “UC Irvine hopes to find how young people are using digital technology” (Mimi Ito quoted) | Informatics @ the University of California, Irvine
 URL: https://www.informatics.uci.edu/hispanic-engineer-uc-irvine-hopes-to-find-how-young-people-are-using-digital-technology-mimi-ito-quoted/#content
 
-Title: Hispanic Engineer: “UC Irvine hopes to find how young people are using digital technology” (Mimi Ito quoted) | Informatics @ the University of California, Irvine
-URL: https://www.informatics.uci.edu/hispanic-engineer-uc-irvine-hopes-to-find-how-young-people-are-using-digital-technology-mimi-ito-quoted/
+Title: January | 2019 | Informatics @ the University of California, Irvine | Page 2
+URL: https://www.informatics.uci.edu/2019/01/page/2/#content
 
-Title: News | Informatics @ the University of California, Irvine | Page 8
-URL: https://www.informatics.uci.edu/very-top-footer-menu-items/news/page/8/
-
-Time taken: 0.051 seconds
+Time taken: 0.007 seconds
 
 ==================================================
 
 Query: cristina lopes
 Results:
-Title: Lopes honored with 2017 AITO Test of Time Award
-URL: https://www.ics.uci.edu/community/news/view_news.php?id=1207
-
 Title: Cristina Lopes | Informatics @ the University of California, Irvine
 URL: https://www.informatics.uci.edu/explore/faculty-profiles/cristina-lopes/#content
 
 Title: Cristina Lopes | Informatics @ the University of California, Irvine
 URL: https://www.informatics.uci.edu/explore/faculty-profiles/cristina-lopes/
 
+Title: Lopes honored with 2017 AITO Test of Time Award
+URL: https://www.ics.uci.edu/community/news/view_news.php?id=1207
+
 Title: faculty profile @ the bren school of information and computer sciences at uc irvine
 URL: https://www.ics.uci.edu/faculty/profiles/view_faculty.php?ucinetid=lopes
 
-Title: Lopes featured speaker at 2016 OpenSimulator Community Conference | Informatics @ the University of California, Irvine
-URL: https://www.informatics.uci.edu/lopes-featured-speaker-at-2016-opensimulator-community-conference/#content
+Title: Lopes awarded Pizzigati Prize for Software in the Public Interest
+URL: https://www.ics.uci.edu/community/news/view_news.php?id=1032
 
-Time taken: 0.036 seconds
+Time taken: 0.001 seconds
 
 ==================================================
 
@@ -78,7 +78,49 @@ URL: https://www.ics.uci.edu/~eppstein/pix/wwrmarlins/TylersNewHat.html
 Title: Tyler Leads The Way
 URL: https://www.ics.uci.edu/~eppstein/pix/candystore/TylerLeadsTheWay.html
 
-Time taken: 0.004 seconds
+Time taken: 0.001 seconds
+
+==================================================
+
+Query: computer science internships at uci
+Results:
+Title: Internships & Employment Opportunities
+URL: https://www.stat.uci.edu/statistics-internships-employment-opportunities/
+
+Title: Senior Spotlight: Graduating Computer Science Major Howard Chen Leaves A Promising Student Security Culture at UCI
+URL: https://www.ics.uci.edu/community/news/view_news.php?id=1351
+
+Title: Connor Richards | Informatics @ the University of California, Irvine
+URL: https://www.informatics.uci.edu/undergrad/student-profiles/connor-richards/#content
+
+Title: Connor Richards | Informatics @ the University of California, Irvine
+URL: https://www.informatics.uci.edu/undergrad/student-profiles/connor-richards/
+
+Title: William Stone | Informatics @ the University of California, Irvine
+URL: https://www.informatics.uci.edu/undergrad/student-profiles/william-stone/#content
+
+Time taken: 0.109 seconds
+
+==================================================
+
+Query: computer science internships at
+Results:
+Title: Internships & Employment Opportunities
+URL: https://www.stat.uci.edu/statistics-internships-employment-opportunities/
+
+Title: Jason Heckard | Informatics @ the University of California, Irvine
+URL: https://www.informatics.uci.edu/undergrad/student-profiles/jason-heckard/#content
+
+Title: Connor Richards | Informatics @ the University of California, Irvine
+URL: https://www.informatics.uci.edu/undergrad/student-profiles/connor-richards/#content
+
+Title: Connor Richards | Informatics @ the University of California, Irvine
+URL: https://www.informatics.uci.edu/undergrad/student-profiles/connor-richards/
+
+Title: William Stone | Informatics @ the University of California, Irvine
+URL: https://www.informatics.uci.edu/undergrad/student-profiles/william-stone/#content
+
+Time taken: 0.084 seconds
 
 ==================================================
 
@@ -90,16 +132,16 @@ URL: https://www.ics.uci.edu/~ics1c/hw4/17.html
 Title: Inquiry and equity in computer science education
 URL: https://www.ics.uci.edu/community/news/view_news.php?id=662
 
-Title: Women in Information and Computer Sciences (WICS) Organization Mentors and Supports Future Tech Professionals
-URL: https://www.ics.uci.edu/community/news/view_news.php?id=1299
+Title: CMTC Video Interview: Aditi Majumder Discussing Computer Vision
+URL: https://www.ics.uci.edu/community/news/view_news.php?id=1339
 
-Title: Women in Information and Computer Sciences (WICS) Organization Mentors and Supports Future Tech Professionals
-URL: https://www.ics.uci.edu/community/news/view_news?id=1299
+Title: UCI computer scientists bring tech-powered installations to the Venice Biennale
+URL: https://www.ics.uci.edu/community/news/view_news.php?id=1560
 
-Title: Senior Spotlight: UCI Sets Up Dante Chakravorti for Continued Success in Computer Science and Volleyball After Graduation
-URL: https://www.ics.uci.edu/community/news/view_news.php?id=1505
+Title: Senior Spotlight: Graduating Computer Science Major Howard Chen Leaves A Promising Student Security Culture at UCI
+URL: https://www.ics.uci.edu/community/news/view_news.php?id=1351
 
-Time taken: 0.094 seconds
+Time taken: 0.049 seconds
 
 ==================================================
 
@@ -120,49 +162,49 @@ URL: https://www.informatics.uci.edu/2018/03/#content
 Title: News | Informatics @ the University of California, Irvine | Page 18
 URL: https://www.informatics.uci.edu/very-top-footer-menu-items/news/page/18/
 
-Time taken: 0.083 seconds
+Time taken: 0.000 seconds
 
 ==================================================
 
 Query: thornton@ics.uci.edu
 Results:
-Title: faculty @ the bren school of information and computer sciences
-URL: https://www.ics.uci.edu/faculty/index.php
+Title: ICS 65 Fall 2012, Project #2: Maps and Legends
+URL: https://www.ics.uci.edu/~thornton/ics65/ProjectGuide/Project2/
 
-Title: faculty @ the bren school of information and computer sciences
-URL: https://www.ics.uci.edu/faculty/
+Title: Accessibility Statement @ The Donald Bren School of Information and Computer Sciences
+URL: https://www.ics.uci.edu/accessibility/
 
-Title: faculty @ the bren school of information and computer sciences
-URL: https://www.ics.uci.edu/faculty/index.php?department=Computer%20Science
+Title: Learning as hill-climbing search
+URL: https://www.ics.uci.edu/~pazzani/Slides/Hill/tsld001.htm
 
-Title: Faculty
-URL: https://www.cs.uci.edu/faculty/
+Title: Learning as hill-climbing searchMichael J. PazzaniDepartment of Information and Computer ScienceUniversity of California, IrvineIrvine, CA 92717	(714) 824-5888pazzani@ics.uci.eduhttp://www.ics.uci.edu/dir/faculty/AI/pazzani
+URL: https://www.ics.uci.edu/~pazzani/Slides/Hill/index.htm
 
-Title: faculty @ the bren school of information and computer sciences
-URL: https://www.ics.uci.edu/faculty/faculty_dept?department=Computer%20Science
+Title: Alex Thornton
+URL: https://www.ics.uci.edu/~thornton/
 
-Time taken: 0.214 seconds
+Time taken: 0.026 seconds
 
 ==================================================
 
 Query: data structure and algorithms course
 Results:
-Title: Cheapest insertion TSP heuristic in R^20
-URL: https://www.ics.uci.edu/~eppstein/projects/pairs/Data/i220/
+Title: Honors ICS 23
+URL: https://www.ics.uci.edu/~kibler/H22syllabus.html
 
-Title: Hierarchical Clustering in a 31-dimensional Fractal
-URL: https://www.ics.uci.edu/~eppstein/projects/pairs/Data/hs31/
+Title: Honors ICS 23
+URL: https://www.ics.uci.edu/~kibler/ICS23/syllabus.html
 
-Title: Multifragment TSP heuristic in R^20
-URL: https://www.ics.uci.edu/~eppstein/projects/pairs/Data/m220/
+Title: Honors ICS 23
+URL: https://www.ics.uci.edu/~kibler/H23syllabus.html
 
-Title: Most Expensive Insertion for Rectilinear Max-TSP
-URL: https://www.ics.uci.edu/~eppstein/projects/pairs/Data/-i12/
+Title: ICS/CSE 23, Winter 2010
+URL: https://www.ics.uci.edu/~irani/w10_23/23.html
 
-Title: Hierarchical Clustering in R^20
-URL: https://www.ics.uci.edu/~eppstein/projects/pairs/Data/h220/
+Title: Selected Publications - Michael T. Goodrich
+URL: https://www.ics.uci.edu/~goodrich/pubs/index.html#chaps
 
-Time taken: 0.009 seconds
+Time taken: 0.001 seconds
 
 ==================================================
 
@@ -171,21 +213,19 @@ Results:
 Title: Professor Singh Awarded Two NSF Grants to Advance Machine Learning
 URL: https://www.ics.uci.edu/community/news/view_news.php?id=1413
 
+Title: Cylance commits $50K to UCI's Center for Machine Learning and Intelligent Systems to support seminar series, Ph.D. recruitment
+URL: https://www.ics.uci.edu/community/news/view_news.php?id=1104
+
+Title: Singh to deliver machine learning talk at July OC ACM Meetup
+URL: https://www.ics.uci.edu/community/news/view_news.php?id=1188
+
+Title: Qualcomm Funds Research Projects in Computer Vision and Machine Learning
+URL: https://www.ics.uci.edu/community/news/view_news?id=1613
+
 Title: Professor Singh Awarded Two NSF Grants to Advance Machine Learning
 URL: https://www.ics.uci.edu/community/news/view_news?id=1413
 
-Title: Cylance commits $50K to UCI's Center for Machine Learning and Intelligent Systems to support seminar series, Ph.D. recruitment
-
-
-URL: https://www.ics.uci.edu/community/news/view_news.php?id=1104
-
-Title: Singh to deliver machine learning talk at July OC ACM Meetup 
-URL: https://www.ics.uci.edu/community/news/view_news.php?id=1188
-
-Title: ICS Researchers Advance Machine Learning with Self-Taught Algorithm that Solves the Rubik’s Cube
-URL: https://www.ics.uci.edu/community/news/view_news.php?id=1381
-
-Time taken: 0.085 seconds
+Time taken: 0.040 seconds
 
 ==================================================
 
@@ -194,42 +234,40 @@ Results:
 Title: Two ICS professors named 2015 ACM Fellows
 URL: https://www.ics.uci.edu/community/news/view_news.php?id=673
 
-Title: Mark elected to ACM CHI Academy for 2017
+Title: Informatics Ph.D. Student Saumya Gupta Receives ACM-W Scholarship for TEI 19
+URL: https://www.ics.uci.edu/community/news/view_news?id=1471
 
-URL: https://www.ics.uci.edu/community/news/view_news.php?id=1129
+Title: UCI team places first in regional ACM competition, advances to international finals in May
+URL: https://www.ics.uci.edu/community/news/view_news.php?id=1101
 
-Title: ICS alumni named to ACM Future of Computing Academy
-URL: https://www.ics.uci.edu/community/news/view_news.php?id=1177
-
-Title: Informatics Ph.D. student to present at ACM-DEV 2015
-URL: https://www.ics.uci.edu/community/news/view_news.php?id=1050
-
-Title: UPDATE: Franz, Dourish formally recognized as ACM Fellows
-
+Title: UPDATE: Franz, Dourish formally recognized as ACM Fellows
 URL: https://www.ics.uci.edu/community/news/view_news.php?id=1067
 
-Time taken: 0.034 seconds
+Title: Informatics Ph.D. Student Saumya Gupta Receives ACM-W Scholarship for TEI 19
+URL: https://www.ics.uci.edu/community/news/view_news.php?id=1471
+
+Time taken: 0.005 seconds
 
 ==================================================
 
 Query: zip file
 Results:
-Title: ICS 22/CSE 22 - Project #1: Perfect Candidate
-URL: https://www.ics.uci.edu/~irani/s11_22/Project1/Project1.html
+Title: CS-171 Winter Quarter 2014
+URL: https://www.ics.uci.edu/~rickl/courses/cs-171/2014-wq-cs171/CS-171-WQ-2014.htm
+
+Title: CS-171 Winter Quarter 2015
+URL: https://www.ics.uci.edu/~rickl/courses/cs-171/2015-wq-cs171/CS-171-WQ-2015.htm
+
+Title: CS-171 Winter Quarter 2012
+URL: https://www.ics.uci.edu/~rickl/courses/cs-171/2012-wq-cs171/CS-171-WQ-2012.htm
+
+Title: SLI | PmWiki / Uploads Administration
+URL: http://sli.ics.uci.edu/PmWiki/UploadsAdmin
 
 Title: Program 1
 URL: https://www.ics.uci.edu/~pattis/ICS-33/assignments/program1/program.html
 
-Title: ICS 22/CSE 22 - Project #3: What's Simple is True
-URL: https://www.ics.uci.edu/~irani/s11_22/Project3/Project3.html
-
-Title: Index of /datasets/wikipedia-events/files
-URL: http://mondego.ics.uci.edu/datasets/wikipedia-events/files/?C=D;O=D
-
-Title: Index of /datasets/wikipedia-events/files
-URL: http://mondego.ics.uci.edu/datasets/wikipedia-events/files/
-
-Time taken: 0.031 seconds
+Time taken: 0.011 seconds
 
 ==================================================
 
@@ -244,13 +282,76 @@ URL: https://www.ics.uci.edu/~ardalan/courses/os/pintos/pintos_2.html#SEC19
 Title: Web2.0  Buzzwords – Ramesh Jain
 URL: https://ngs.ics.uci.edu/web20-buzzwords/
 
+Title: When 2.0 – Ramesh Jain
+URL: https://ngs.ics.uci.edu/when-20/
+
 Title: Web 3.0 – Ramesh Jain
 URL: https://ngs.ics.uci.edu/web-30/
 
-Title: EventWeb 16: Web 2.0 does not necessarily create a Web – Ramesh Jain
-URL: https://ngs.ics.uci.edu/eventweb-16-web-20-does-not-necessarily-create-a-web/
+Time taken: 0.047 seconds
 
-Time taken: 0.086 seconds
+==================================================
+
+Query: 0 shindler
+Results:
+Title: faculty profile @ the bren school of information and computer sciences at uc irvine
+URL: https://www.ics.uci.edu/faculty/profiles/view_faculty.php?ucinetid=mikes
+
+Title: Theory Seminar, 19 Nov 2004
+URL: https://www.ics.uci.edu/~theory/269/041119.html
+
+Title: Theory Seminar, January 10, 2014
+URL: https://www.ics.uci.edu/~theory/269/140110.html
+
+Title: Theory Seminar, 4 Feb 2005
+URL: https://www.ics.uci.edu/~theory/269/050204.html
+
+Title: Theory Seminar, 29 Oct 2010
+URL: https://www.ics.uci.edu/~theory/269/101029.html
+
+Time taken: 0.035 seconds
+
+==================================================
+
+Query: university of california irvine computer science ranking
+Results:
+Title: University of California, Irvine computer scientists breathe life into Venice Biennale installations
+URL: https://www.ics.uci.edu/community/news/view_news.php?id=1559
+
+Title: University of California, Irvine computer scientists breathe life into Venice Biennale installations
+URL: https://www.ics.uci.edu/community/news/view_news?id=1559
+
+Title: ICS News @ Donald Bren School of Information and Computer Sciences
+URL: https://www.ics.uci.edu/community/news/
+
+Title: ICS News @ Donald Bren School of Information and Computer Sciences
+URL: https://www.ics.uci.edu/community/news/index.php
+
+Title: University Of California-Irvine’s Hyperloop Prototype Ready For January Weekend Competition
+URL: https://www.ics.uci.edu/community/news/view_news.php?id=1123
+
+Time taken: 0.040 seconds
+
+==================================================
+
+Query: tropical fish
+Results:
+Title: Fishes and fitness
+URL: https://www.ics.uci.edu/community/news/articles/view_article?id=68
+
+Title: Freddy Fish, II
+URL: https://www.ics.uci.edu/~eppstein/pix/fam4/PlayingClose.html
+
+Title: Kids playing Freddy Fish
+URL: https://www.ics.uci.edu/~eppstein/pix/fam4/PlayingFreddyFish.html
+
+Title: Freddy Fish, III
+URL: https://www.ics.uci.edu/~eppstein/pix/fam4/SaraAndCousins.html
+
+Title: Green Fish
+URL: https://www.ics.uci.edu/~eppstein/pix/hw05/GreenFish.html
+
+Time taken: 0.001 seconds
 
 ==================================================
 
@@ -271,7 +372,7 @@ URL: https://www.ics.uci.edu/~pattis/ICS-31/handouts/syllabus/syllabus.html
 Title: ICS-31 Overview
 URL: https://www.ics.uci.edu/~pattis/ICS-31/lectures/overview/lecture.html
 
-Time taken: 0.047 seconds
+Time taken: 0.005 seconds
 
 ==================================================
 
@@ -280,32 +381,29 @@ Results:
 Title: Introducing a simple and intuitive Python API for UCI machine learning repository
 URL: https://www.ics.uci.edu/community/news/view_news.php?id=1396
 
-Title: A machine has figured out Rubik’s Cube all by itself
-URL: https://www.ics.uci.edu/community/news/view_news.php?id=1378
-
-Title: A machine taught itself to solve Rubik’s Cube without human help, UC Irvine researchers say
-URL: https://www.ics.uci.edu/community/news/view_news.php?id=1386
-
 Title: Rubik's Cube Solved in 'Fraction of a Second' by Artificial Intelligence Machine Learning Algorithm
 URL: https://www.ics.uci.edu/community/news/view_news?id=1583
 
 Title: Rubik's Cube Solved in 'Fraction of a Second' by Artificial Intelligence Machine Learning Algorithm
 URL: https://www.ics.uci.edu/community/news/view_news.php?id=1583
 
-Time taken: 0.085 seconds
+Title: A machine taught itself to solve Rubik’s Cube without human help, UC Irvine researchers say
+URL: https://www.ics.uci.edu/community/news/view_news.php?id=1386
+
+Title: A machine has figured out Rubik’s Cube all by itself
+URL: https://www.ics.uci.edu/community/news/view_news.php?id=1378
+
+Time taken: 0.059 seconds
 
 ==================================================
 
 Query: The competent programmer is fully aware of the strictly limited size of his own skull therefore he approaches the programming task in full humility and among other things he avoids clever tricks like the plague
 Results:
-Title: Quotations for CS1
-URL: https://www.ics.uci.edu/~pattis/quotations.html
+Title: Act on the Protection of Individuals with regard to the Processing of Personal Data No. 77/2000
+URL: https://www.ics.uci.edu/~kobsa/privacy/Iceland.htm#section6
 
 Title: ICS-33 Overview
 URL: https://www.ics.uci.edu/~pattis/ICS-33/lectures/overview/lecture.html
-
-Title: ICS-31 Overview
-URL: https://www.ics.uci.edu/~pattis/ICS-31/lectures/overview/lecture.html
 
 Title: ICS-21 Overview
 URL: https://www.ics.uci.edu/~pattis/ICS-21/lectures/overview/lecture.html
@@ -313,7 +411,10 @@ URL: https://www.ics.uci.edu/~pattis/ICS-21/lectures/overview/lecture.html
 Title: ICS-46 Overview
 URL: https://www.ics.uci.edu/~pattis/ICS-46/lectures/overview/lecture.html
 
-Time taken: 0.086 seconds
+Title: Quotations for CS1
+URL: https://www.ics.uci.edu/~pattis/quotations.html
+
+Time taken: 0.001 seconds
 
 ==================================================
 
@@ -334,7 +435,7 @@ URL: https://www.ics.uci.edu/~majumder/VC/211HW3/vlfeat/doc/api/dev.html
 Title: World Wide Web FAQ
 URL: https://www.ics.uci.edu/~ics1c/doc/www_faq.html
 
-Time taken: 0.061 seconds
+Time taken: 0.010 seconds
 
 ==================================================
 
@@ -355,7 +456,28 @@ URL: https://www.ics.uci.edu/~ejw/authoring/orem/namespace/tsld003.htm
 Title: Create History Collection
 URL: https://www.ics.uci.edu/~ejw/authoring/orem/versioning/tsld016.htm
 
-Time taken: 0.009 seconds
+Time taken: 0.006 seconds
+
+==================================================
+
+Query: alex thornton
+Results:
+Title: faculty profile @ the bren school of information and computer sciences at uc irvine
+URL: https://www.ics.uci.edu/faculty/profiles/view_faculty.php?ucinetid=thornton
+
+Title: Singh, Thornton Recognized for Excellence in Undergraduate Teaching
+URL: https://www.ics.uci.edu/community/news/view_news.php?id=1523
+
+Title: Singh, Thornton Recognized for Excellence in Undergraduate Teaching
+URL: https://www.ics.uci.edu/community/news/view_news?id=1523
+
+Title: ﻿Singh, Thornton Recognized for Excellence in Undergraduate Teaching
+URL: https://www.cs.uci.edu/%EF%BB%BFsingh-thornton-recognized-for-excellence-in-undergraduate-teaching/
+
+Title: ﻿Singh, Thornton Recognized for Excellence in Undergraduate Teaching
+URL: https://www.cs.uci.edu/%EF%BB%BFsingh-thornton-recognized-for-excellence-in-undergraduate-teaching/#more-2214
+
+Time taken: 0.002 seconds
 
 ==================================================
 

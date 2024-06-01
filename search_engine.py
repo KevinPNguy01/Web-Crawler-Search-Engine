@@ -29,6 +29,10 @@ class SearchEngine:
     def search(self, query: str) -> List[Tuple[str]]:
         self.prev_tokens = self.tokenize(query)
         webpages = self.get_results(self.prev_tokens)
+        if not webpages:
+            stemmer = PorterStemmer()
+            self.prev_tokens = [stemmer.stem(token.lower()) for token in re.findall(r'\b[a-zA-Z0-9]+\b', query) if not token.isnumeric() or len(token) <= 4]
+            webpages = self.get_results(self.prev_tokens)
         return webpages
 
     def tokenize(self, query: str) -> List[str]:
@@ -79,13 +83,10 @@ class SearchEngine:
                 doc_to_postings[posting.id].append(posting)
         
         token_doc_ids = [set(posting.id for posting in postings) for postings in token_postings]
-        
-        # Find common document IDs that appear in all token_doc_ids sets
-        common_doc_ids = set()
         if token_doc_ids:
-            common_doc_ids = set.intersection(*token_doc_ids)
+            token_doc_ids = set.union(*token_doc_ids)
 
-        for doc_id in common_doc_ids:
+        for doc_id in token_doc_ids:
             # tells you what byte come in 
             tf_idf_score = sum(posting.tf_idf for posting in doc_to_postings[doc_id])
             document = Posting(doc_id, tf_idf_score)

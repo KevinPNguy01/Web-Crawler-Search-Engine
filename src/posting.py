@@ -24,7 +24,7 @@ class Posting:
                 tokens = tokenize(tag_string) | tokenize(tag_string, stem=True)
                 for token in frequencies:
                     if token in tokens:
-                        frequencies[token] += weight
+                        frequencies[token] += weight-1
 
         # Create postings for each token and return dict.
         return {token: Posting(id, frequency) for token, frequency in frequencies.items()}

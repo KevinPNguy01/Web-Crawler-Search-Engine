@@ -194,7 +194,7 @@ class InvertedIndex:
 				idf = math.log(len(self.crawled) / len(postings))
 				for i in range(len(postings)):
 					doc_id, tf = postings[i]
-					tf_idf = int(tf) * idf
+					tf_idf = (1 + math.log(int(tf))) * idf
 					index.write(f"{";" if i else ""}{doc_id},{tf_idf:.3f}")		# Write the posting.
 				index.write("\n")
 

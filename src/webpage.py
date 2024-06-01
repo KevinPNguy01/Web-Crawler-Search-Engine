@@ -21,7 +21,7 @@ class WebPage(msgspec.Struct, gc=False):
 	def __post_init__(self):
 		self.soup = BeautifulSoup(self.content, "lxml")
 		title = self.soup("title")
-		self.title = title[-1].text if title else self.url
+		self.title = title[-1].text.strip() if title else self.url
 	
 	def get_text(self) -> List[str]:
 		[s.decompose() for s in self.soup(['style', 'script', 'code', '[document]', 'head'])]
@@ -50,6 +50,7 @@ class WebPage(msgspec.Struct, gc=False):
 				yield chunk.choices[0].delta.content
 	
 	def get_context(self, tokens=None) -> str:
+		tokens = " ".join(tokens).split(" ")
 		if tokens and (body := self.soup.find("body")):
 			body_strings = [re.sub(r'\s+',' ', string).strip() for string in body.stripped_strings]
 			body_strings = " ".join(body_strings)
