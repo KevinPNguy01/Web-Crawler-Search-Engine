@@ -1,6 +1,6 @@
 from collections import defaultdict
 import streamlit as st
-from typing import Dict, List, Generator
+from typing import Dict, List, Tuple
 from src.posting import Posting
 import time
 import nltk
@@ -16,6 +16,8 @@ class SearchEngine:
         self.index_of_crawled: Dict[str, int] = self.read_index_files("index_of_crawled.txt")
         self.crawled_file = open("indices/crawled.txt", "r", encoding="utf-8")
 
+        self.prev_tokens: List[str] = []
+
     def read_index_files(self, file_name: str) -> Dict[str, int]:
         index_dict = {}
         with open(f"indices/{file_name}", "r") as file:
@@ -24,9 +26,9 @@ class SearchEngine:
                 index_dict[key] = int(position)
         return index_dict
     
-    def search(self, query: str) -> List[WebPage]:
-        tokens = self.tokenize(query)
-        webpages = self.get_results(tokens)
+    def search(self, query: str) -> List[Tuple[str]]:
+        self.prev_tokens = self.tokenize(query)
+        webpages = self.get_results(self.prev_tokens)
         return webpages
 
     def tokenize(self, query: str) -> List[str]:
@@ -41,16 +43,16 @@ class SearchEngine:
 
         return tokens
         
-    def get_results(self, tokens: List[str]) -> List[WebPage]:
+    def get_results(self, tokens: List[str]) -> List[Tuple[str]]:
         postings = self.get_postings(tokens)
         results = self.filter(postings)
         webpages = []
         for posting in sorted(results, key=lambda x: x.tf_idf, reverse=True)[:5]:
             self.crawled_file.seek(self.index_of_crawled[str(posting.id)])
-            path = Path(self.crawled_file.readline().strip())
-            webpage = WebPage.from_path(path)
-            webpage.get_context(tokens)
-            webpages.append(webpage)
+            path = self.crawled_file.readline().strip()
+            url = self.crawled_file.readline().strip()
+            title = self.crawled_file.readline().strip()
+            webpages.append((path, url, title))
         return webpages
 
     def get_postings(self, tokens: List[str]) -> List[List[Posting]]:
@@ -90,15 +92,24 @@ class SearchEngine:
             results.append(document)
         return results
 
-def display_results(results: List[WebPage]) -> None:
+def display_results(results: List[Tuple[str]], tokens: List[str]) -> None:
     summaries = []
-    for i, webpage in enumerate(results):
-        st.subheader(webpage.title, anchor=False)
-        st.write(webpage.url)
-        st.write(webpage.context)
+    contexts = []
+    paths = []
+    for i, webpage_tuple in enumerate(results):
+        path, url, title = webpage_tuple
+        paths.append(path)
+        st.subheader(title, anchor=False)
+        st.write(url)
+        contexts.append(st.empty())
         summaries.append(st.empty())
         st.markdown("---")
-    for i, webpage in enumerate(results):
+
+    webpages = [WebPage.from_path(path) for path in paths]
+    for i, webpage in enumerate(webpages):
+        with contexts[i].container():
+            st.write(webpage.get_context(tokens))
+    for i, webpage in enumerate(webpages):
         with summaries[i].container():
             try:
                 st.write_stream(webpage.get_summary())
@@ -115,9 +126,10 @@ def main():
         if user_input:
             start = time.time()
             results = search_engine.search(user_input)
+            tokens = search_engine.prev_tokens
             elapsed_time = round((time.time() - start) * 1000)
             st.write(f"Search completed in {elapsed_time} ms.")
-            display_results(results)
+            display_results(results, tokens)
 
 if __name__ == "__main__":
     main()

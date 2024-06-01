@@ -20,7 +20,8 @@ def main():
 
             start_time = time.time()
             for webpage in search_engine.search(query):
-                f.write(f"Title: {webpage.title}\nURL: {webpage.url}\n\n")
+                path, url, title = webpage
+                f.write(f"Title: {title}\nURL: {url}\n\n")
 
             end_time = time.time()
             f.write(f"Time taken: {end_time - start_time:.3f} seconds\n")

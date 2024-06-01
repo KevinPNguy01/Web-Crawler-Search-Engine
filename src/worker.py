@@ -162,7 +162,7 @@ class Worker:
 		for token, posting in Posting.get_postings(webpage.soup, id).items():
 			self.postings.setdefault(token, []).append(posting)
 			self.posting_count += 1
-		self.q_out.put((id, file_path))
+		self.q_out.put((id, file_path, webpage.url, webpage.title))
 		print(f"Worker {self.worker_id:02} - {id} - {file_path}")
 
 	def print_duplicate(self):

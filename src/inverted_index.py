@@ -133,7 +133,7 @@ class InvertedIndex:
 			self.q_in.get()
 		print("Cleared input queue.")
 
-	def update_crawled_list(self, id: int, file_path: Path, file_position: int) -> int:
+	def update_crawled_list(self, id: int, file_path: Path, url: str, title: str, file_position: int) -> int:
 		""" Updates the crawled save file, as well as the index for it. 
 		
 		Arguments:\n
@@ -145,7 +145,7 @@ class InvertedIndex:
 		"""
 
 		# Write the file path of this document to the crawled save file.
-		line = f"{file_path}\n"
+		line = f"{file_path}\n{url}\n{title}\n"
 		self.crawled_file.write(line)
 		self.crawled.add(file_path.name)
 
