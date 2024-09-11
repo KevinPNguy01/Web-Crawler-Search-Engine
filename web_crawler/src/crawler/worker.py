@@ -1,19 +1,15 @@
-from threading import Thread, Lock
+from threading import Thread
 from inspect import getsource
-from utils import get_logger
+from urllib.parse import urlparse
 from bs4 import BeautifulSoup
-from crawler.tokenizer import *
-from crawler.frontier import Frontier
-from utils.config import Config
-from urllib.robotparser import RobotFileParser
-from urllib.parse import urlparse, ParseResult
-from utils.download import download
-from datetime import datetime
+from src.crawler.tokenizer import *
+from src.crawler.frontier import Frontier
+from src.utils.config import Config
+from src.utils.download import download
+from src.utils import get_logger
+from src.utils.response import Response
+from src.utils.scraper import scraper
 from typing import Dict
-from utils.response import Response
-
-import socket
-import scraper
 import time
 import os
 
@@ -28,9 +24,6 @@ class Worker(Thread):
         self.frequencies: Dict[str, int] = {}
         self.page_lengths: Dict[str, int] = {}
                 
-        # basic check for requests in scraper
-        assert {getsource(scraper).find(req) for req in {"from requests import", "import requests"}} == {-1}, "Do not use requests in scraper.py"
-        assert {getsource(scraper).find(req) for req in {"from urllib.request import", "import urllib.request"}} == {-1}, "Do not use urllib.request in scraper.py"
         super().__init__(daemon=True)
         
     def save_page(self, response: Response):
@@ -43,7 +36,7 @@ class Worker(Thread):
             path += '?' + parsed_url.query
 
         # Create directory structure based on domain and path.
-        directory = os.path.join('pages', domain, os.path.dirname(path).lstrip("/"))
+        directory = os.path.join(str(self.config.download_path), domain, os.path.dirname(path).lstrip("/"))
         os.makedirs(directory, exist_ok=True)
 
         # Generate filename from the last part of the path.
@@ -91,7 +84,7 @@ class Worker(Thread):
             return
         if self.should_scrape(resp):
             # Add the scraped urls to the frontier.
-            for scraped_url in scraper.scraper(resp, self.config):                
+            for scraped_url in scraper(resp, self.config):                
                 self.frontier.add_url(scraped_url)
         
             # Tokenize the page content and get their frequencies.

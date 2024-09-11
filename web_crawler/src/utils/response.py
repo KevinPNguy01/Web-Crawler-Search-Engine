@@ -1,5 +1,4 @@
 import pickle
-from typing import Dict
 
 class RawResponse(object):
     def __init__(self, url: str, content: bytes):

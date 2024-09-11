@@ -2,13 +2,15 @@ import os
 import logging
 from hashlib import sha256
 from urllib.parse import urlparse, unquote
+from pathlib import Path
 
 def get_logger(name, filename=None):
     logger = logging.getLogger(name)
     logger.setLevel(logging.INFO)
-    if not os.path.exists("Logs"):
-        os.makedirs("Logs")
-    fh = logging.FileHandler(f"Logs/{filename if filename else name}.log")
+    path = str(Path(__file__).parent.parent / "logs")
+    if not os.path.exists(path):
+        os.makedirs(path)
+    fh = logging.FileHandler(f"{path}/{filename if filename else name}.log")
     fh.setLevel(logging.DEBUG)
     ch = logging.StreamHandler()
     ch.setLevel(logging.INFO)

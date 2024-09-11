@@ -1,0 +1,1526 @@
+	<!DOCTYPE html>
+<html lang="en-US">
+<head>
+
+	
+		<meta charset="utf-8">
+	<meta name="author" content="Department of Computer Science">
+	<link rel="pingback" href="https://cs.ics.uci.edu/xmlrpc.php">
+
+		<meta name="HandheldFriendly" content="True">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+		<meta name="apple-mobile-web-app-title" content="Home">
+
+		<meta name="application-name" content="Department of Computer Science">
+
+	
+        <script type="text/javascript">
+            function is_browser() {
+                return (
+                    navigator.userAgent.indexOf("Chrome") !== - 1 ||
+                    navigator.userAgent.indexOf("Opera") !== - 1 ||
+                    navigator.userAgent.indexOf("Firefox") !== - 1 ||
+                    navigator.userAgent.indexOf("MSIE") !== - 1 ||
+                    navigator.userAgent.indexOf("Safari") !== - 1 ||
+                    navigator.userAgent.indexOf("Edge") !== - 1
+                );
+            }
+
+            function less_than_ie11() {
+                return (
+                    !window.atob || // IE9 and below
+                    Function('/*@cc_on return document.documentMode===10@*/')() // IE10
+                );
+            }
+
+            function not_excluded_page() {
+                return (
+                    window.location.href.indexOf("/unsupported-browser/") === - 1 &&
+                    document.title.toLowerCase().indexOf('page not found') === - 1
+                );
+            }
+
+            if (is_browser() && less_than_ie11() && not_excluded_page()) {
+                window.location = location.protocol + '//' + location.host + '/unsupported-browser/';
+            }
+        </script>
+
+		
+		<script>
+			var modern_tribe = window.modern_tribe || {};
+			modern_tribe.fonts = {
+				state: {
+					loading: true,
+					active: false
+				},
+				events: {
+					trigger: function ( event_type, event_data, el ) {
+						var event;
+						try {
+							event = new CustomEvent( event_type, { detail: event_data } );
+						} catch ( e ) {
+							event = document.createEvent( 'CustomEvent' );
+							event.initCustomEvent( event_type, true, true, event_data );
+						}
+						el.dispatchEvent( event );
+					}
+				}
+			};
+			var WebFontConfig = {
+								typekit: {
+					id: 'orm2hhr'
+				},
+																loading: function () {
+					modern_tribe.fonts.state.loading = true;
+					modern_tribe.fonts.state.active = false;
+					modern_tribe.fonts.events.trigger( 'modern_tribe/fonts_loading', {}, document );
+				},
+				active: function () {
+					modern_tribe.fonts.state.loading = false;
+					modern_tribe.fonts.state.active = true;
+					modern_tribe.fonts.events.trigger( 'modern_tribe/fonts_loaded', {}, document );
+				},
+				inactive: function () {
+					modern_tribe.fonts.state.loading = false;
+					modern_tribe.fonts.state.active = false;
+					modern_tribe.fonts.events.trigger( 'modern_tribe/fonts_failed', {}, document );
+				}
+			};
+			(function ( d ) {
+				var wf = d.createElement( 'script' ), s = d.scripts[ 0 ];
+				wf.src = 'https://cs.ics.uci.edu/wp-content/themes/core/js/vendor/webfontloader.js';
+				s.parentNode.insertBefore( wf, s );
+			})( document );
+		</script>
+
+		<meta name='robots' content='index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1' />
+
+	<!-- This site is optimized with the Yoast SEO Premium plugin v22.2 (Yoast SEO v22.2) - https://yoast.com/wordpress/plugins/seo/ -->
+	<title>Department of Computer Science - UCI School of Information &amp; Computer Science</title>
+	<link rel="canonical" href="https://cs.ics.uci.edu/" />
+	<meta property="og:locale" content="en_US" />
+	<meta property="og:type" content="website" />
+	<meta property="og:title" content="Home" />
+	<meta property="og:url" content="https://cs.ics.uci.edu/" />
+	<meta property="og:site_name" content="Department of Computer Science" />
+	<meta property="article:modified_time" content="2023-11-21T16:54:07+00:00" />
+	<meta name="twitter:card" content="summary_large_image" />
+	<!-- / Yoast SEO Premium plugin. -->
+
+
+<link rel='dns-prefetch' href='//kit.fontawesome.com' />
+<link rel='stylesheet' id='tribe-events-pro-mini-calendar-block-styles-css' href='https://cs.ics.uci.edu/wp-content/plugins/events-calendar-pro/src/resources/css/tribe-events-pro-mini-calendar-block.min.css?ver=6.3.1.1' type='text/css' media='all' />
+<link rel='stylesheet' id='wp-block-library-css' href='https://cs.ics.uci.edu/wp-includes/css/dist/block-library/style.min.css?ver=6.6.1' type='text/css' media='all' />
+<style id='safe-svg-svg-icon-style-inline-css' type='text/css'>
+.safe-svg-cover{text-align:center}.safe-svg-cover .safe-svg-inside{display:inline-block;max-width:100%}.safe-svg-cover svg{height:100%;max-height:100%;max-width:100%;width:100%}
+
+</style>
+<style id='classic-theme-styles-inline-css' type='text/css'>
+/*! This file is auto-generated */
+.wp-block-button__link{color:#fff;background-color:#32373c;border-radius:9999px;box-shadow:none;text-decoration:none;padding:calc(.667em + 2px) calc(1.333em + 2px);font-size:1.125em}.wp-block-file__button{background:#32373c;color:#fff;text-decoration:none}
+</style>
+<style id='global-styles-inline-css' type='text/css'>
+:root{--wp--preset--aspect-ratio--square: 1;--wp--preset--aspect-ratio--4-3: 4/3;--wp--preset--aspect-ratio--3-4: 3/4;--wp--preset--aspect-ratio--3-2: 3/2;--wp--preset--aspect-ratio--2-3: 2/3;--wp--preset--aspect-ratio--16-9: 16/9;--wp--preset--aspect-ratio--9-16: 9/16;--wp--preset--color--black: #000000;--wp--preset--color--cyan-bluish-gray: #abb8c3;--wp--preset--color--white: #ffffff;--wp--preset--color--pale-pink: #f78da7;--wp--preset--color--vivid-red: #cf2e2e;--wp--preset--color--luminous-vivid-orange: #ff6900;--wp--preset--color--luminous-vivid-amber: #fcb900;--wp--preset--color--light-green-cyan: #7bdcb5;--wp--preset--color--vivid-green-cyan: #00d084;--wp--preset--color--pale-cyan-blue: #8ed1fc;--wp--preset--color--vivid-cyan-blue: #0693e3;--wp--preset--color--vivid-purple: #9b51e0;--wp--preset--gradient--vivid-cyan-blue-to-vivid-purple: linear-gradient(135deg,rgba(6,147,227,1) 0%,rgb(155,81,224) 100%);--wp--preset--gradient--light-green-cyan-to-vivid-green-cyan: linear-gradient(135deg,rgb(122,220,180) 0%,rgb(0,208,130) 100%);--wp--preset--gradient--luminous-vivid-amber-to-luminous-vivid-orange: linear-gradient(135deg,rgba(252,185,0,1) 0%,rgba(255,105,0,1) 100%);--wp--preset--gradient--luminous-vivid-orange-to-vivid-red: linear-gradient(135deg,rgba(255,105,0,1) 0%,rgb(207,46,46) 100%);--wp--preset--gradient--very-light-gray-to-cyan-bluish-gray: linear-gradient(135deg,rgb(238,238,238) 0%,rgb(169,184,195) 100%);--wp--preset--gradient--cool-to-warm-spectrum: linear-gradient(135deg,rgb(74,234,220) 0%,rgb(151,120,209) 20%,rgb(207,42,186) 40%,rgb(238,44,130) 60%,rgb(251,105,98) 80%,rgb(254,248,76) 100%);--wp--preset--gradient--blush-light-purple: linear-gradient(135deg,rgb(255,206,236) 0%,rgb(152,150,240) 100%);--wp--preset--gradient--blush-bordeaux: linear-gradient(135deg,rgb(254,205,165) 0%,rgb(254,45,45) 50%,rgb(107,0,62) 100%);--wp--preset--gradient--luminous-dusk: linear-gradient(135deg,rgb(255,203,112) 0%,rgb(199,81,192) 50%,rgb(65,88,208) 100%);--wp--preset--gradient--pale-ocean: linear-gradient(135deg,rgb(255,245,203) 0%,rgb(182,227,212) 50%,rgb(51,167,181) 100%);--wp--preset--gradient--electric-grass: linear-gradient(135deg,rgb(202,248,128) 0%,rgb(113,206,126) 100%);--wp--preset--gradient--midnight: linear-gradient(135deg,rgb(2,3,129) 0%,rgb(40,116,252) 100%);--wp--preset--font-size--small: 13px;--wp--preset--font-size--medium: 20px;--wp--preset--font-size--large: 36px;--wp--preset--font-size--x-large: 42px;--wp--preset--spacing--20: 0.44rem;--wp--preset--spacing--30: 0.67rem;--wp--preset--spacing--40: 1rem;--wp--preset--spacing--50: 1.5rem;--wp--preset--spacing--60: 2.25rem;--wp--preset--spacing--70: 3.38rem;--wp--preset--spacing--80: 5.06rem;--wp--preset--shadow--natural: 6px 6px 9px rgba(0, 0, 0, 0.2);--wp--preset--shadow--deep: 12px 12px 50px rgba(0, 0, 0, 0.4);--wp--preset--shadow--sharp: 6px 6px 0px rgba(0, 0, 0, 0.2);--wp--preset--shadow--outlined: 6px 6px 0px -3px rgba(255, 255, 255, 1), 6px 6px rgba(0, 0, 0, 1);--wp--preset--shadow--crisp: 6px 6px 0px rgba(0, 0, 0, 1);}:where(.is-layout-flex){gap: 0.5em;}:where(.is-layout-grid){gap: 0.5em;}body .is-layout-flex{display: flex;}.is-layout-flex{flex-wrap: wrap;align-items: center;}.is-layout-flex > :is(*, div){margin: 0;}body .is-layout-grid{display: grid;}.is-layout-grid > :is(*, div){margin: 0;}:where(.wp-block-columns.is-layout-flex){gap: 2em;}:where(.wp-block-columns.is-layout-grid){gap: 2em;}:where(.wp-block-post-template.is-layout-flex){gap: 1.25em;}:where(.wp-block-post-template.is-layout-grid){gap: 1.25em;}.has-black-color{color: var(--wp--preset--color--black) !important;}.has-cyan-bluish-gray-color{color: var(--wp--preset--color--cyan-bluish-gray) !important;}.has-white-color{color: var(--wp--preset--color--white) !important;}.has-pale-pink-color{color: var(--wp--preset--color--pale-pink) !important;}.has-vivid-red-color{color: var(--wp--preset--color--vivid-red) !important;}.has-luminous-vivid-orange-color{color: var(--wp--preset--color--luminous-vivid-orange) !important;}.has-luminous-vivid-amber-color{color: var(--wp--preset--color--luminous-vivid-amber) !important;}.has-light-green-cyan-color{color: var(--wp--preset--color--light-green-cyan) !important;}.has-vivid-green-cyan-color{color: var(--wp--preset--color--vivid-green-cyan) !important;}.has-pale-cyan-blue-color{color: var(--wp--preset--color--pale-cyan-blue) !important;}.has-vivid-cyan-blue-color{color: var(--wp--preset--color--vivid-cyan-blue) !important;}.has-vivid-purple-color{color: var(--wp--preset--color--vivid-purple) !important;}.has-black-background-color{background-color: var(--wp--preset--color--black) !important;}.has-cyan-bluish-gray-background-color{background-color: var(--wp--preset--color--cyan-bluish-gray) !important;}.has-white-background-color{background-color: var(--wp--preset--color--white) !important;}.has-pale-pink-background-color{background-color: var(--wp--preset--color--pale-pink) !important;}.has-vivid-red-background-color{background-color: var(--wp--preset--color--vivid-red) !important;}.has-luminous-vivid-orange-background-color{background-color: var(--wp--preset--color--luminous-vivid-orange) !important;}.has-luminous-vivid-amber-background-color{background-color: var(--wp--preset--color--luminous-vivid-amber) !important;}.has-light-green-cyan-background-color{background-color: var(--wp--preset--color--light-green-cyan) !important;}.has-vivid-green-cyan-background-color{background-color: var(--wp--preset--color--vivid-green-cyan) !important;}.has-pale-cyan-blue-background-color{background-color: var(--wp--preset--color--pale-cyan-blue) !important;}.has-vivid-cyan-blue-background-color{background-color: var(--wp--preset--color--vivid-cyan-blue) !important;}.has-vivid-purple-background-color{background-color: var(--wp--preset--color--vivid-purple) !important;}.has-black-border-color{border-color: var(--wp--preset--color--black) !important;}.has-cyan-bluish-gray-border-color{border-color: var(--wp--preset--color--cyan-bluish-gray) !important;}.has-white-border-color{border-color: var(--wp--preset--color--white) !important;}.has-pale-pink-border-color{border-color: var(--wp--preset--color--pale-pink) !important;}.has-vivid-red-border-color{border-color: var(--wp--preset--color--vivid-red) !important;}.has-luminous-vivid-orange-border-color{border-color: var(--wp--preset--color--luminous-vivid-orange) !important;}.has-luminous-vivid-amber-border-color{border-color: var(--wp--preset--color--luminous-vivid-amber) !important;}.has-light-green-cyan-border-color{border-color: var(--wp--preset--color--light-green-cyan) !important;}.has-vivid-green-cyan-border-color{border-color: var(--wp--preset--color--vivid-green-cyan) !important;}.has-pale-cyan-blue-border-color{border-color: var(--wp--preset--color--pale-cyan-blue) !important;}.has-vivid-cyan-blue-border-color{border-color: var(--wp--preset--color--vivid-cyan-blue) !important;}.has-vivid-purple-border-color{border-color: var(--wp--preset--color--vivid-purple) !important;}.has-vivid-cyan-blue-to-vivid-purple-gradient-background{background: var(--wp--preset--gradient--vivid-cyan-blue-to-vivid-purple) !important;}.has-light-green-cyan-to-vivid-green-cyan-gradient-background{background: var(--wp--preset--gradient--light-green-cyan-to-vivid-green-cyan) !important;}.has-luminous-vivid-amber-to-luminous-vivid-orange-gradient-background{background: var(--wp--preset--gradient--luminous-vivid-amber-to-luminous-vivid-orange) !important;}.has-luminous-vivid-orange-to-vivid-red-gradient-background{background: var(--wp--preset--gradient--luminous-vivid-orange-to-vivid-red) !important;}.has-very-light-gray-to-cyan-bluish-gray-gradient-background{background: var(--wp--preset--gradient--very-light-gray-to-cyan-bluish-gray) !important;}.has-cool-to-warm-spectrum-gradient-background{background: var(--wp--preset--gradient--cool-to-warm-spectrum) !important;}.has-blush-light-purple-gradient-background{background: var(--wp--preset--gradient--blush-light-purple) !important;}.has-blush-bordeaux-gradient-background{background: var(--wp--preset--gradient--blush-bordeaux) !important;}.has-luminous-dusk-gradient-background{background: var(--wp--preset--gradient--luminous-dusk) !important;}.has-pale-ocean-gradient-background{background: var(--wp--preset--gradient--pale-ocean) !important;}.has-electric-grass-gradient-background{background: var(--wp--preset--gradient--electric-grass) !important;}.has-midnight-gradient-background{background: var(--wp--preset--gradient--midnight) !important;}.has-small-font-size{font-size: var(--wp--preset--font-size--small) !important;}.has-medium-font-size{font-size: var(--wp--preset--font-size--medium) !important;}.has-large-font-size{font-size: var(--wp--preset--font-size--large) !important;}.has-x-large-font-size{font-size: var(--wp--preset--font-size--x-large) !important;}
+:where(.wp-block-post-template.is-layout-flex){gap: 1.25em;}:where(.wp-block-post-template.is-layout-grid){gap: 1.25em;}
+:where(.wp-block-columns.is-layout-flex){gap: 2em;}:where(.wp-block-columns.is-layout-grid){gap: 2em;}
+:root :where(.wp-block-pullquote){font-size: 1.5em;line-height: 1.6;}
+</style>
+<link rel='stylesheet' id='core-theme-base-css' href='https://cs.ics.uci.edu/wp-content/themes/core/css/dist/master.min.css?ver=6.6.1' type='text/css' media='all' />
+<link rel='stylesheet' id='core-theme-tec-css' href='https://cs.ics.uci.edu/wp-content/themes/core/css/dist/tec.min.css?ver=6.6.1' type='text/css' media='all' />
+<link rel='stylesheet' id='core-theme-print-css' href='https://cs.ics.uci.edu/wp-content/themes/core/css/dist/print.min.css?ver=6.6.1' type='text/css' media='print' />
+<link rel='stylesheet' id='uniquestylesheetid-css' href='https://cs.ics.uci.edu/wp-content/themes/core/css/custom.css?ver=6.6.1' type='text/css' media='all' />
+<link rel='stylesheet' id='dflip-style-css' href='https://cs.ics.uci.edu/wp-content/plugins/3d-flipbook-dflip-lite/assets/css/dflip.min.css?ver=2.2.32' type='text/css' media='all' />
+<link rel='stylesheet' id='tablepress-default-css' href='https://cs.ics.uci.edu/wp-content/plugins/tablepress/css/build/default.css?ver=2.2.5' type='text/css' media='all' />
+<link rel='stylesheet' id='searchwp-forms-css' href='https://cs.ics.uci.edu/wp-content/plugins/searchwp/assets/css/frontend/search-forms.css?ver=4.3.4' type='text/css' media='all' />
+<script type="text/javascript" src="https://cs.ics.uci.edu/wp-content/themes/core/js/vendor/jquery.min.js?ver=6.6.1" id="jquery-js"></script>
+<script type="text/javascript" src="https://kit.fontawesome.com/12af82385d.js" id="font-awesome-kit-js"></script>
+<link rel="https://api.w.org/" href="https://cs.ics.uci.edu/wp-json/" /><link rel="alternate" title="JSON" type="application/json" href="https://cs.ics.uci.edu/wp-json/wp/v2/pages/5" /><link rel="EditURI" type="application/rsd+xml" title="RSD" href="https://cs.ics.uci.edu/xmlrpc.php?rsd" />
+<meta name="generator" content="WordPress 6.6.1" />
+<link rel='shortlink' href='https://cs.ics.uci.edu/' />
+<link rel="alternate" title="oEmbed (JSON)" type="application/json+oembed" href="https://cs.ics.uci.edu/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fcs.ics.uci.edu%2F" />
+<link rel="alternate" title="oEmbed (XML)" type="text/xml+oembed" href="https://cs.ics.uci.edu/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fcs.ics.uci.edu%2F&#038;format=xml" />
+<!-- CS Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-68T133S2W0"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-68T133S2W0');
+</script>
+
+<!-- Google Search Console -->
+<meta name="google-site-verification" content="7AEbw6Pk-4ZU5SEwHtPEI96kxTMsf4HcZ4KNwkMVSJE" />
+
+<!--Bing-Webmaster-->
+<meta name="msvalidate.01" content="88752397D33A1E05CDCF38710ED13FBE" /><link rel='preload' href='https://cs.ics.uci.edu/wp-content/themes/core/js/dist/vendor.min.js?ver=6.6.1' as='script'/>
+<link rel='preload' href='https://cs.ics.uci.edu/wp-content/themes/core/js/dist/scripts.min.js?ver=6.6.1' as='script'/>
+<link rel='preload' href='https://cs.ics.uci.edu/wp-content/plugins/3d-flipbook-dflip-lite/assets/js/dflip.min.js?ver=2.2.32' as='script'/>
+<link rel='preload' href='https://cs.ics.uci.edu/wp-content/plugins/wpfront-scroll-top/js/wpfront-scroll-top.min.js?ver=2.2.10081' as='script'/>
+
+        <!-- Start Google Analytics -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-68T133S2W0"></script>
+        <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-68T133S2W0');
+        </script>
+        <!-- End Google Analytics -->
+
+		<meta name="tec-api-version" content="v1"><meta name="tec-api-origin" content="https://cs.ics.uci.edu"><link rel="alternate" href="https://cs.ics.uci.edu/wp-json/tribe/events/v1/" /><link rel="icon" href="https://cs.ics.uci.edu/wp-content/uploads/sites/2/2022/10/cropped-UCIICS-32x32.jpg" sizes="32x32" />
+<link rel="icon" href="https://cs.ics.uci.edu/wp-content/uploads/sites/2/2022/10/cropped-UCIICS-192x192.jpg" sizes="192x192" />
+<link rel="apple-touch-icon" href="https://cs.ics.uci.edu/wp-content/uploads/sites/2/2022/10/cropped-UCIICS-180x180.jpg" />
+<meta name="msapplication-TileImage" content="https://cs.ics.uci.edu/wp-content/uploads/sites/2/2022/10/cropped-UCIICS-270x270.jpg" />
+		<style type="text/css" id="wp-custom-css">
+			/* Seminar Series */
+.seminar_series--block{
+	padding-top:25px;
+	padding-bottom:25px;
+}
+.seminar_series--cat_title{
+	padding:5px 15px;
+	background-color:gray;
+	margin-top:25px;
+	margin-bottom:25px;
+}
+.seminar_series--cat_title h2{
+	color:#fff;
+	font-weight:700;
+	font-size:1.75em;
+	letter-spacing: .1rem;
+}
+.seminar_series-content h3{
+	font-size:1.2em;
+}
+
+.seminar_series-content h4{
+	font-size:1.1em;
+	font-weight:700;
+}
+.seminar_series-content p{
+	font-size:1.1em;
+	font-style:italic;
+}
+.ss-selector{
+	font-weight:700;
+	font-size:1.75em;
+	width:500px;
+	padding-top:10px;
+	padding-bottom:50px;
+	margin-top:25px;
+	margin-bottom:25px;
+}
+
+/* Grad */
+.page-id-322 .site-panel--cardgrid[data-index="1"] {
+	padding-top: 0px;
+	margin-top: -20px
+}
+
+/*Seminar Series */
+.page-id-3543 .site-panel--wysiwyg {
+margin-top: -90px;
+}
+
+/* Global Fix
+ * this fixes spacing between panels */
+.t-content dl, .t-content ol, .t-content ul {
+	font-size: 1.35em;
+}
+.s-wrapper {
+	padding-bottom: 50px;
+	padding-top: 50px;
+}
+.s-wrapper:last-child {
+	padding-bottom: 50px;
+}
+.u-vertical-padding--top {
+	padding-top: 60px;
+}
+
+.subheader__container {
+	padding-top: 50px;
+}
+
+/* Adjust Anchor Offset */
+a.anchor {
+    display: block;
+    position: relative;
+    top: -80px;
+    visibility: hidden;
+}
+/* Menu */
+.primary__wrap-child--depth-0 {
+	width: 415px;
+}
+/* Mega Menu */
+.primary__list-item--has-mim .primary__wrap-child--depth-0 {
+	width: 70%;
+	left: 450px;
+}
+.menu-item-messaging {
+display:none;
+}
+.primary__list-item--has-mim .primary__list-child--depth-0 {
+	columns: 3;
+}
+.primary__list-item--has-mim .primary__list-child--depth-0 {
+	border:none;
+}
+
+
+/* Search Bar */
+.masthead__search-form {
+	display:none;
+}
+
+/* Media Queries */
+@media only screen and (min-width: 960px) {
+.masthead__flyout-trigger {
+display: none;
+}
+}
+@media screen and (max-width: 1258px) {
+.primary__list-item--has-mim .primary__list-child--depth-0 {
+	columns: 1 !important;
+	border-left: 1px solid #ebebf0;
+}
+.primary__action--depth-1 {
+		padding: 8px 4px !important;
+	}
+.primary__action--depth-2 {
+		padding: 5px 8px;
+	}
+}		</style>
+		
+
+</head>
+<body class="home page-template page-template-page-templates page-template-landing page-template-page-templateslanding-php page page-id-5 is-department-site navbar-bg-color-grey-extra-light has-panels page-home tribe-no-js tribe-theme-core">
+
+	
+
+
+
+	<div class="l-wrapper" data-js="site-wrap">
+
+		<header id="masthead" class="masthead" data-js="masthead">
+
+	<a href="#a11y-skip-link-content" class="a11y-skip-link a11y-visual-hide">Skip to main content</a>
+
+	<div class="masthead__logo-row" data-js="masthead-logo-row">
+		<div class="l-container">
+
+			
+<div class="masthead__logo">
+	
+				<a href="https://ics.uci.edu/" target="_self" title="" class=""  >
+		
+				<img class=" lazyload"  alt="Visit the ICS homepage." data-expand="200" data-parent-fit="width" data-src="https://cs.ics.uci.edu/wp-content/uploads/sites/2/2020/08/logo-fullcolor.svg" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" />
+		
+				</a>
+		
+		
+
+	</div>
+
+
+							<div class="masthead__dept-name h4">
+<a class=" masthead__dept-link"
+				href="https://cs.ics.uci.edu/"
+			>
+			<span class="c-btn__text" >Department of Computer Science</span>
+	</a>
+</div>
+			
+			<div
+				class="masthead__primary-wrap"
+				data-js="desktop-primary-wrap"
+			></div>
+
+			<button
+				id="toggle-flyout"
+				data-js="toggle-flyout"
+				class="masthead__flyout-trigger"
+				aria-label="Toggle site search form &amp; navigation"
+				data-label-mobile="Toggle site search form &amp; navigation"
+				data-label-desktop="Toggle site search form"
+				aria-expanded="false"
+				aria-haspopup="true"
+				aria-controls="masthead-flyout"
+			>
+				<i class="icon"></i>
+			</button>
+
+		</div>
+	</div>
+
+	<div
+		id="masthead-flyout"
+		data-js="masthead-flyout"
+		class="masthead__flyout"
+		aria-hidden="true"
+		aria-labelledby="toggle-flyout"
+	>
+		<div class="masthead__nav-wrap" data-js="mobile-nav-wrap">
+
+			<div class="masthead__search-form">
+				<div class="l-container">
+					
+<form class="c-search" role='search' method='get' action='https://cs.ics.uci.edu' data-js='site-search__form'>
+
+	<label class="c-search__label form-control-label" for='sm-66e2263a65f13'>Search</label>
+	<input class="c-search__input form-control" type='text' id='sm-66e2263a65f13' name='s' data-js='site-search__input' placeholder='Search ICS&hellip;' />
+	
+<button class=" c-search__button c-search__reset"
+			type="reset"
+				data-js='site-search__reset'>
+			<span class="c-btn__text" ><span class="c-text-btn-inner--black">Clear</span></span>
+	</button>
+
+	
+<button class=" c-search__button"
+			type="submit"
+				data-js='site-search__submit'>
+			<span class="c-btn__text" ><span class="c-text-btn-inner--black">Submit</span></span>
+	</button>
+
+</form>
+
+				</div>
+			</div>
+
+				<nav class="primary__nav" data-js="primary-nav" aria-label="Primary Navigation">
+		<ol class="primary__nav-list">
+			<li class="primary__list-item primary__list-item--depth-0 primary__list-item--has-children"><button title="Toggle Sub-Menu" id="menu-item-3205" class="primary__action primary__action--depth-0 primary__action--has-children" data-js="trigger-child-menu" aria-controls="menu-item-child-3205" aria-expanded="false"><span class="primary__list-item-title">Explore</span></button>
+<div class="primary__wrap-child primary__wrap-child--depth-0"><div class="primary__wrap-child-inner primary__wrap-child-inner--depth-0">
+<ol id="menu-item-child-3205" class="primary__list-child primary__list-child--depth-0" data-js="child-menu">
+	<li class="primary__list-item primary__list-item--depth-1"><a href="https://cs.ics.uci.edu/explore/" id="menu-item-3325" class="primary__action primary__action--depth-1"><span class="c-text-btn-inner--black">About</span></a></li>
+	<li class="primary__list-item primary__list-item--depth-1"><a href="https://ics.uci.edu/people/?filter%5Bunits%5D=69" id="menu-item-3540" class="primary__action primary__action--depth-1"><span class="c-text-btn-inner--black">People</span></a></li>
+	<li class="primary__list-item primary__list-item--depth-1"><a href="https://cs.ics.uci.edu/contact/" id="menu-item-3324" class="primary__action primary__action--depth-1"><span class="c-text-btn-inner--black">Contact</span></a></li>
+</ol>
+</div></div>
+</li>
+<li class="primary__list-item primary__list-item--depth-0 primary__list-item--has-children"><button title="Toggle Sub-Menu" id="menu-item-3114" class="primary__action primary__action--depth-0 primary__action--has-children" data-js="trigger-child-menu" aria-controls="menu-item-child-3114" aria-expanded="false"><span class="primary__list-item-title">Research</span></button>
+<div class="primary__wrap-child primary__wrap-child--depth-0"><div class="primary__wrap-child-inner primary__wrap-child-inner--depth-0">
+<ol id="menu-item-child-3114" class="primary__list-child primary__list-child--depth-0" data-js="child-menu">
+	<li class="primary__list-item primary__list-item--depth-1"><a href="https://cs.ics.uci.edu/research-areas/" id="menu-item-3183" class="primary__action primary__action--depth-1"><span class="c-text-btn-inner--black">Research Areas</span></a></li>
+	<li class="primary__list-item primary__list-item--depth-1"><a href="https://cs.ics.uci.edu/research-centers/" id="menu-item-3186" class="primary__action primary__action--depth-1"><span class="c-text-btn-inner--black">Research Centers</span></a></li>
+	<li class="primary__list-item primary__list-item--depth-1 primary__list-item--has-children"><a href="https://ics.uci.edu/academics/impact/" id="menu-item-3503" class="primary__action primary__action--depth-1 primary__action--has-children"><span class="c-text-btn-inner--black">Impact</span></a>
+	<div class="primary__wrap-child primary__wrap-child--depth-1"><div class="primary__wrap-child-inner primary__wrap-child-inner--depth-1">
+	<ol id="menu-item-child-3503" class="primary__list-child primary__list-child--depth-1" data-js="child-menu">
+		<li class="primary__list-item primary__list-item--depth-2"><a href="https://ics.uci.edu/academics/impact/faculty-awards-honors/" id="menu-item-3678" class="primary__action primary__action--depth-2"><span class="c-text-btn-inner--black">Faculty Awards &#038; Honors</span></a></li>
+	</ol>
+	</div></div>
+</li>
+</ol>
+</div></div>
+</li>
+<li class="primary__list-item primary__list-item--depth-0 primary__list-item--has-children primary__list-item--has-mim"><button title="Toggle Sub-Menu" id="menu-item-3111" class="primary__action primary__action--depth-0 primary__action--has-children" data-js="trigger-child-menu" aria-controls="menu-item-child-3111" aria-expanded="false"><span class="primary__list-item-title">Academics</span></button>
+<div class="primary__wrap-child primary__wrap-child--depth-0"><div class="primary__wrap-child-inner primary__wrap-child-inner--depth-0">
+
+
+<div class="menu-item-messaging">
+	<div class="mim__inner">
+
+					
+<div class="mim__image-component c-image">
+	
+		
+				<img class="mim__image lazyload"  alt="Zot Hacks students" data-expand="200" data-parent-fit="width" data-src="https://cs.ics.uci.edu/wp-content/uploads/sites/2/2023/10/ZotHacks2022-PetrArchive-696x464-1.jpeg" src="https://cs.ics.uci.edu/wp-content/themes/core/img/theme/shims/3x2.png" />
+		
+		
+		
+
+	</div>
+
+		
+					
+<p
+		class="mim__title h4"
+		>
+
+	Student success starts here!
+
+</p>
+		
+					
+<div
+			class="mim__description"
+    	>
+<p>Undergraduate and graduate students enjoy limitless academic and extracurricular opportunities as part of the ICS community.</p>
+
+</div>
+
+		
+		
+	</div>
+</div>
+
+<ol id="menu-item-child-3111" class="primary__list-child primary__list-child--depth-0" data-js="child-menu">
+	<li class="primary__list-item primary__list-item--depth-1 primary__list-item--has-children"><a href="https://cs.ics.uci.edu/undergraduate-programs/" id="menu-item-3184" class="primary__action primary__action--depth-1 primary__action--has-children"><span class="c-text-btn-inner--black">Undergraduate Programs</span></a>
+	<div class="primary__wrap-child primary__wrap-child--depth-1"><div class="primary__wrap-child-inner primary__wrap-child-inner--depth-1">
+	<ol id="menu-item-child-3184" class="primary__list-child primary__list-child--depth-1" data-js="child-menu">
+		<li class="primary__list-item primary__list-item--depth-2"><a href="https://cs.ics.uci.edu/undergraduate-programs/" id="menu-item-3326" class="primary__action primary__action--depth-2"><span class="c-text-btn-inner--black">Majors &#038; Minors</span></a></li>
+		<li class="primary__list-item primary__list-item--depth-2"><a href="https://ics.uci.edu/honors/" id="menu-item-3327" class="primary__action primary__action--depth-2"><span class="c-text-btn-inner--black">ICS Honors Program</span></a></li>
+	</ol>
+	</div></div>
+</li>
+	<li class="primary__list-item primary__list-item--depth-1"><a href="https://ics.uci.edu/admissions-information-and-computer-science/admissions-process/" id="menu-item-3328" class="primary__action primary__action--depth-1"><span class="c-text-btn-inner--black">Undergraduate Admissions</span></a></li>
+	<li class="primary__list-item primary__list-item--depth-1"><a href="https://ics.uci.edu/financial-aid-and-scholarships/undergraduate-financial-awards/" id="menu-item-3329" class="primary__action primary__action--depth-1"><span class="c-text-btn-inner--black">Undergraduate Financial Aid</span></a></li>
+	<li class="primary__list-item primary__list-item--depth-1"><a href="https://ics.uci.edu/academics/undergraduate-academic-advising/" id="menu-item-3330" class="primary__action primary__action--depth-1"><span class="c-text-btn-inner--black">Undergraduate Academic Advising</span></a></li>
+	<li class="primary__list-item primary__list-item--depth-1 primary__list-item--has-children"><a href="https://cs.ics.uci.edu/graduate-computer-science-programs/" id="menu-item-3113" class="primary__action primary__action--depth-1 primary__action--has-children"><span class="c-text-btn-inner--black">Graduate Programs</span></a>
+	<div class="primary__wrap-child primary__wrap-child--depth-1"><div class="primary__wrap-child-inner primary__wrap-child-inner--depth-1">
+	<ol id="menu-item-child-3113" class="primary__list-child primary__list-child--depth-1" data-js="child-menu">
+		<li class="primary__list-item primary__list-item--depth-2"><a href="https://cs.ics.uci.edu/graduate-computer-science-programs#researchprograms" id="menu-item-3331" class="primary__action primary__action--depth-2"><span class="c-text-btn-inner--black">Research</span></a></li>
+		<li class="primary__list-item primary__list-item--depth-2"><a href="https://cs.ics.uci.edu/graduate-computer-science-programs#professionalprograms" id="menu-item-3332" class="primary__action primary__action--depth-2"><span class="c-text-btn-inner--black">Professional</span></a></li>
+	</ol>
+	</div></div>
+</li>
+	<li class="primary__list-item primary__list-item--depth-1"><a href="https://ics.uci.edu/admissions-information-and-computer-science/graduate-admissions/" id="menu-item-3333" class="primary__action primary__action--depth-1"><span class="c-text-btn-inner--black">Graduate Admissions</span></a></li>
+	<li class="primary__list-item primary__list-item--depth-1"><a href="https://ics.uci.edu/academics/graduate-fellowships-funding/" id="menu-item-3334" class="primary__action primary__action--depth-1"><span class="c-text-btn-inner--black">Graduate Financial Support</span></a></li>
+	<li class="primary__list-item primary__list-item--depth-1"><a href="https://ics.uci.edu/academics/graduate-academic-advising/" id="menu-item-3335" class="primary__action primary__action--depth-1"><span class="c-text-btn-inner--black">Graduate Academic Advising</span></a></li>
+	<li class="primary__list-item primary__list-item--depth-1 primary__list-item--has-children"><a href="https://ics.uci.edu/student-experience/" id="menu-item-3505" class="primary__action primary__action--depth-1 primary__action--has-children"><span class="c-text-btn-inner--black">Student Experience</span></a>
+	<div class="primary__wrap-child primary__wrap-child--depth-1"><div class="primary__wrap-child-inner primary__wrap-child-inner--depth-1">
+	<ol id="menu-item-child-3505" class="primary__list-child primary__list-child--depth-1" data-js="child-menu">
+		<li class="primary__list-item primary__list-item--depth-2"><a href="https://oai.ics.uci.edu/" id="menu-item-3506" class="primary__action primary__action--depth-2"><span class="c-text-btn-inner--black">Outreach, Access &#038; Inclusion</span></a></li>
+		<li class="primary__list-item primary__list-item--depth-2"><a href="https://ics.uci.edu/academics/career-development/" id="menu-item-3523" class="primary__action primary__action--depth-2"><span class="c-text-btn-inner--black">Career Development</span></a></li>
+		<li class="primary__list-item primary__list-item--depth-2"><a href="https://ics.uci.edu/student-experience/clubs-organizations/" id="menu-item-3524" class="primary__action primary__action--depth-2"><span class="c-text-btn-inner--black">Clubs &#038; Organizations</span></a></li>
+		<li class="primary__list-item primary__list-item--depth-2"><a href="https://ics.uci.edu/student-experience/entrepreneurship-student-experience/" id="menu-item-3525" class="primary__action primary__action--depth-2"><span class="c-text-btn-inner--black">Entrepreneurship</span></a></li>
+		<li class="primary__list-item primary__list-item--depth-2"><a href="https://ics.uci.edu/student-experience/undergraduate-research/" id="menu-item-3526" class="primary__action primary__action--depth-2"><span class="c-text-btn-inner--black">Undergraduate Research</span></a></li>
+		<li class="primary__list-item primary__list-item--depth-2"><a href="https://ics.uci.edu/academics/campus-resources/" id="menu-item-3527" class="primary__action primary__action--depth-2"><span class="c-text-btn-inner--black">Campus Resources</span></a></li>
+	</ol>
+	</div></div>
+</li>
+</ol>
+</div></div>
+</li>
+<li class="primary__list-item primary__list-item--depth-0 primary__list-item--has-children"><button title="Toggle Sub-Menu" id="menu-item-3124" class="primary__action primary__action--depth-0 primary__action--has-children" data-js="trigger-child-menu" aria-controls="menu-item-child-3124" aria-expanded="false"><span class="primary__list-item-title">News</span></button>
+<div class="primary__wrap-child primary__wrap-child--depth-0"><div class="primary__wrap-child-inner primary__wrap-child-inner--depth-0">
+<ol id="menu-item-child-3124" class="primary__list-child primary__list-child--depth-0" data-js="child-menu">
+	<li class="primary__list-item primary__list-item--depth-1 primary__list-item--has-children"><a href="https://ics.uci.edu/happening/news/?filter%5Bunits%5D=69" id="menu-item-3344" class="primary__action primary__action--depth-1 primary__action--has-children"><span class="c-text-btn-inner--black">Recent News</span></a>
+	<div class="primary__wrap-child primary__wrap-child--depth-1"><div class="primary__wrap-child-inner primary__wrap-child-inner--depth-1">
+	<ol id="menu-item-child-3344" class="primary__list-child primary__list-child--depth-1" data-js="child-menu">
+		<li class="primary__list-item primary__list-item--depth-2"><a target="_blank" href="https://ics.uci.edu/happening/news/?filter%5Baffiliation_posts%5D=1988&#038;filter%5Bunits%5D=69" id="menu-item-3125" class="primary__action primary__action--depth-2"><span class="c-text-btn-inner--black">Faculty Spotlights</span></a></li>
+		<li class="primary__list-item primary__list-item--depth-2"><a target="_blank" href="https://ics.uci.edu/happening/news/?filter%5Bunits%5D=69&#038;filter%5Baffiliation_posts%5D=1989" id="menu-item-3336" class="primary__action primary__action--depth-2"><span class="c-text-btn-inner--black">Student Spotlights</span></a></li>
+		<li class="primary__list-item primary__list-item--depth-2"><a target="_blank" href="https://ics.uci.edu/happening/news/?filter%5Bunits%5D=69&#038;filter%5Bresearch_areas_ics%5D=1994" id="menu-item-3337" class="primary__action primary__action--depth-2"><span class="c-text-btn-inner--black">Research Spotlights</span></a></li>
+		<li class="primary__list-item primary__list-item--depth-2"><a target="_blank" href="https://ics.uci.edu/happening/news/?filter%5Bunits%5D=69&#038;filter%5Baffiliation_posts%5D=1990" id="menu-item-3338" class="primary__action primary__action--depth-2"><span class="c-text-btn-inner--black">Alumni Spotlights</span></a></li>
+	</ol>
+	</div></div>
+</li>
+</ol>
+</div></div>
+</li>
+<li class="primary__list-item primary__list-item--depth-0 primary__list-item--has-children"><button title="Toggle Sub-Menu" id="menu-item-3126" class="primary__action primary__action--depth-0 primary__action--has-children" data-js="trigger-child-menu" aria-controls="menu-item-child-3126" aria-expanded="false"><span class="primary__list-item-title">Events</span></button>
+<div class="primary__wrap-child primary__wrap-child--depth-0"><div class="primary__wrap-child-inner primary__wrap-child-inner--depth-0">
+<ol id="menu-item-child-3126" class="primary__list-child primary__list-child--depth-0" data-js="child-menu">
+	<li class="primary__list-item primary__list-item--depth-1 primary__list-item--has-children"><a href="https://cs.ics.uci.edu/seminar-series/" id="menu-item-3552" class="primary__action primary__action--depth-1 primary__action--has-children"><span class="c-text-btn-inner--black">Seminar Series</span></a>
+	<div class="primary__wrap-child primary__wrap-child--depth-1"><div class="primary__wrap-child-inner primary__wrap-child-inner--depth-1">
+	<ol id="menu-item-child-3552" class="primary__list-child primary__list-child--depth-1" data-js="child-menu">
+		<li class="primary__list-item primary__list-item--depth-2"><a target="_blank" href="https://ics.uci.edu/events/list/?tribe__ecp_custom_81%5B0%5D=Computer+Science" id="menu-item-3360" class="primary__action primary__action--depth-2"><span class="c-text-btn-inner--black">CS Seminar Series</span></a></li>
+		<li class="primary__list-item primary__list-item--depth-2"><a href="https://cs.ics.uci.edu/special-events/distinguished-lecture-series/" id="menu-item-3359" class="primary__action primary__action--depth-2"><span class="c-text-btn-inner--black">CS Distinguished Lecture Series</span></a></li>
+		<li class="primary__list-item primary__list-item--depth-2"><a target="_blank" href="https://acoi.ics.uci.edu/seminar-series/" id="menu-item-3364" class="primary__action primary__action--depth-2"><span class="c-text-btn-inner--black">ACO Center Seminar Series</span></a></li>
+		<li class="primary__list-item primary__list-item--depth-2"><a target="_blank" href="https://hpi.ics.uci.edu/hpiuci-2022-grand-opening-event/" id="menu-item-3361" class="primary__action primary__action--depth-2"><span class="c-text-btn-inner--black">HPI Events</span></a></li>
+		<li class="primary__list-item primary__list-item--depth-2"><a target="_blank" href="https://isg.ics.uci.edu/talks/" id="menu-item-3363" class="primary__action primary__action--depth-2"><span class="c-text-btn-inner--black">Information Systems Group Talks</span></a></li>
+		<li class="primary__list-item primary__list-item--depth-2"><a target="_blank" href="https://futurehealth.uci.edu/events/" id="menu-item-3365" class="primary__action primary__action--depth-2"><span class="c-text-btn-inner--black">Institute for Future Health Events</span></a></li>
+		<li class="primary__list-item primary__list-item--depth-2"><a target="_blank" href="https://cml.ics.uci.edu/aiml/" id="menu-item-3362" class="primary__action primary__action--depth-2"><span class="c-text-btn-inner--black">AI/ML Seminar Series</span></a></li>
+	</ol>
+	</div></div>
+</li>
+	<li class="primary__list-item primary__list-item--depth-1"><a target="_blank" href="https://ics.uci.edu/events/list/?tribe__ecp_custom_46%5B0%5D=Computer+Science" id="menu-item-3534" class="primary__action primary__action--depth-1"><span class="c-text-btn-inner--black">CS Calendar</span></a></li>
+</ol>
+</div></div>
+</li>
+<li class="primary__list-item primary__list-item--depth-0 primary__list-item--has-children"><button title="Toggle Sub-Menu" id="menu-item-3320" class="primary__action primary__action--depth-0 primary__action--has-children" data-js="trigger-child-menu" aria-controls="menu-item-child-3320" aria-expanded="false"><span class="primary__list-item-title">Partnerships</span></button>
+<div class="primary__wrap-child primary__wrap-child--depth-0"><div class="primary__wrap-child-inner primary__wrap-child-inner--depth-0">
+<ol id="menu-item-child-3320" class="primary__list-child primary__list-child--depth-0" data-js="child-menu">
+	<li class="primary__list-item primary__list-item--depth-1 primary__list-item--has-children"><a href="https://ics.uci.edu/alumni/corporate-engagement/" id="menu-item-3339" class="primary__action primary__action--depth-1 primary__action--has-children"><span class="c-text-btn-inner--black">Corporate &#038; Community Engagement</span></a>
+	<div class="primary__wrap-child primary__wrap-child--depth-1"><div class="primary__wrap-child-inner primary__wrap-child-inner--depth-1">
+	<ol id="menu-item-child-3339" class="primary__list-child primary__list-child--depth-1" data-js="child-menu">
+		<li class="primary__list-item primary__list-item--depth-2"><a href="https://ics.uci.edu/alumni/corporate-engagement/capstone-projects-corporate-engagement/" id="menu-item-3340" class="primary__action primary__action--depth-2"><span class="c-text-btn-inner--black">Capstone Projects</span></a></li>
+		<li class="primary__list-item primary__list-item--depth-2"><a href="https://ics.uci.edu/alumni/corporate-engagement/research-partnerships-corporate-engagement/" id="menu-item-3341" class="primary__action primary__action--depth-2"><span class="c-text-btn-inner--black">Research Partnerships</span></a></li>
+		<li class="primary__list-item primary__list-item--depth-2"><a href="https://ics.uci.edu/alumni/corporate-engagement/student-recruitment-corporate-engagement/" id="menu-item-3342" class="primary__action primary__action--depth-2"><span class="c-text-btn-inner--black">Student Recruitment</span></a></li>
+		<li class="primary__list-item primary__list-item--depth-2"><a href="https://ics.uci.edu/alumni/corporate-engagement/corporate-partners/" id="menu-item-3343" class="primary__action primary__action--depth-2"><span class="c-text-btn-inner--black">Corporate Partners Program</span></a></li>
+	</ol>
+	</div></div>
+</li>
+</ol>
+</div></div>
+</li>
+
+		</ol>
+	</nav>
+
+				<nav class="utility__nav" data-js="utility-nav" aria-label="Utility Navigation">
+		<ol class="utility__nav-list">
+			<li class="secondary__list-item secondary__list-item--depth-0"><a href="https://ics.uci.edu/contact-us/" class="secondary__action secondary__action--depth-0"><span class="c-text-btn-inner--black">Contact Us</span></a></li><li class="secondary__list-item secondary__list-item--depth-0"><a target="_blank" rel="noopener" href="https://ics.uci.edu/follow-us/" class="secondary__action secondary__action--depth-0"><span class="c-text-btn-inner--black">Follow Us</span></a></li><li class="secondary__list-item secondary__list-item--depth-0"><a href="https://ics.uci.edu/make-a-gift/" class="secondary__action secondary__action--depth-0"><span class="c-text-btn-inner--black">Support Us</span></a></li>
+		</ol>
+	</nav>
+
+
+		</div>
+	</div>
+
+	<div
+		class="masthead__utility-wrap"
+		data-js="desktop-utility-wrap"
+	></div>
+
+</header>
+
+
+
+<main>
+	<a id="a11y-skip-link-content" tabindex="-1"></a>
+
+	
+			<header  class="subheader a11y-visual-hide">
+
+	
+
+	
+<div class="subheader__c-image subheader__c-image--landscape c-image">
+		<div  role="img" aria-label="blue network" data-expand="200"   data-sizes="(min-width: 1260px) 1260px, 100vw" data-bgset="https://cs.ics.uci.edu/wp-content/uploads/sites/2/2020/08/network-4871163-768x274.jpg 768w 274h, 
+https://cs.ics.uci.edu/wp-content/uploads/sites/2/2020/08/network-4871163-944x337.jpg 944w 337h, 
+https://cs.ics.uci.edu/wp-content/uploads/sites/2/2020/08/network-4871163-1440x514.jpg 1440w 514h, 
+https://cs.ics.uci.edu/wp-content/uploads/sites/2/2020/08/network-4871163-1680x600.jpg 1680w 600h, 
+https://cs.ics.uci.edu/wp-content/uploads/sites/2/2020/08/network-4871163-2520x900.jpg 2520w 900h" style="background-image:url('https://cs.ics.uci.edu/wp-content/themes/core/img/theme/shims/3x1.png');"  class="c-image__bg lazyload">
+	
+		
+		
+		
+		
+
+		</div>
+	</div>
+
+
+	<div  class="subheader__container l-container">
+		
+
+<div class="subheader__content">
+	<div class="subheader__content-inner">
+
+					
+<nav class="c-breadcrumbs__wrap a11y-visual-hide" aria-label="Breadcrumbs">
+	<ol class="c-breadcrumbs">
+					
+					
+<li
+			class="c-breadcrumb c-breadcrumb--current"
+    	>
+
+<a class=" c-breadcrumb__action c-text-btn"
+				href="https://cs.ics.uci.edu/"
+			title='Home' aria-current='page' tabindex='-1'>
+			<span class="c-btn__text" >Home</span>
+	</a>
+
+</li>
+
+			</ol>
+</nav>
+		
+					
+<h1
+		class="subheader__title h1"
+		>
+
+	Home
+
+</h1>
+		
+		
+		
+	</div>
+</div>
+
+	</div>
+
+</header>
+
+	
+	
+		<div class="panel-collection" data-modular-content-collection>
+	
+		
+
+			<section  class="panel site-panel site-panel--hero u-bc-black t-content--light site-panel--layout-full-bleed site-panel--has-landscape-image "
+				 data-index="0"
+				 data-js="panel"
+				 data-type="hero"
+				 data-modular-content>
+	
+	
+	
+	
+		<div class="l-container">
+			<div class="panel-hero__row">
+
+				
+
+<div class="c-content-block panel-hero__content">
+	<div class="c-content-block__content">
+
+		
+					
+<h2
+		class="site-panel__title s-title h1"
+		>
+
+	New Findings on CAPTCHAs Attract Worldwide Attention
+
+</h2>
+		
+		
+					<p class="s-cta__wrap">
+<a class=" s-cta c-btn c-btn--white"
+				href="https://ics.uci.edu/2023/09/14/new-findings-on-captchas-attract-worldwide-attention/"
+			target="_blank"
+		rel='noopener'>
+			<span class="c-btn__text" >Read More</span>
+	</a>
+</p>
+		
+	</div>
+</div>
+
+
+				<div class="panel-hero__media">
+											
+					
+					
+<div class="panel-hero__c-image panel-hero__c-image--landscape c-image">
+		<div  role="img" aria-label="Searles at Symposium" data-expand="200"   data-sizes="(min-width: 1260px) 1260px, 100vw" data-bgset="https://cs.ics.uci.edu/wp-content/uploads/sites/2/2023/09/Searles_Symposium-944x711-1-768x346.jpg 768w 346h, 
+https://cs.ics.uci.edu/wp-content/uploads/sites/2/2023/09/Searles_Symposium-944x711-1-944x425.jpg 944w 425h, 
+https://cs.ics.uci.edu/wp-content/uploads/sites/2/2023/09/Searles_Symposium-944x711-1-944x648.jpg 944w 648h" style="background-image:url('https://cs.ics.uci.edu/wp-content/themes/core/img/theme/shims/2x1.png');"  class="c-image__bg lazyload">
+	
+		
+		
+		
+		
+
+		</div>
+	</div>
+
+				</div>
+
+			</div>
+		</div>
+
+	
+				
+	
+			</section>
+	
+
+
+		
+
+			<section  class="panel s-wrapper site-panel site-panel--cardgrid u-bc-grey-extra-light "
+				 data-index="1"
+				 data-js="panel"
+				 data-type="cardgrid"
+				 data-modular-content>
+	
+			<div class="l-container">
+	
+	
+		
+	
+	
+	<div class="s-content">
+		<div  class="g-row g-row--left g-row--col-2--min-medium g-row--col-3--min-full card-grid__container" >
+
+							<div class="g-col card-grid__card-margin">
+					 
+<div class="c-card card-grid__card">
+
+			<a class="card-grid__link" href="https://cs.ics.uci.edu/undergraduate-programs/" aria-label=''>
+	
+			
+<div class="card-grid__image-container">
+		<div  role="img" aria-label="Undergrad students at commencement" data-expand="200"   data-sizes="(min-width: 1260px) 1260px, 100vw" data-bgset="https://cs.ics.uci.edu/wp-content/uploads/sites/2/2023/10/commencement_eng_socsci_061419_1526_sz-1044x696-1-696x464.jpeg 696w 464h, 
+https://cs.ics.uci.edu/wp-content/uploads/sites/2/2023/10/commencement_eng_socsci_061419_1526_sz-1044x696-1-320x213.jpeg 320w 213h, 
+https://cs.ics.uci.edu/wp-content/uploads/sites/2/2023/10/commencement_eng_socsci_061419_1526_sz-1044x696-1-448x300.jpeg 448w 300h, 
+https://cs.ics.uci.edu/wp-content/uploads/sites/2/2023/10/commencement_eng_socsci_061419_1526_sz-1044x696-1.jpeg 1044w 696h" style="background-image:url('https://cs.ics.uci.edu/wp-content/themes/core/img/theme/shims/3x2.png');"  class="card-grid__image lazyload">
+	
+		
+		
+		
+		
+
+		</div>
+	</div>
+
+	
+	<div class="c-card__content card-grid__content">
+		
+		
+					
+<h3
+		class="c-card__title card-grid__title h3"
+		>
+
+	Undergraduate Programs
+
+</h3>
+		
+		
+				
+
+		
+	</div>
+
+			</a>
+	
+</div>
+
+				</div>
+							<div class="g-col card-grid__card-margin">
+					 
+<div class="c-card card-grid__card">
+
+			<a class="card-grid__link" href="https://cs.ics.uci.edu/graduate-computer-science-programs/" aria-label=''>
+	
+			
+<div class="card-grid__image-container">
+		<div  role="img" aria-label="Computer Science Ph.D. hooding" data-expand="200"   data-sizes="(min-width: 1260px) 1260px, 100vw" data-bgset="https://cs.ics.uci.edu/wp-content/uploads/sites/2/2023/10/cs-grad-phd-hooding-696x464.jpg 696w 464h, 
+https://cs.ics.uci.edu/wp-content/uploads/sites/2/2023/10/cs-grad-phd-hooding-320x213.jpg 320w 213h, 
+https://cs.ics.uci.edu/wp-content/uploads/sites/2/2023/10/cs-grad-phd-hooding-448x300.jpg 448w 300h, 
+https://cs.ics.uci.edu/wp-content/uploads/sites/2/2023/10/cs-grad-phd-hooding-1044x696.jpg 1044w 696h" style="background-image:url('https://cs.ics.uci.edu/wp-content/themes/core/img/theme/shims/3x2.png');"  class="card-grid__image lazyload">
+	
+		
+		
+		
+		
+
+		</div>
+	</div>
+
+	
+	<div class="c-card__content card-grid__content">
+		
+		
+					
+<h3
+		class="c-card__title card-grid__title h3"
+		>
+
+	Graduate Programs
+
+</h3>
+		
+		
+				
+
+		
+	</div>
+
+			</a>
+	
+</div>
+
+				</div>
+							<div class="g-col card-grid__card-margin">
+					 
+<div class="c-card card-grid__card">
+
+			<a class="card-grid__link" href="https://ics.uci.edu/academic-recruitment/" aria-label=''>
+	
+			
+<div class="card-grid__image-container">
+		<div  role="img" aria-label="Professor at whiteboard" data-expand="200"   data-sizes="(min-width: 1260px) 1260px, 100vw" data-bgset="https://cs.ics.uci.edu/wp-content/uploads/sites/2/2023/10/p-smyth-whiteboard-676x464.jpg 676w 464h, 
+https://cs.ics.uci.edu/wp-content/uploads/sites/2/2023/10/p-smyth-whiteboard-320x213.jpg 320w 213h, 
+https://cs.ics.uci.edu/wp-content/uploads/sites/2/2023/10/p-smyth-whiteboard-448x300.jpg 448w 300h" style="background-image:url('https://cs.ics.uci.edu/wp-content/themes/core/img/theme/shims/3x2.png');"  class="card-grid__image lazyload">
+	
+		
+		
+		
+		
+
+		</div>
+	</div>
+
+	
+	<div class="c-card__content card-grid__content">
+		
+		
+					
+<h3
+		class="c-card__title card-grid__title h3"
+		>
+
+	Faculty Recruiting
+
+</h3>
+		
+		
+				
+
+		
+	</div>
+
+			</a>
+	
+</div>
+
+				</div>
+			
+		</div>
+	</div>
+
+
+				
+			</div>
+	
+			</section>
+	
+
+
+		
+
+			<section  class="panel s-wrapper site-panel site-panel--newsfeed u-bc-white "
+				 data-index="2"
+				 data-js="panel"
+				 data-type="newsfeed"
+				 data-modular-content>
+	
+			<div class="l-container">
+	
+	
+			<header class="panel-postloop__header s-header">
+
+							
+			
+							
+<h2
+		class="site-panel__title s-title h1"
+		>
+
+	News & Updates
+
+</h2>
+			
+							
+			
+		</header>
+	
+
+	
+	<div class="panel-postloop__content s-content">
+
+		
+		<div class="panel-postloop__items item-loop">
+							<article class="item item--post item--has-image" aria-labelledby='p-66e2263a91b84'>
+	<div class="item__inner">
+
+		
+<a class=" item__link"
+				href="https://ics.uci.edu/2024/09/03/uci-team-collaborates-on-15m-grant-to-secure-cyber-physical-systems/"
+			>
+			<span class="c-btn__text" >View UCI Team Collaborates on $15M Grant to Secure Cyber-Physical Systems</span>
+	</a>
+
+
+		<div class="item__content">
+
+							<div class="item__category">
+					
+<a class=" c-text-btn"
+				href="https://ics.uci.edu/category/article/"
+			>
+			<span class="c-btn__text" >News</span>
+	</a>
+
+				</div>
+			
+			
+<h3
+		class="item__title h4"
+			id='p-66e2263a91b84'
+	>
+
+	<span>UCI Team Collaborates on $15M Grant to Secure Cyber-Physical Systems</span>
+
+</h3>
+
+			
+<time
+			class="item__date"
+    	        datetime='2024-09-03T09:30:00-07:00'
+    >
+September 3, 2024
+</time>
+
+
+		</div>
+
+		
+<div class="item__image-wrap">
+		<div  role="img" aria-label="Six researchers standing behind a table with a large drone." data-expand="200"   data-sizes="(min-width: 1260px) 1260px, 100vw" data-bgset="https://cs.ics.uci.edu/wp-content/uploads/2024/09/Chen_DARPAgroup-100x100.jpg 100w 100h, 
+https://cs.ics.uci.edu/wp-content/uploads/2024/09/Chen_DARPAgroup-180x180.jpg 180w 180h, 
+https://cs.ics.uci.edu/wp-content/uploads/2024/09/Chen_DARPAgroup-360x360.jpg 360w 360h" style="background-image:url('https://cs.ics.uci.edu/wp-content/themes/core/img/theme/shims/1x1.png');"  class="item__image lazyload">
+	
+		
+		
+		
+		
+
+		</div>
+	</div>
+
+
+	</div>
+</article>
+
+							<article class="item item--post item--has-image" aria-labelledby='p-66e2263a930d1'>
+	<div class="item__inner">
+
+		
+<a class=" item__link"
+				href="https://ics.uci.edu/2024/08/29/a-time-to-reconnect-network-information-systems-group-reunion/"
+			>
+			<span class="c-btn__text" >View A Time to Reconnect &#038; Network: Information Systems Group Reunion</span>
+	</a>
+
+
+		<div class="item__content">
+
+							<div class="item__category">
+					
+<a class=" c-text-btn"
+				href="https://ics.uci.edu/category/article/"
+			>
+			<span class="c-btn__text" >News</span>
+	</a>
+
+				</div>
+			
+			
+<h3
+		class="item__title h4"
+			id='p-66e2263a930d1'
+	>
+
+	<span>A Time to Reconnect &#038; Network: Information Systems Group Reunion</span>
+
+</h3>
+
+			
+<time
+			class="item__date"
+    	        datetime='2024-08-29T09:10:40-07:00'
+    >
+August 29, 2024
+</time>
+
+
+		</div>
+
+		
+<div class="item__image-wrap">
+		<div  role="img" aria-label="Slideshow TV Graphics #2 &#8211; 4" data-expand="200"   data-sizes="(min-width: 1260px) 1260px, 100vw" data-bgset="https://cs.ics.uci.edu/wp-content/uploads/2024/08/story_sept2024_ISG-100x100.jpg 100w 100h, 
+https://cs.ics.uci.edu/wp-content/uploads/2024/08/story_sept2024_ISG-180x180.jpg 180w 180h, 
+https://cs.ics.uci.edu/wp-content/uploads/2024/08/story_sept2024_ISG-360x360.jpg 360w 360h" style="background-image:url('https://cs.ics.uci.edu/wp-content/themes/core/img/theme/shims/1x1.png');"  class="item__image lazyload">
+	
+		
+		
+		
+		
+
+		</div>
+	</div>
+
+
+	</div>
+</article>
+
+							<article class="item item--post item--has-image" aria-labelledby='p-66e2263a940f4'>
+	<div class="item__inner">
+
+		
+<a class=" item__link"
+				href="https://ics.uci.edu/2024/08/19/in-memoriam-fred-tonge-professor-emeritus-and-founding-member-of-ics/"
+			>
+			<span class="c-btn__text" >View In Memoriam: Fred Tonge, Professor Emeritus and Founding Member of ICS</span>
+	</a>
+
+
+		<div class="item__content">
+
+							<div class="item__category">
+					
+<a class=" c-text-btn"
+				href="https://ics.uci.edu/category/article/"
+			>
+			<span class="c-btn__text" >News</span>
+	</a>
+
+				</div>
+			
+			
+<h3
+		class="item__title h4"
+			id='p-66e2263a940f4'
+	>
+
+	<span>In Memoriam: Fred Tonge, Professor Emeritus and Founding Member of ICS</span>
+
+</h3>
+
+			
+<time
+			class="item__date"
+    	        datetime='2024-08-19T09:17:51-07:00'
+    >
+August 19, 2024
+</time>
+
+
+		</div>
+
+		
+<div class="item__image-wrap">
+		<div  role="img" aria-label="Fred Tonge headshot" data-expand="200"   data-sizes="(min-width: 1260px) 1260px, 100vw" data-bgset="https://cs.ics.uci.edu/wp-content/uploads/2024/08/FredTonge-100x100.jpg 100w 100h, 
+https://cs.ics.uci.edu/wp-content/uploads/2024/08/FredTonge-180x180.jpg 180w 180h, 
+https://cs.ics.uci.edu/wp-content/uploads/2024/08/FredTonge-360x360.jpg 360w 360h" style="background-image:url('https://cs.ics.uci.edu/wp-content/themes/core/img/theme/shims/1x1.png');"  class="item__image lazyload">
+	
+		
+		
+		
+		
+
+		</div>
+	</div>
+
+
+	</div>
+</article>
+
+							<article class="item item--post item--has-image" aria-labelledby='p-66e2263a9591f'>
+	<div class="item__inner">
+
+		
+<a class=" item__link"
+				href="https://ics.uci.edu/2024/08/08/data-science-students-win-american-statistical-association-award/"
+			>
+			<span class="c-btn__text" >View Data Science Students Win American Statistical Association Award</span>
+	</a>
+
+
+		<div class="item__content">
+
+							<div class="item__category">
+					
+<a class=" c-text-btn"
+				href="https://ics.uci.edu/category/article/awards/"
+			>
+			<span class="c-btn__text" >Awards &amp; Honors</span>
+	</a>
+
+				</div>
+			
+			
+<h3
+		class="item__title h4"
+			id='p-66e2263a9591f'
+	>
+
+	<span>Data Science Students Win American Statistical Association Award</span>
+
+</h3>
+
+			
+<time
+			class="item__date"
+    	        datetime='2024-08-08T08:27:46-07:00'
+    >
+August 8, 2024
+</time>
+
+
+		</div>
+
+		
+<div class="item__image-wrap">
+		<div  role="img" aria-label="William Hou and Ashley Yung headshots" data-expand="200"   data-sizes="(min-width: 1260px) 1260px, 100vw" data-bgset="https://cs.ics.uci.edu/wp-content/uploads/2024/08/ASA_HouYung-FeatureSq-100x100.png 100w 100h, 
+https://cs.ics.uci.edu/wp-content/uploads/2024/08/ASA_HouYung-FeatureSq-180x180.png 180w 180h" style="background-image:url('https://cs.ics.uci.edu/wp-content/themes/core/img/theme/shims/1x1.png');"  class="item__image lazyload">
+	
+		
+		
+		
+		
+
+		</div>
+	</div>
+
+
+	</div>
+</article>
+
+							<article class="item item--post item--has-image" aria-labelledby='p-66e2263a96a83'>
+	<div class="item__inner">
+
+		
+<a class=" item__link"
+				href="https://ics.uci.edu/2024/08/07/how-ai-is-impacting-the-medical-imaging-field-spectrum-news-1/"
+			>
+			<span class="c-btn__text" >View How AI is impacting the medical imaging field (Spectrum News 1)</span>
+	</a>
+
+
+		<div class="item__content">
+
+							<div class="item__category">
+					
+<a class=" c-text-btn"
+				href="https://ics.uci.edu/category/article/highlight/"
+			>
+			<span class="c-btn__text" >Highlight</span>
+	</a>
+
+				</div>
+			
+			
+<h3
+		class="item__title h4"
+			id='p-66e2263a96a83'
+	>
+
+	<span>How AI is impacting the medical imaging field (Spectrum News 1)</span>
+
+</h3>
+
+			
+<time
+			class="item__date"
+    	        datetime='2024-08-07T08:26:49-07:00'
+    >
+August 7, 2024
+</time>
+
+
+		</div>
+
+		
+<div class="item__image-wrap">
+		<div  role="img" aria-label="Spectrum News 1 logo" data-expand="200"   data-sizes="(min-width: 1260px) 1260px, 100vw" data-bgset="https://cs.ics.uci.edu/wp-content/uploads/2024/08/SpectrumNews1-100x100.jpg 100w 100h, 
+https://cs.ics.uci.edu/wp-content/uploads/2024/08/SpectrumNews1-180x180.jpg 180w 180h, 
+https://cs.ics.uci.edu/wp-content/uploads/2024/08/SpectrumNews1-360x360.jpg 360w 360h" style="background-image:url('https://cs.ics.uci.edu/wp-content/themes/core/img/theme/shims/1x1.png');"  class="item__image lazyload">
+	
+		
+		
+		
+		
+
+		</div>
+	</div>
+
+
+	</div>
+</article>
+
+							<article class="item item--post item--has-image" aria-labelledby='p-66e2263a9798d'>
+	<div class="item__inner">
+
+		
+<a class=" item__link"
+				href="https://ics.uci.edu/2024/08/07/attacks-on-bytecode-interpreters-conceal-malicious-injection-activity-dark-reading/"
+			>
+			<span class="c-btn__text" >View Attacks on Bytecode Interpreters Conceal Malicious Injection Activity (Dark Reading)</span>
+	</a>
+
+
+		<div class="item__content">
+
+							<div class="item__category">
+					
+<a class=" c-text-btn"
+				href="https://ics.uci.edu/category/article/highlight/"
+			>
+			<span class="c-btn__text" >Highlight</span>
+	</a>
+
+				</div>
+			
+			
+<h3
+		class="item__title h4"
+			id='p-66e2263a9798d'
+	>
+
+	<span>Attacks on Bytecode Interpreters Conceal Malicious Injection Activity (Dark Reading)</span>
+
+</h3>
+
+			
+<time
+			class="item__date"
+    	        datetime='2024-08-07T08:25:39-07:00'
+    >
+August 7, 2024
+</time>
+
+
+		</div>
+
+		
+<div class="item__image-wrap">
+		<div  role="img" aria-label="Dark Reading logo" data-expand="200"   data-sizes="(min-width: 1260px) 1260px, 100vw" data-bgset="https://cs.ics.uci.edu/wp-content/uploads/2024/08/DarkReading-100x100.jpg 100w 100h, 
+https://cs.ics.uci.edu/wp-content/uploads/2024/08/DarkReading-180x180.jpg 180w 180h, 
+https://cs.ics.uci.edu/wp-content/uploads/2024/08/DarkReading-360x360.jpg 360w 360h" style="background-image:url('https://cs.ics.uci.edu/wp-content/themes/core/img/theme/shims/1x1.png');"  class="item__image lazyload">
+	
+		
+		
+		
+		
+
+		</div>
+	</div>
+
+
+	</div>
+</article>
+
+			
+					</div>
+
+	</div>
+
+			<footer class="panel-postloop__footer s-footer">
+			<p class="s-cta__wrap">
+<a class=" s-cta c-text-btn "
+				href="https://ics.uci.edu/happening/news/"
+			target="_blank"
+		rel='noopener'>
+			<span class="c-btn__text" >Read more news</span>
+	</a>
+</p>
+		</footer>
+	
+
+				
+			</div>
+	
+			</section>
+	
+
+
+		
+
+			<section  class="panel s-wrapper site-panel site-panel--events u-bc-grey-extra-light "
+				 data-index="3"
+				 data-js="panel"
+				 data-type="events"
+				 data-modular-content>
+	
+	
+	
+			<div class="l-container">
+			<header class="s-header">
+									
+				
+									
+<h2
+		class="site-panel__title s-title h1"
+		>
+
+	Events & Seminars
+
+</h2>
+				
+									
+				
+			</header>
+		</div>
+	
+
+	
+	
+<div class="c-slider">
+
+	<div class="c-slider__inner">
+		<div class="c-slider__main swiper-container c-slider__main--has-arrows events-panel__carousel-main" data-js='c-slider' data-swiper-options='{&quot;spaceBetween&quot;:48,&quot;slidesPerView&quot;:&quot;auto&quot;,&quot;freeMode&quot;:true,&quot;freeModeSticky&quot;:true,&quot;watchSlidesVisibility&quot;:true,&quot;speed&quot;:500}'>
+
+			<div class="c-slider__wrapper swiper-wrapper events-panel__wrapper">
+							</div>
+
+		</div>
+	</div>
+
+			<div class="events-panel__footer l-container">
+				<div class="c-slider__arrows events-panel__carousel-arrows-container">
+					<div class="c-slider__button c-slider__button--prev swiper-button swiper-button-prev "></div>
+					<div class="c-slider__button c-slider__button--next swiper-button swiper-button-next "></div>
+				</div>
+				<p class="s-cta__wrap">
+<a class=" s-cta c-text-btn "
+				href="https://ics.uci.edu/events/list/?tribe__ecp_custom_46%5B0%5D=Computer+Science"
+			target="_blank"
+		rel='noopener'>
+			<span class="c-btn__text" >See all events</span>
+	</a>
+</p>
+			</div>
+	
+	
+	
+</div>
+ 
+
+
+				
+	
+			</section>
+	
+
+</div>
+
+		
+	
+
+</main>
+
+	
+		<footer class="site-footer">
+	<div class="site-footer__container l-container">
+
+		<div class="site-footer__content">
+			
+<div >
+		<figure   class="site-footer__logo lazyload">
+	
+				<a href="https://ics.uci.edu/" target="_self" title="" class=""  >
+		
+				<img class=" lazyload"  alt="logo-white" data-expand="200" data-parent-fit="width" data-src="https://cs.ics.uci.edu/wp-content/uploads/sites/2/2023/10/logo-white.svg" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" />
+		
+				</a>
+		
+		
+
+		</figure>
+	</div>
+
+			
+<div
+			class="site-footer__address"
+    	>
+<p><a target="_blank" href="https://goo.gl/maps/xhK6rgUsdX2Xi7Cm7">6210 Donald Bren Hall<br />
+Irvine, CA 92697-3425</a></p>
+
+</div>
+
+			
+<div
+			class="site-footer__phone"
+    	>
+<p><a href="tel:1-949-824-7427">(949) 824-7427</a></p>
+
+</div>
+
+		</div>
+
+		<nav class="social-follow" aria-label="Social Media">
+
+	<ul class="social-follow__list">
+					<li class="social-follow__item social-follow__item--facebook">
+				<a href="http://facebook.com/UCIBrenICS" class="social-follow__anchor" rel="me noopener"
+				   title="Like us on Facebook" target="_blank">
+					<i class="icon icon-facebook"></i>
+					<span class="a11y-visual-hide">Like us on Facebook</span>
+				</a>
+			</li>
+					<li class="social-follow__item social-follow__item--twitter">
+				<a href="http://twitter.com/UCIbrenICS" class="social-follow__anchor" rel="me noopener"
+				   title="Follow us on Twitter" target="_blank">
+					<i class="icon icon-twitter"></i>
+					<span class="a11y-visual-hide">Follow us on Twitter</span>
+				</a>
+			</li>
+					<li class="social-follow__item social-follow__item--youtube">
+				<a href="http://youtube.com/UCIBrenICS" class="social-follow__anchor" rel="me noopener"
+				   title="Follow us on YouTube" target="_blank">
+					<i class="icon icon-youtube"></i>
+					<span class="a11y-visual-hide">Follow us on YouTube</span>
+				</a>
+			</li>
+					<li class="social-follow__item social-follow__item--linkedin">
+				<a href="https://www.linkedin.com/company/uc-irvine-information-and-computer-sciences" class="social-follow__anchor" rel="me noopener"
+				   title="Add us on LinkedIn" target="_blank">
+					<i class="icon icon-linkedin"></i>
+					<span class="a11y-visual-hide">Add us on LinkedIn</span>
+				</a>
+			</li>
+					<li class="social-follow__item social-follow__item--instagram">
+				<a href="http://instagram.com/ucibrenics/" class="social-follow__anchor" rel="me noopener"
+				   title="Follow us on Instagram" target="_blank">
+					<i class="icon icon-instagram"></i>
+					<span class="a11y-visual-hide">Follow us on Instagram</span>
+				</a>
+			</li>
+		
+	</ul>
+
+</nav>
+
+
+		
+	<nav class="site-footer__nav" aria-labelledby="site-footer__nav-label">
+
+		<h2 id="site-footer__nav-label" class="a11y-visual-hide">Footer Navigation</h2>
+
+		<ol class="site-footer__nav-list">
+			<li class="footer__list-item footer__list-item--depth-0"><a href="https://ics.uci.edu/people/" class="footer__action footer__action--depth-0">Directory</a></li><li class="footer__list-item footer__list-item--depth-0"><a href="https://ics.uci.edu/faculty-staff-resources/" class="footer__action footer__action--depth-0">Faculty &#038; Staff Resources</a></li><li class="footer__list-item footer__list-item--depth-0"><a href="https://ics.uci.edu/faculty-staff-positions/" class="footer__action footer__action--depth-0">Faculty Positions</a></li><li class="footer__list-item footer__list-item--depth-0"><a href="https://em.uci.edu/" class="footer__action footer__action--depth-0">Emergency Preparedness</a></li><li class="footer__list-item footer__list-item--depth-0"><a href="https://ics.uci.edu/accessibility-statement/" class="footer__action footer__action--depth-0">Accessibility</a></li><li class="footer__list-item footer__list-item--depth-0"><a href="https://uci.edu/privacy/index.php" class="footer__action footer__action--depth-0">Privacy Policy</a></li><li class="footer__list-item footer__list-item--depth-0"><a href="https://www.uci.edu/" class="footer__action footer__action--depth-0">UCI Home</a></li><li class="footer__list-item footer__list-item--depth-0"><a href="https://directory.uci.edu/" class="footer__action footer__action--depth-0">UCI Directory</a></li><li class="footer__list-item footer__list-item--depth-0"><a href="https://uci.edu/visit/maps.php" class="footer__action footer__action--depth-0">Campus Maps</a></li>
+		</ol>
+
+	</nav>
+
+
+
+		
+<p
+			class="site-footer__copyright"
+    	>
+© 2024 All Rights Reserved. UCI Donald Bren School of Information &amp; Computer Sciences
+</p>
+
+
+	</div>
+</footer>
+
+
+	</div><!-- .l-wrapper -->
+
+	<div class="overlay"></div>
+
+			<script>window.Promise ||
+			document.write('<script src="https://cs.ics.uci.edu/wp-content/themes/core/js/vendor/es6-promise.auto.js"><\/script>');
+		</script>
+				<script>
+		( function ( body ) {
+			'use strict';
+			body.className = body.className.replace( /\btribe-no-js\b/, 'tribe-js' );
+		} )( document.body );
+		</script>
+		<script> /* <![CDATA[ */var tribe_l10n_datatables = {"aria":{"sort_ascending":": activate to sort column ascending","sort_descending":": activate to sort column descending"},"length_menu":"Show _MENU_ entries","empty_table":"No data available in table","info":"Showing _START_ to _END_ of _TOTAL_ entries","info_empty":"Showing 0 to 0 of 0 entries","info_filtered":"(filtered from _MAX_ total entries)","zero_records":"No matching records found","search":"Search:","all_selected_text":"All items on this page were selected. ","select_all_link":"Select all pages","clear_selection":"Clear Selection.","pagination":{"all":"All","next":"Next","previous":"Previous"},"select":{"rows":{"0":"","_":": Selected %d rows","1":": Selected 1 row"}},"datepicker":{"dayNames":["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"],"dayNamesShort":["Sun","Mon","Tue","Wed","Thu","Fri","Sat"],"dayNamesMin":["S","M","T","W","T","F","S"],"monthNames":["January","February","March","April","May","June","July","August","September","October","November","December"],"monthNamesShort":["January","February","March","April","May","June","July","August","September","October","November","December"],"monthNamesMin":["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"],"nextText":"Next","prevText":"Prev","currentText":"Today","closeText":"Done","today":"Today","clear":"Clear"}};/* ]]> */ </script><script type="text/javascript" src="https://cs.ics.uci.edu/wp-content/themes/core/js/dist/vendor.min.js?ver=6.6.1" id="core-webpack-vendors-js"></script>
+<script type="text/javascript" id="core-theme-scripts-js-extra">
+/* <![CDATA[ */
+var modern_tribe_i18n = {"tooltips":{"clipboard":{"copySuccess":"Copied!","copyError":"Press Ctrl+C to copy."}},"search":{"noResultsTitle":"No Results","noResultsContent":"Sorry, but no results match your search term. Please try a different term or use the navigational menu to find your way through the site.","resultCount":"Results %start% - %end% of about %total% for &ldquo;%term%&rdquo;","resultCountPlural":"Page %pageNum% of about %totalResults% results","resultCountSingular":"Page %pageNum% of %totalResults% result","searchQueryTime":"(%s seconds)","resultFileFormat":"File format:","viewPage":"View page","prevPage":"Previous page","nextPage":"Next page","sortByLabel":"Sort By:","sortRelevanceLabel":"Relevance","sortDateLabel":"Most Recent"}};
+var modern_tribe_config = {"images_url":"https:\/\/cs.ics.uci.edu\/wp-content\/themes\/core\/img\/theme","template_url":"https:\/\/cs.ics.uci.edu\/wp-content\/themes\/core\/","hmr_dev":"","posts_per_page":"12","google_cse_id":"016332633028603907396:shc2v8gmm7g","google_api_key":"AIzaSyC4UjKjb3BRs9UxkroB8hmqKgYXxpi8Wag"};
+/* ]]> */
+</script>
+<script type="text/javascript" src="https://cs.ics.uci.edu/wp-content/themes/core/js/dist/scripts.min.js?ver=6.6.1" id="core-theme-scripts-js"></script>
+<script type="text/javascript" src="https://cs.ics.uci.edu/wp-content/plugins/3d-flipbook-dflip-lite/assets/js/dflip.min.js?ver=2.2.32" id="dflip-script-js"></script>
+<script type="text/javascript" id="wpfront-scroll-top-js-extra">
+/* <![CDATA[ */
+var wpfront_scroll_top_data = {"data":{"css":"#wpfront-scroll-top-container{display:none;position:fixed;cursor:pointer;z-index:9999;opacity:0}#wpfront-scroll-top-container div.text-holder{padding:3px 10px;border-radius:3px;-webkit-border-radius:3px;-webkit-box-shadow:4px 4px 5px 0 rgba(50,50,50,.5);-moz-box-shadow:4px 4px 5px 0 rgba(50,50,50,.5);box-shadow:4px 4px 5px 0 rgba(50,50,50,.5)}#wpfront-scroll-top-container a{outline-style:none;box-shadow:none;text-decoration:none}#wpfront-scroll-top-container {right: 10px;bottom: 10px;}        #wpfront-scroll-top-container img {\n            width: 45px;\n            height: 45px;\n        }\n        ","html":"<div id=\"wpfront-scroll-top-container\"><img src=\"https:\/\/ics.uci.edu\/wp-content\/uploads\/2022\/11\/back-to-top-75x75-1.png\" alt=\"\" title=\"\" \/><\/div>","data":{"hide_iframe":false,"button_fade_duration":200,"auto_hide":false,"auto_hide_after":2,"scroll_offset":100,"button_opacity":0.7,"button_action":"top","button_action_element_selector":"","button_action_container_selector":"html, body","button_action_element_offset":0,"scroll_duration":400}}};
+/* ]]> */
+</script>
+<script type="text/javascript" src="https://cs.ics.uci.edu/wp-content/plugins/wpfront-scroll-top/js/wpfront-scroll-top.min.js?ver=2.2.10081" id="wpfront-scroll-top-js"></script>
+<script data-cfasync="false"> var dFlipLocation = "https://cs.ics.uci.edu/wp-content/plugins/3d-flipbook-dflip-lite/assets/"; var dFlipWPGlobal = {"text":{"toggleSound":"Turn on\/off Sound","toggleThumbnails":"Toggle Thumbnails","toggleOutline":"Toggle Outline\/Bookmark","previousPage":"Previous Page","nextPage":"Next Page","toggleFullscreen":"Toggle Fullscreen","zoomIn":"Zoom In","zoomOut":"Zoom Out","toggleHelp":"Toggle Help","singlePageMode":"Single Page Mode","doublePageMode":"Double Page Mode","downloadPDFFile":"Download PDF File","gotoFirstPage":"Goto First Page","gotoLastPage":"Goto Last Page","share":"Share","mailSubject":"I wanted you to see this FlipBook","mailBody":"Check out this site {{url}}","loading":"DearFlip: Loading "},"moreControls":"download,pageMode,startPage,endPage,sound","hideControls":"","scrollWheel":"false","backgroundColor":"#777","backgroundImage":"","height":"auto","paddingLeft":"20","paddingRight":"20","controlsPosition":"bottom","duration":800,"soundEnable":"true","enableDownload":"true","showSearchControl":"false","showPrintControl":"false","enableAnnotation":false,"enableAnalytics":"false","webgl":"true","hard":"none","maxTextureSize":"1600","rangeChunkSize":"524288","zoomRatio":1.5,"stiffness":3,"pageMode":"0","singlePageMode":"0","pageSize":"0","autoPlay":"false","autoPlayDuration":5000,"autoPlayStart":"false","linkTarget":"2","sharePrefix":"flipbook-"};</script>
+
+</body>
+</html>
+
