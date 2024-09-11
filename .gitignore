@@ -1,3 +1,12 @@
+.vscode/settings.json
+__pycache__
+DEV/
+indices/
+partial_indices/
+temp.txt
+query_results.txt
+test.py
+query_results.txt
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]

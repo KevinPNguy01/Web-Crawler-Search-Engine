@@ -1,0 +1,42 @@
+***** QUERIES TESTED WITH *****
+master of software engineering
+master of software engineering uc irvine
+university of california irvine computer science ranking
+thornton@ics.uci.edu
+cristina lopes
+tyler
+computer science internships at uci
+computer science internships at
+computer!
+march 21 2018
+data structure and algorithms course
+machine learning
+ACM
+zip file
+0
+0 shindler
+tropical fish
+introduction to programming
+a machine
+document
+collection
+
+
+Initially, queries that were longer, such as "master of software engineering" or 
+"university of california irvine computer science ranking," took a significant amount
+of time to process because of two factors: how we processed the tokens and how we accessed
+the information.
+
+For each token in the query, our program finds all the postings related to that token. 
+However, since our index was stored in one entire file, this made it inefficient.
+
+
+To improve on this, we've implemented an index_of_index which maps tokens to the file position, 
+significantly increasing our performance.
+
+
+Furthermore, another issue we dealt with was certain queries where some of the postings we received 
+were large in size compared to other web pages. With how our program worked, after the query was
+dispatched and we found the related webpage, we would have to open up the webpage for the title,
+URL, and text summary, slowing down performance. To combat this, we've stored the URL, title, and 
+file path in the crawled.txt file for a more efficient process during runtime.
