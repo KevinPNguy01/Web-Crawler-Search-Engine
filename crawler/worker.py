@@ -89,10 +89,9 @@ class Worker(Thread):
             resp = None
             self.logger.error(f"Error Downloading {tbd_url}: {e}")
             return
-        
         if self.should_scrape(resp):
             # Add the scraped urls to the frontier.
-            for scraped_url in scraper.scraper(tbd_url, resp):                
+            for scraped_url in scraper.scraper(resp, self.config):                
                 self.frontier.add_url(scraped_url)
         
             # Tokenize the page content and get their frequencies.

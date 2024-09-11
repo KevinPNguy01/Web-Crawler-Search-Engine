@@ -2,15 +2,16 @@ from urllib.parse import urlparse, urldefrag, urljoin, parse_qs, unquote
 from utils.response import Response
 from bs4 import BeautifulSoup
 from typing import List
+from utils.config import Config
 
 import re
 
-def scraper(url: str, resp: Response) -> List[str]:
+def scraper(resp: Response, config: Config) -> List[str]:
     # Returns a list of links found inside the given url that are valid to crawl.
-    links = extract_next_links(url, resp)
-    return [link for link in links if is_valid(link)]
+    links = extract_next_links(resp)
+    return [link for link in links if is_valid(link, config)]
 
-def extract_next_links(url: str, resp: Response) -> List[str]:
+def extract_next_links(resp: Response) -> List[str]:
     # Implementation required.
     # url: the URL that was used to get the page
     # resp.url: the actual url of the page
@@ -30,14 +31,11 @@ def is_valid_scheme(scheme: str) -> bool:
     
     return scheme in {"http", "https"}
 
-def is_valid_domain(domain: str) -> bool:
+def is_valid_domain(domain: str, root_domains: List[str]) -> bool:
     # Returns whether the given domain is valid to crawl.
     
-    if domain == "gitlab.ics.uci.edu":
-        return False
-    
     # It must end with one of four valid domains.
-    return any([domain.endswith(valid_domain) for valid_domain in (".target.com",)])
+    return any([domain.endswith(valid_domain) for valid_domain in root_domains])
 
 def is_valid_path(path: str) -> bool:
     # Returns whether the given path is valid to crawl.
@@ -78,13 +76,13 @@ def is_valid_query(query: str) -> bool:
             return False
     return True
 
-def is_valid(url: str) -> bool:
+def is_valid(url: str, config: Config) -> bool:
     # Returns whether the given url is valid to crawl.
     
     parsed_url = urlparse(url)
     return all((
         is_valid_scheme(parsed_url.scheme),
-        is_valid_domain(parsed_url.netloc),
+        is_valid_domain(parsed_url.netloc, config.root_domains),
         is_valid_path(parsed_url.path),
         is_valid_query(parsed_url.query)
     ))
