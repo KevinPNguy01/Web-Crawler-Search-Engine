@@ -1,13 +1,14 @@
 from pathlib import Path
 from bs4 import BeautifulSoup
 import msgspec
-import lxml
 from typing import List
 import re
 from openai import OpenAI
-import time
+from dotenv import load_dotenv
+import os
 
-OPENAI_AI_KEY = ""
+load_dotenv()
+OPENAI_AI_KEY = os.getenv("API_KEY")
 CLIENT = OpenAI(api_key=OPENAI_AI_KEY)
 
 class WebPage(msgspec.Struct, gc=False):
