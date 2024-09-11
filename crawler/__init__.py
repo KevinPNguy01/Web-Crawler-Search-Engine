@@ -23,9 +23,13 @@ class Crawler(object):
     def start(self):
         try:
             self.start_async()
+            # Crawler will stop when the queue of urls has been empty for 5 seconds.
             time.sleep(5)
+            while not self.frontier.to_be_downloaded.empty():
+                time.sleep(5)
             self.join()
         except KeyboardInterrupt:
+            print("Keyboard Interrupt caught, stopping crawler...")
             self.frontier.is_running = False
             self.join()
 

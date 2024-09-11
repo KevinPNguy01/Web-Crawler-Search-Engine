@@ -1,6 +1,5 @@
 from threading import Thread, Lock
 from inspect import getsource
-from utils.download import download, download2
 from utils import get_logger
 from bs4 import BeautifulSoup
 from crawler.tokenizer import *
@@ -8,7 +7,7 @@ from crawler.frontier import Frontier
 from utils.config import Config
 from urllib.robotparser import RobotFileParser
 from urllib.parse import urlparse, ParseResult
-from utils.download import download, download2
+from utils.download import download
 from datetime import datetime
 from typing import Dict
 from utils.response import Response
@@ -83,9 +82,9 @@ class Worker(Thread):
         
         # Try to download the url, setting the response to None if an exception was caught.
         try:
-            resp = download(tbd_url, self.config, self.logger)
-            self.logger.info(f"Downloaded {tbd_url}, status <{resp.status}>, using cache {self.config.cache_server}.")
-            #self.save_page(resp, tbd_url)
+            resp = download(tbd_url)
+            self.logger.info(f"Downloaded {tbd_url}, status <{resp.status}>.")
+            self.save_page(resp)
         except Exception as e:
             resp = None
             self.logger.error(f"Error Downloading {tbd_url}: {e}")

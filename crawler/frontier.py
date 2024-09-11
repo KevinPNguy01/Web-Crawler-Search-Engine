@@ -74,7 +74,7 @@ class Frontier(object):
         try:
             # Update the last crawled time.
             self.last_crawls[url.netloc] = datetime.now()
-            response = download(robot_url, self.config, self.logger)
+            response = download(robot_url)
             robot.parse(response.raw_response.content.decode().splitlines())
             self.logger.info(f"Downloaded {robot_url}.")
             return robot

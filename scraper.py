@@ -7,7 +7,6 @@ import re
 
 def scraper(url: str, resp: Response) -> List[str]:
     # Returns a list of links found inside the given url that are valid to crawl.
-    
     links = extract_next_links(url, resp)
     return [link for link in links if is_valid(link)]
 
@@ -38,7 +37,7 @@ def is_valid_domain(domain: str) -> bool:
         return False
     
     # It must end with one of four valid domains.
-    return any([domain.endswith(valid_domain) for valid_domain in (".stat.uci.edu", ".informatics.uci.edu", ".cs.uci.edu", ".ics.uci.edu")])
+    return any([domain.endswith(valid_domain) for valid_domain in (".target.com",)])
 
 def is_valid_path(path: str) -> bool:
     # Returns whether the given path is valid to crawl.
