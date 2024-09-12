@@ -1,3 +1,4 @@
+from typing import List
 from web_crawler.crawler.frontier import Frontier
 from web_crawler.crawler.worker import Worker
 from web_crawler.utils.config import Config
@@ -6,17 +7,18 @@ import time
 import json
 
 class Crawler(object):
-    def __init__(self, config: Config, restart, frontier_factory=Frontier, worker_factory=Worker):
+    def __init__(self, config: Config, restart, num_workers=1):
         self.config = config
         self.logger = get_logger("CRAWLER")
-        self.frontier = frontier_factory(config, restart)
-        self.workers = list()
-        self.worker_factory = worker_factory
+        self.frontier = Frontier(config, restart)
+        self.workers: List[Worker] = list()
+        self.num_workers = max(1, min(100, num_workers))
 
     def start_async(self):
         self.workers = [
-            self.worker_factory(worker_id, self.config, self.frontier)
-            for worker_id in range(self.config.threads_count)]
+            Worker(worker_id, self.config, self.frontier)
+            for worker_id in range(self.num_workers)
+        ]
         for worker in self.workers:
             worker.start()
 

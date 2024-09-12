@@ -33,7 +33,7 @@ class Worker(Thread):
         domain = parsed_url.netloc
 
         # Create directory structure based on domain and path.
-        directory = os.path.join(str(self.config.download_path), domain)
+        directory = os.path.join(str("pages"), domain)
         os.makedirs(directory, exist_ok=True)
 
         # Generate filename from the url's hash.

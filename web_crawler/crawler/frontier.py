@@ -31,13 +31,13 @@ class Frontier(object):
                                 
         if restart:
             self.logger.info(f"Restarting from seed urls.")
-            if os.path.exists(self.config.download_path):
-                shutil.rmtree(self.config.download_path)
+            if os.path.exists("pages"):
+                shutil.rmtree("pages")
             for url in self.config.seed_urls:
                 self.add_url(url)
         else:
             self._parse_save_file()
-        Path(self.config.download_path).mkdir(exist_ok=True)
+        Path("pages").mkdir(exist_ok=True)
 
     def _parse_save_file(self):
         try:
