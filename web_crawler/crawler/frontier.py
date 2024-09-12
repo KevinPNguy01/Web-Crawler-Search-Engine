@@ -8,6 +8,9 @@ from datetime import datetime
 from urllib.robotparser import RobotFileParser
 from web_crawler.utils.download import download
 from web_crawler.utils.config import Config
+from pathlib import Path
+import shutil
+import os
 
 class Frontier(object):
     def __init__(self, config: Config, restart):
@@ -28,10 +31,13 @@ class Frontier(object):
                                 
         if restart:
             self.logger.info(f"Restarting from seed urls.")
+            if os.path.exists(self.config.download_path):
+                shutil.rmtree(self.config.download_path)
             for url in self.config.seed_urls:
                 self.add_url(url)
         else:
             self._parse_save_file()
+        Path(self.config.download_path).mkdir(exist_ok=True)
 
     def _parse_save_file(self):
         try:

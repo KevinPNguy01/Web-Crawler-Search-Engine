@@ -145,7 +145,7 @@ class InvertedIndex:
 		"""
 
 		# Write the file path of this document to the crawled save file.
-		line = f"{file_path}\n{url}\n{title}\n"
+		line = f"{file_path}\n{url}\n{title.replace("\n", " ")}\n"
 		self.crawled_file.write(line)
 		self.crawled.add(file_path.name)
 
