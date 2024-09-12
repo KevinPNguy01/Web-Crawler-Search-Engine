@@ -1,8 +1,7 @@
 from multiprocessing import Process, Queue, Value
 from typing import Set, List, Tuple, TextIO
 from pathlib import Path
-from worker import Worker
-from webpage import WebPage
+from inverted_indexer.indexer.worker import Worker
 import platform
 import shutil
 import math
@@ -12,9 +11,10 @@ OS_WINDOWS = platform.system() == "Windows"		# Flag for if OS is Windows.
 
 class InvertedIndex:
 	def __init__(self, source: Path, restart=True, num_workers=1) -> None:
-		self.source: Path = source                      		# Folder path containg documents to index.
-		self.index_folder = Path("indices")						# Folder path for indices.
-		self.partial_index_folder = Path("partial_indices")		# Folder path for partial indices.
+		parent = Path(__file__).parent.parent
+		self.source = source                      		                # Folder path containg documents to index.
+		self.index_folder = parent / Path("indices")					# Folder path for indices.
+		self.partial_index_folder = parent / Path("partial_indices")	# Folder path for partial indices.
 		self.index_save_path = Path("index.txt")        		# File path for inverted index.
 		self.crawled_save_path = Path("crawled.txt")    		# File path for names of crawled files.
 

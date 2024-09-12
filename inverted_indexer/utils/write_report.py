@@ -1,4 +1,4 @@
-from search_engine import SearchEngine
+from start_search_engine import SearchEngine
 import time
 
 def main():

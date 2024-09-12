@@ -1,13 +1,13 @@
 import json
 from threading import Lock
 from queue import Queue, Empty
-from utils import get_logger, normalize
+from web_crawler.utils import get_logger, normalize
 from urllib.parse import urlparse, ParseResult
 from typing import Dict
 from datetime import datetime
 from urllib.robotparser import RobotFileParser
-from utils.download import download
-from utils.config import Config
+from web_crawler.utils.download import download
+from web_crawler.utils.config import Config
 
 class Frontier(object):
     def __init__(self, config: Config, restart):

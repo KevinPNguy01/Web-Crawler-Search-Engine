@@ -1,8 +1,6 @@
 from typing import Dict, Self
-from tokenizer import *
+from shared.tokenizer import *
 from bs4 import BeautifulSoup
-from collections import Counter
-import nltk
 
 class Posting: 
     @staticmethod

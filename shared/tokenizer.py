@@ -1,7 +1,5 @@
 from typing import List, Dict, Tuple
 from bs4 import BeautifulSoup
-from bs4.element import Comment
-from functools import cmp_to_key
 from collections import Counter
 from nltk.util import ngrams
 from nltk.stem import PorterStemmer
@@ -42,7 +40,12 @@ def tokenize(text: List[str], stem=False) -> Dict[str, int]:
     frequencies = Counter(" ".join(token) for token in n_grams)
     return frequencies
 
-if __name__ == "__main__":
-    with open("DEV\\aiclub_ics_uci_edu\\8ef6d99d9f9264fc84514cdd2e680d35843785310331e1db4bbd06dd2b8eda9b.json", "r") as f:
-        data = json.load(f)
-        print(tokenize(extract_text(data["content"])))
+# This runs in O(n) with respect to the number of tokens since it traverses each key token in the list only once.
+def computeWordFrequencies(tokens: List[str]) -> Dict[str, int]:
+    frequencies = {}
+    for token in tokens:
+        # Initialize frequency count for token to 0.
+        if token not in frequencies:
+            frequencies[token] = 0
+        frequencies[token] += 1
+    return frequencies

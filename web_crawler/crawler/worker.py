@@ -2,13 +2,13 @@ from threading import Thread
 from inspect import getsource
 from urllib.parse import urlparse
 from bs4 import BeautifulSoup
-from crawler.tokenizer import *
-from crawler.frontier import Frontier
-from utils.config import Config
-from utils.download import download
-from utils import get_logger, get_urlhash
-from utils.response import Response
-from utils.scraper import scraper
+from shared.tokenizer import *
+from web_crawler.crawler.frontier import Frontier
+from web_crawler.utils.config import Config
+from web_crawler.utils.download import download
+from web_crawler.utils import get_logger, get_urlhash
+from web_crawler.utils.response import Response
+from web_crawler.utils.scraper import scraper
 from typing import Dict
 import json
 import time
@@ -40,12 +40,12 @@ class Worker(Thread):
         filename = os.path.join(directory, get_urlhash(response.url)+".json")
 
         # Write page content to file.
+        data = {
+            "url": response.url,
+            "content": response.raw_response.content.decode(),
+            "encoding": "utf-8"
+        }
         with open(filename, 'w') as f:
-            data = {
-                "url": response.url,
-                "content": response.raw_response.content.decode(),
-                "encoding": "utf-8"
-            }
             json.dump(data, f)
 
         self.logger.info(f"Page saved to: {filename}")

@@ -1,11 +1,11 @@
 from collections import defaultdict
 import streamlit as st
 from typing import Dict, List, Tuple, Set
-from posting import Posting
+from shared.posting import Posting
 import time
 import nltk
 import re
-from webpage import WebPage
+from shared.webpage import WebPage
 from nltk.stem import PorterStemmer
 import nltk 
 
@@ -13,14 +13,14 @@ class SearchEngine:
     def __init__(self):
         self.index_of_index: Dict[str, int] = self.read_index_files("index_of_index.txt")       # Read the the index of the index.
         self.index_of_crawled: Dict[str, int] = self.read_index_files("index_of_crawled.txt")   # Read the index of the crawled.
-        self.crawled_file = open("indices/crawled.txt", "r", encoding="utf-8")
+        self.crawled_file = open("inverted_indexer/indices/crawled.txt", "r", encoding="utf-8")
 
         self.prev_tokens: List[str] = []    # The tokens used for the last search query
 
     def read_index_files(self, file_name: str) -> Dict[str, int]:
         """ Open the given file name and read the index into a dict. """
         index_dict = {}
-        with open(f"indices/{file_name}", "r") as file:
+        with open(f"inverted_indexer/indices/{file_name}", "r") as file:
             for line in file:
                 key, position = line.split(",")
                 index_dict[key] = int(position)
@@ -86,7 +86,7 @@ class SearchEngine:
 
         token_postings: List[List[Posting]] = []    # List to store postings for each token.
 
-        with open("indices/index.txt", "r") as index:
+        with open("inverted_indexer/indices/index.txt", "r") as index:
             for token in tokens:
                 # If the token exists in the index, retrieve its postings and add it to a list.
                 if index_position := self.index_of_index.get(token):

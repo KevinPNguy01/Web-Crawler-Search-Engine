@@ -1,11 +1,11 @@
 from pathlib import Path
-from posting import Posting
+from shared.posting import Posting
 from typing import Dict, List
 import os
 from multiprocessing import Queue, Value
 import signal
 import ctypes
-from webpage import WebPage
+from shared.webpage import WebPage
 
 def is_valid_html(content: str) -> bool:
 	""" Ensure the JSON file has the "content" field and contains HTML tags. """
@@ -148,7 +148,7 @@ class Worker:
 		webpage = WebPage.from_path(file_path)
 
 		# Skip file if it contains invalid html.
-		if not is_valid_html(webpage.content):
+		if not webpage or not is_valid_html(webpage.content):
 			return
 		
 		text_content = webpage.get_text()

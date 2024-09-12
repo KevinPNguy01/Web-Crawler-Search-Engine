@@ -1,7 +1,7 @@
-from crawler.frontier import Frontier
-from crawler.worker import Worker
-from utils.config import Config
-from utils import get_logger
+from web_crawler.crawler.frontier import Frontier
+from web_crawler.crawler.worker import Worker
+from web_crawler.utils.config import Config
+from web_crawler.utils import get_logger
 import time
 import json
 
