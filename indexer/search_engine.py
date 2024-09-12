@@ -1,11 +1,11 @@
 from collections import defaultdict
 import streamlit as st
 from typing import Dict, List, Tuple, Set
-from src.posting import Posting
+from posting import Posting
 import time
 import nltk
 import re
-from src.webpage import WebPage
+from webpage import WebPage
 from nltk.stem import PorterStemmer
 import nltk 
 

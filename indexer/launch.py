@@ -1,5 +1,5 @@
 from argparse import ArgumentParser
-from src.inverted_index import InvertedIndex
+from inverted_index import InvertedIndex
 from pathlib import Path
 
 def main(restart, num_workers):

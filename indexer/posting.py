@@ -1,5 +1,5 @@
 from typing import Dict, Self
-from src.tokenizer import *
+from tokenizer import *
 from bs4 import BeautifulSoup
 from collections import Counter
 import nltk

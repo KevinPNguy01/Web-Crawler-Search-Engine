@@ -1,11 +1,11 @@
 from pathlib import Path
-from src.posting import Posting
+from posting import Posting
 from typing import Dict, List
 import os
 from multiprocessing import Queue, Value
 import signal
 import ctypes
-from src.webpage import WebPage
+from webpage import WebPage
 
 def is_valid_html(content: str) -> bool:
 	""" Ensure the JSON file has the "content" field and contains HTML tags. """

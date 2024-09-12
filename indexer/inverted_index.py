@@ -1,8 +1,8 @@
 from multiprocessing import Process, Queue, Value
 from typing import Set, List, Tuple, TextIO
 from pathlib import Path
-from src.worker import Worker
-from src.webpage import WebPage
+from worker import Worker
+from webpage import WebPage
 import platform
 import shutil
 import math
