@@ -160,8 +160,8 @@ def main():
         # Retrieve results and record how long it took.
         start = time.time()
         results = search_engine.search(user_input)
-        elapsed_time = round((time.time() - start) * 1000)
-        st.write(f"Search completed in {elapsed_time} ms.")
+        elapsed_time = round((time.time() - start), 6)
+        st.write(f"Search completed in {elapsed_time} seconds.")
 
         display_results(results, search_engine.prev_tokens)
 

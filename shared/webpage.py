@@ -9,7 +9,7 @@ import os
 
 load_dotenv()
 OPENAI_AI_KEY = os.getenv("API_KEY")
-CLIENT = OpenAI(api_key=OPENAI_AI_KEY)
+CLIENT = OpenAI(api_key=OPENAI_AI_KEY) if OPENAI_AI_KEY else None
 
 class WebPage(msgspec.Struct, gc=False):
 	url: str
@@ -29,6 +29,8 @@ class WebPage(msgspec.Struct, gc=False):
 		return [re.sub(r'\s+',' ', string) for string in self.soup.stripped_strings if string]
 	
 	def get_summary(self):
+		if not CLIENT:
+			return ""
 		body = self.soup.find("body")
 		if not body:
 			return ""
