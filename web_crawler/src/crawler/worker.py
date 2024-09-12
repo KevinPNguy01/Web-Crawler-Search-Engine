@@ -6,10 +6,11 @@ from src.crawler.tokenizer import *
 from src.crawler.frontier import Frontier
 from src.utils.config import Config
 from src.utils.download import download
-from src.utils import get_logger
+from src.utils import get_logger, get_urlhash
 from src.utils.response import Response
 from src.utils.scraper import scraper
 from typing import Dict
+import json
 import time
 import os
 
@@ -30,23 +31,22 @@ class Worker(Thread):
         # Parse the URL to extract domain and path.
         parsed_url = urlparse(response.url)
         domain = parsed_url.netloc
-        path = parsed_url.path
-        
-        if parsed_url.query:
-            path += '?' + parsed_url.query
 
         # Create directory structure based on domain and path.
-        directory = os.path.join(str(self.config.download_path), domain, os.path.dirname(path).lstrip("/"))
+        directory = os.path.join(str(self.config.download_path), domain)
         os.makedirs(directory, exist_ok=True)
 
-        # Generate filename from the last part of the path.
-        filename = os.path.join(directory, os.path.basename(path).lstrip("/"))
-        if not filename.endswith(".html"):
-            filename += ".html"
+        # Generate filename from the url's hash.
+        filename = os.path.join(directory, get_urlhash(response.url)+".json")
 
         # Write page content to file.
-        with open(filename, 'wb') as f:
-            f.write(response.raw_response.content)
+        with open(filename, 'w') as f:
+            data = {
+                "url": response.url,
+                "content": response.raw_response.content.decode(),
+                "encoding": "utf-8"
+            }
+            json.dump(data, f)
 
         self.logger.info(f"Page saved to: {filename}")
         

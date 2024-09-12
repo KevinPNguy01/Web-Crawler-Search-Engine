@@ -3,7 +3,7 @@ from src.inverted_index import InvertedIndex
 from pathlib import Path
 
 def main(restart, num_workers):
-    index = InvertedIndex(Path("DEV"), restart=restart, num_workers=num_workers)
+    index = InvertedIndex(Path("pages"), restart=restart, num_workers=num_workers)
     index.start()
 
 if __name__ == "__main__":
