@@ -1,8 +1,8 @@
 from urllib.parse import urlparse, urldefrag, urljoin, parse_qs, unquote
-from src.utils.response import Response
+from utils.response import Response
 from bs4 import BeautifulSoup
 from typing import List
-from src.utils.config import Config
+from utils.config import Config
 
 import re
 

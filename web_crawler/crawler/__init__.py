@@ -1,7 +1,7 @@
-from src.crawler.frontier import Frontier
-from src.crawler.worker import Worker
-from src.utils.config import Config
-from src.utils import get_logger
+from crawler.frontier import Frontier
+from crawler.worker import Worker
+from utils.config import Config
+from utils import get_logger
 import time
 import json
 

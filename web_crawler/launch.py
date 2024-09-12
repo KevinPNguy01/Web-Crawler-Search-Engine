@@ -1,8 +1,8 @@
 from configparser import ConfigParser
 from argparse import ArgumentParser
 from pathlib import Path
-from src.utils.config import Config
-from src.crawler import Crawler
+from utils.config import Config
+from crawler import Crawler
 
 
 def main(config_file, restart):

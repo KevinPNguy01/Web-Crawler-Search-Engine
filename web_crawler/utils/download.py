@@ -1,5 +1,5 @@
 import requests
-from src.utils.response import Response
+from utils.response import Response
 
 def download(url) -> Response:
     resp = requests.get(url, timeout=5)

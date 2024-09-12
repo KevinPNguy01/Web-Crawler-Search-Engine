@@ -2,13 +2,13 @@ from threading import Thread
 from inspect import getsource
 from urllib.parse import urlparse
 from bs4 import BeautifulSoup
-from src.crawler.tokenizer import *
-from src.crawler.frontier import Frontier
-from src.utils.config import Config
-from src.utils.download import download
-from src.utils import get_logger, get_urlhash
-from src.utils.response import Response
-from src.utils.scraper import scraper
+from crawler.tokenizer import *
+from crawler.frontier import Frontier
+from utils.config import Config
+from utils.download import download
+from utils import get_logger, get_urlhash
+from utils.response import Response
+from utils.scraper import scraper
 from typing import Dict
 import json
 import time
