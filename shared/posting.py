@@ -9,8 +9,8 @@ class Posting:
         # Extract text from webpage content.
         text = extract_text(soup)
         # Tokenize text.
-        frequencies = tokenize(text)
-        for token, count in tokenize(text, stem=True).items():
+        frequencies = tokenize_with_ngrams(text)
+        for token, count in tokenize_with_ngrams(text, stem=True).items():
             if token not in frequencies:
                 frequencies[token] = count
 
@@ -19,7 +19,7 @@ class Posting:
         for tag_type, weight in weights:
             for tag in soup.find_all(tag_type):
                 tag_string = [" ".join([s.lower() for s in re.findall(r'\b[a-zA-Z0-9]+\b', tag.text)])]
-                tokens = tokenize(tag_string) | tokenize(tag_string, stem=True)
+                tokens = tokenize_with_ngrams(tag_string) | tokenize_with_ngrams(tag_string, stem=True)
                 for token in frequencies:
                     if token in tokens:
                         frequencies[token] += weight-1
