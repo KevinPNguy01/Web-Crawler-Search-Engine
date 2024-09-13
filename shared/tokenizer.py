@@ -3,7 +3,6 @@ from bs4 import BeautifulSoup
 from collections import Counter
 from nltk.util import ngrams
 from nltk.stem import PorterStemmer
-import json
 import re
 
 def extract_text(soup: BeautifulSoup) -> List[str]:
