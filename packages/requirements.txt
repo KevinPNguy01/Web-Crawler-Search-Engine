@@ -1,9 +1,0 @@
-cbor
-requests
-beautifulsoup4
-msgspec
-lxml
-nltk
-openai
-streamlit
-python-dotenv
