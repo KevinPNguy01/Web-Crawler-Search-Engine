@@ -90,3 +90,9 @@
 <pre><code>streamlit run start_search_engine.py</code></pre>
 
 <p>This will launch a web-based interface where you can type your query into the search box and press the "Search" button to retrieve results.</p>
+
+## Usage Demos
+Below are some demonstrations of the web crawling, indexing, and search capabilities.
+
+### Crawling
+![Crawling](./demos/crawling.gif)
