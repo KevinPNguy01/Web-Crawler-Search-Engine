@@ -35,6 +35,7 @@ class WebPage(msgspec.Struct, gc=False):
 		if not body:
 			return ""
 		yield "AI Summary: "
+		body_strings = [tag.text for tag in body.find_all("p") if len(tag.text) > 20]
 		body_strings = [re.sub(r'\s+',' ', string).strip() for string in body.stripped_strings]
 		body_strings = [list(re.findall(r'\b[a-zA-Z0-9]+\b', string)) for string in body_strings]
 		body_strings = [" ".join(string) for string in body_strings]
@@ -42,7 +43,7 @@ class WebPage(msgspec.Struct, gc=False):
 		response = CLIENT.chat.completions.create(
 			model="gpt-3.5-turbo",
 			messages=[
-				{"role": "system", "content": "Summarize following webpage content using 30 completion_tokens or less. Not complete sentence, don't mention the word summary"},
+				{"role": "system", "content": "Summarize following webpage content using 30 completion_tokens or less. Only the summary, incomplete sentence, no context or format needed."},
 				{"role": "user", "content": "\n".join(body_strings)}
 			],
 			max_tokens=100,
@@ -53,6 +54,10 @@ class WebPage(msgspec.Struct, gc=False):
 				yield chunk.choices[0].delta.content
 	
 	def get_context(self, tokens=None) -> str:
+		paragraphs = [tag.text for tag in self.soup.find_all("p") if len(tag.text) > 20]
+		if paragraphs:
+			return "".join(paragraphs[0][:300].rsplit(" ", 1)[:-1]) + " ..."
+
 		tokens = " ".join(tokens).split(" ")
 		if tokens and (body := self.soup.find("body")):
 			body_strings = [re.sub(r'\s+',' ', string).strip() for string in body.stripped_strings]
@@ -62,7 +67,7 @@ class WebPage(msgspec.Struct, gc=False):
 				pos = body_strings.lower().find(token)
 				if pos > -1:
 					self.context = body_strings[pos:pos+300]
-		return self.context
+		return "".join(self.context[:300].rsplit(" ", 1)[:-1]) + " ..."
 	
 	@classmethod
 	def from_path(cls, path: Path):
